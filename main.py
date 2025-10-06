@@ -19,6 +19,7 @@ import atexit
 import chromedriver_autoinstaller
 import psutil
 import shutil
+import requests
 
 colorama.init()
 
@@ -110,9 +111,27 @@ logging.basicConfig(
 )
 
 # Hide verbose logs from undetected_chromedriver and other modules
-logging.getLogger('undetected_chromedriver').setLevel(logging.WARNING)
-logging.getLogger('selenium').setLevel(logging.WARNING)
+logging.getLogger('undetected_chromedriver').setLevel(logging.ERROR)
+logging.getLogger('selenium').setLevel(logging.ERROR)
+logging.getLogger('selenium.webdriver').setLevel(logging.ERROR)
+logging.getLogger('selenium.webdriver.remote').setLevel(logging.ERROR)
+logging.getLogger('selenium.webdriver.common').setLevel(logging.ERROR)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
+logging.getLogger('seleniumwire').setLevel(logging.WARNING)
+logging.getLogger('seleniumwire.server').setLevel(logging.WARNING)
+logging.getLogger('seleniumwire.handler').setLevel(logging.WARNING)
+logging.getLogger('seleniumwire.proxy').setLevel(logging.WARNING)
+logging.getLogger('seleniumwire.thirdparty').setLevel(logging.WARNING)
+logging.getLogger('seleniumwire.thirdparty.mitmproxy').setLevel(logging.WARNING)
+
+# Suppress specific warnings
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module="seleniumwire")
+warnings.filterwarnings("ignore", message="pkg_resources is deprecated")
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", message="Cache folder")
+warnings.filterwarnings("ignore", message=".*cannot be created.*")
+warnings.filterwarnings("ignore", message=".*Permission denied.*")
 
 # Global variables
 file_lock = threading.Lock()
@@ -309,23 +328,24 @@ def safe_wait_and_click(driver, by, value, timeout=10):
     safe_click(driver, element)
     return element
 
-def generate_random_birthdate():
-    """Tạo ngày sinh ngẫu nhiên cho độ tuổi 18-60"""
-    current_year = datetime.now().year
-    birth_year = random.randint(current_year - 60, current_year - 18)
-    birth_month = random.randint(1, 12)
-    
-    # Handle February and leap years
-    if birth_month == 2:
-        max_day = 29 if birth_year % 4 == 0 and (birth_year % 100 != 0 or birth_year % 400 == 0) else 28
-    elif birth_month in [4, 6, 9, 11]:
-        max_day = 30
-    else:
-        max_day = 31
-    
-    birth_day = random.randint(1, max_day)
-    
-    return birth_year, birth_month, birth_day
+def _remove_account_from_file(email):
+    """Remove account from accounts.txt file"""
+    try:
+        with file_lock:
+            with open('accounts.txt', 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+            
+            with open('accounts.txt', 'w', encoding='utf-8') as f:
+                for line in lines:
+                    if line.strip() and not line.startswith('#'):
+                        parts = line.strip().split(':')
+                        if len(parts) >= 1 and parts[0].strip() != email:
+                            f.write(line)
+                    else:
+                        f.write(line)
+            logging.info(f"🗑️ Đã xóa {email} khỏi accounts.txt")
+    except Exception as e:
+        logging.warning(f"Không thể xóa {email} khỏi accounts.txt: {e}")
 
 def check_rakuten_account(driver, email, password):
     """Kiểm tra tài khoản Rakuten"""
@@ -333,30 +353,34 @@ def check_rakuten_account(driver, email, password):
         logging.info(f"Bắt đầu kiểm tra tài khoản: {email}")
         
         # Navigate to login page
-        login_url = ("https://login.account.rakuten.com/sso/authorize?"
-                    "client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&"
-                    "scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in")
+        login_url = ("https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in")
+        
         driver.get(login_url)
                 
         time.sleep(random.randint(2, 4))
         
         # Step 1: Enter email
         if not _enter_email(driver, email):
-            return False, f"Lỗi nhập email cho {email}"
-        
+            result = False, f"Lỗi nhập email cho {email}"
         # Step 2: Enter password
-        if not _enter_password(driver, password, email):
-            return False, f"Lỗi nhập password cho {email}"
-        
+        elif not _enter_password(driver, password, email):
+            result = False, f"Lỗi nhập password cho {email}"
         # Step 3: Check login success
-        if not _check_login_success(driver, email):
-            return False, "Đăng nhập thất bại"
+        elif not _check_login_success(driver, email):
+            result = False, "Đăng nhập thất bại"
+        else:
+            # Step 4: Check points
+            result = _check_points(driver, email, password)
         
-        # Step 4: Check points
-        return _check_points(driver, email, password)
+        # Remove account from accounts.txt after check is complete (success or fail)
+        _remove_account_from_file(email)
+        
+        return result
             
     except Exception as e:
         logging.error(f"❌ Lỗi trong quá trình kiểm tra cho {email}: {repr(e)}")
+        # Remove account even if there's an exception
+        _remove_account_from_file(email)
         return False, repr(e)
 
 def _enter_email(driver, email):
@@ -441,31 +465,56 @@ def _check_points(driver, email, password):
         driver.get(points_url)    
         time.sleep(5)
         
-        # Try to find points information
+        points_details = []
+        
         try:
-            # Look for the points element
-            points_element = wait_for_element(driver, By.CSS_SELECTOR, ".point_num", timeout=10)
-            points_text = points_element.text.strip()
-            
-            points_clean = ''.join(filter(str.isdigit, points_text))
-            
-            if points_clean:
-                points_value = int(points_clean)
-                logging.info(f"✅ {email} - Điểm: {points_value:,}")
+            try:
+                held_points_element = wait_for_element(driver, By.CSS_SELECTOR, ".point-total dd", timeout=5)
+                held_points_text = held_points_element.text.strip()
+                held_points_clean = ''.join(filter(str.isdigit, held_points_text))
+                if held_points_clean:
+                    held_points_value = int(held_points_clean)
+                    points_details.append(f"Total Point: {held_points_value:,}")
+                    logging.info(f"📊 {email} - Points total: {held_points_value:,}")
+            except Exception:
+                logging.debug(f"Không tìm thấy 'Points total' cho {email}")
+
+            try:
+                operation_points_element = wait_for_element(driver, By.CSS_SELECTOR, ".point-gadget-display-point .point_num", timeout=5)
+                operation_points_text = operation_points_element.text.strip()
+                operation_points_clean = ''.join(filter(str.isdigit, operation_points_text))
+                if operation_points_clean:
+                    operation_points_value = int(operation_points_clean)
+                    points_details.append(f"Operation: {operation_points_value:,}")
+                    logging.info(f"📈 {email} - Points in operation: {operation_points_value:,}")
+            except Exception:
+                logging.debug(f"Không tìm thấy 'Points in operation' cho {email}")
+
+            try:
+                add_points_element = wait_for_element(driver, By.CSS_SELECTOR, " #js-pointBankTotalBalance .point_num", timeout=5)
+                add_points_text = add_points_element.text.strip()
+                add_points_clean = ''.join(filter(str.isdigit, add_points_text))
+                if add_points_clean:
+                    add_points_value = int(add_points_clean)
+                    points_details.append(f"Add: {add_points_value:,}")
+                    logging.info(f"➕ {email} - Points add: {add_points_value:,}")
+            except Exception:
+                logging.debug(f"Không tìm thấy 'Points add' cho {email}")
+            if len(points_details) > 0:
+                points_summary = " | ".join(points_details)
+                logging.info(f"✅ {email} - ({points_summary})")
                 
                 # Save to appropriate file based on points
                 with file_lock:
-                    if points_value > 0:
-                        with open('point_account.txt', 'a', encoding='utf-8') as f:
-                            f.write(f"{email}|{password}|{points_value}\n")
-                        return True, f"Có điểm: {points_value:,}"
-                    else:
-                        with open('no_point_account.txt', 'a', encoding='utf-8') as f:
-                            f.write(f"{email}|{password}|0\n")
-                        return True, "Không có điểm"
+                    with open('point_account.txt', 'a', encoding='utf-8') as f:
+                        f.write(f"{email}|{password}|{points_summary}\n")
+                    return True, f"Có điểm: ({points_summary})"
             else:
-                logging.warning(f"Không thể đọc số điểm cho {email}")
-                return True, "Đăng nhập thành công nhưng không đọc được điểm"
+                logging.info(f"📭 {email} - Không có điểm")
+                with file_lock:
+                    with open('no_point_account.txt', 'a', encoding='utf-8') as f:
+                        f.write(f"{email}|{password}|0\n")
+                    return True, "Không có điểm"
                 
         except Exception as e:
             logging.warning(f"Không tìm thấy thông tin điểm cho {email}: {repr(e)}")
@@ -488,23 +537,6 @@ def process_account(driver, account, account_index):
                 # Lưu tài khoản thành công
                 with open('successful_accounts.txt', 'a', encoding='utf-8') as f:
                     f.write(f"{email}|{password}|{message}\n")
-                
-                # Remove successful email from accounts.txt
-                try:
-                    with open('accounts.txt', 'r', encoding='utf-8') as f:
-                        lines = f.readlines()
-                    
-                    with open('accounts.txt', 'w', encoding='utf-8') as f:
-                        for line in lines:
-                            if line.strip() and not line.startswith('#'):
-                                parts = line.strip().split('|')
-                                if len(parts) >= 1 and parts[0].strip() != email:
-                                    f.write(line)
-                            else:
-                                f.write(line)
-                    logging.info(f"Đã xóa {email} khỏi accounts.txt")
-                except Exception as e:
-                    logging.warning(f"Không thể xóa {email} khỏi accounts.txt: {e}")
             else:
                 failed_accounts.append({'account': account, 'error': message})
                 # Lưu tài khoản thất bại
@@ -537,9 +569,47 @@ def clean_all_user_data(retries=5, delay=1):
         else:
             logging.error(f"Không thể dọn dẹp dữ liệu người dùng sau {retries} lần thử.")
 
+def check_key_live():
+    """Kiểm tra key có live không từ GitHub"""
+    try:
+        trial_url = "https://raw.githubusercontent.com/sang2770/storage/master/trial.json"
+        
+        logging.info("Đang kiểm tra key live...")
+        response = requests.get(trial_url, timeout=10)
+        
+        if response.status_code == 404:
+            logging.error("❌ Key đã hết hạn hoặc không tồn tại (404).")
+            print("\n" + "="*50)
+            print("🔑 KEY ĐÃ HẾT HẠN HOẶC KHÔNG TỒN TẠI")
+            print("Vui lòng liên hệ để gia hạn key.")
+            print("="*50)
+            return False
+        elif response.status_code == 200:
+            logging.info("✅ Key live - Cho phép chạy chương trình.")
+            return True
+        else:
+            logging.warning(f"⚠️ Không thể kiểm tra key (HTTP {response.status_code}). Tiếp tục chạy...")
+            return True
+            
+    except requests.exceptions.Timeout:
+        logging.warning("⚠️ Timeout khi kiểm tra key. Tiếp tục chạy...")
+        return True
+    except requests.exceptions.ConnectionError:
+        logging.warning("⚠️ Không có kết nối internet. Tiếp tục chạy...")
+        return True
+    except Exception as e:
+        logging.warning(f"⚠️ Lỗi khi kiểm tra key: {repr(e)}. Tiếp tục chạy...")
+        return True
+
 def main():
     """Hàm chính"""
     global show_browser
+    
+    # Check if key is live before proceeding
+    if not check_key_live():
+        logging.error("Dừng chương trình do key không hợp lệ.")
+        input("Nhấn Enter để thoát...")
+        sys.exit(1)
     
     try:
         # Load input files
