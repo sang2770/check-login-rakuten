@@ -1,0 +1,81 @@
+2025-10-06 12:10:15,367 - ERROR - [MainThread] - Không tìm thấy tài khoản hợp lệ trong accounts.txt
+2025-10-06 12:10:15,369 - ERROR - [MainThread] - Lỗi khi tải file đầu vào: ValueError('Không có tài khoản để xử lý')
+2025-10-06 12:10:15,369 - ERROR - [MainThread] - Lỗi trong hàm main: ValueError('Không có tài khoản để xử lý')
+2025-10-06 12:10:15,369 - WARNING - [MainThread] - Đang dọn dẹp drivers...
+2025-10-06 12:10:15,369 - WARNING - [MainThread] - Đang dọn dẹp drivers...
+2025-10-06 12:10:49,156 - INFO - [MainThread] - Đã tải 13 tài khoản và 50 proxy
+2025-10-06 12:10:49,156 - INFO - [MainThread] - Đang dọn dẹp dữ liệu người dùng...
+2025-10-06 12:11:07,320 - INFO - [Luồng-1] - Đang xử lý tài khoản 1: kango_n@yahoo.co.jp
+2025-10-06 12:11:07,322 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: kango_n@yahoo.co.jp
+2025-10-06 12:11:08,820 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho kango_n@yahoo.co.jp: WebDriverException()
+2025-10-06 12:11:08,820 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: kango_n@yahoo.co.jp
+2025-10-06 12:11:15,907 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2025-10-06 12:11:15,908 - WARNING - [MainThread] - Đang dọn dẹp drivers...
+2025-10-06 12:11:15,908 - INFO - [MainThread] - Đang dọn dẹp dữ liệu người dùng...
+2025-10-06 12:11:16,958 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2025-10-06 12:11:16,958 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2025-10-06 12:11:16,958 - WARNING - [MainThread] - Đang dọn dẹp drivers...
+2025-10-06 12:11:16,959 - WARNING - [MainThread] - Đang dọn dẹp drivers...
+2025-10-06 12:11:22,838 - INFO - [MainThread] - Đã tải 13 tài khoản và 0 proxy
+2025-10-06 12:11:22,838 - INFO - [MainThread] - Đang dọn dẹp dữ liệu người dùng...
+2025-10-06 12:11:28,059 - INFO - [Luồng-1] - Đang xử lý tài khoản 1: kango_n@yahoo.co.jp
+2025-10-06 12:11:28,060 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: kango_n@yahoo.co.jp
+2025-10-06 12:11:57,358 - INFO - [Luồng-1] - ✅ kango_n@yahoo.co.jp - Điểm: 9,445
+2025-10-06 12:11:57,360 - INFO - [Luồng-1] - Đã xóa kango_n@yahoo.co.jp khỏi accounts.txt
+2025-10-06 12:11:57,360 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: kango_n@yahoo.co.jp
+2025-10-06 12:12:01,093 - INFO - [Luồng-1] - Đang xử lý tài khoản 2: dakutosg@yahoo.co.jp
+2025-10-06 12:12:01,093 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: dakutosg@yahoo.co.jp
+2025-10-06 12:12:12,665 - ERROR - [Luồng-1] - Lỗi khi nhập password cho dakutosg@yahoo.co.jp
+2025-10-06 12:12:12,666 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: dakutosg@yahoo.co.jp
+2025-10-06 12:12:17,231 - INFO - [Luồng-1] - Đang xử lý tài khoản 3: tmyu417@yahoo.co.jp
+2025-10-06 12:12:17,232 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: tmyu417@yahoo.co.jp
+2025-10-06 12:12:36,659 - WARNING - [Luồng-1] - Đăng nhập thất bại cho tmyu417@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:12:36,659 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: tmyu417@yahoo.co.jp
+2025-10-06 12:12:40,443 - INFO - [Luồng-1] - Đang xử lý tài khoản 4: matm1226@yahoo.co.jp
+2025-10-06 12:12:40,444 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: matm1226@yahoo.co.jp
+2025-10-06 12:13:01,427 - WARNING - [Luồng-1] - Đăng nhập thất bại cho matm1226@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:13:01,428 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: matm1226@yahoo.co.jp
+2025-10-06 12:13:05,164 - INFO - [Luồng-1] - Đang xử lý tài khoản 5: hqxnd187@yahoo.co.jp
+2025-10-06 12:13:05,165 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: hqxnd187@yahoo.co.jp
+2025-10-06 12:13:22,313 - WARNING - [Luồng-1] - Đăng nhập thất bại cho hqxnd187@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:13:22,313 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: hqxnd187@yahoo.co.jp
+2025-10-06 12:13:25,927 - INFO - [Luồng-1] - Đang xử lý tài khoản 6: mh_araki@yahoo.co.jp
+2025-10-06 12:13:25,928 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: mh_araki@yahoo.co.jp
+2025-10-06 12:13:47,080 - WARNING - [Luồng-1] - Đăng nhập thất bại cho mh_araki@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:13:47,080 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: mh_araki@yahoo.co.jp
+2025-10-06 12:13:51,019 - INFO - [Luồng-1] - Đang xử lý tài khoản 7: yaurajp@katch.ne.jp
+2025-10-06 12:13:51,019 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: yaurajp@katch.ne.jp
+2025-10-06 12:14:11,945 - WARNING - [Luồng-1] - Đăng nhập thất bại cho yaurajp@katch.ne.jp: Vẫn ở trang login
+2025-10-06 12:14:11,947 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: yaurajp@katch.ne.jp
+2025-10-06 12:14:16,165 - INFO - [Luồng-1] - Đang xử lý tài khoản 8: hirock28jp@yahoo.co.jp
+2025-10-06 12:14:16,165 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: hirock28jp@yahoo.co.jp
+2025-10-06 12:14:36,897 - WARNING - [Luồng-1] - Đăng nhập thất bại cho hirock28jp@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:14:36,898 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: hirock28jp@yahoo.co.jp
+2025-10-06 12:14:40,787 - INFO - [Luồng-1] - Đang xử lý tài khoản 9: ggg30612@yahoo.co.jp
+2025-10-06 12:14:40,787 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: ggg30612@yahoo.co.jp
+2025-10-06 12:15:00,933 - WARNING - [Luồng-1] - Đăng nhập thất bại cho ggg30612@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:15:00,934 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: ggg30612@yahoo.co.jp
+2025-10-06 12:15:04,787 - INFO - [Luồng-1] - Đang xử lý tài khoản 10: dewasiex@yahoo.co.jp
+2025-10-06 12:15:04,787 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: dewasiex@yahoo.co.jp
+2025-10-06 12:15:25,058 - WARNING - [Luồng-1] - Đăng nhập thất bại cho dewasiex@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:15:25,058 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: dewasiex@yahoo.co.jp
+2025-10-06 12:15:29,140 - INFO - [Luồng-1] - Đang xử lý tài khoản 11: nyo2929@yahoo.co.jp
+2025-10-06 12:15:29,141 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: nyo2929@yahoo.co.jp
+2025-10-06 12:15:47,194 - WARNING - [Luồng-1] - Đăng nhập thất bại cho nyo2929@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:15:47,195 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: nyo2929@yahoo.co.jp
+2025-10-06 12:15:50,962 - INFO - [Luồng-1] - Đang xử lý tài khoản 12: sa_ki_ymd@yahoo.co.jp
+2025-10-06 12:15:50,962 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: sa_ki_ymd@yahoo.co.jp
+2025-10-06 12:16:11,173 - WARNING - [Luồng-1] - Đăng nhập thất bại cho sa_ki_ymd@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:16:11,175 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: sa_ki_ymd@yahoo.co.jp
+2025-10-06 12:16:14,880 - INFO - [Luồng-1] - Đang xử lý tài khoản 13: writtendai@yahoo.co.jp
+2025-10-06 12:16:14,880 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: writtendai@yahoo.co.jp
+2025-10-06 12:16:34,797 - WARNING - [Luồng-1] - Đăng nhập thất bại cho writtendai@yahoo.co.jp: Vẫn ở trang login
+2025-10-06 12:16:34,797 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: writtendai@yahoo.co.jp
+2025-10-06 12:16:34,864 - INFO - [MainThread] - Đã xử lý xong tất cả tài khoản.
+2025-10-06 12:16:34,865 - INFO - [MainThread] - ✅ Đăng ký thành công: 1
+2025-10-06 12:16:34,865 - INFO - [MainThread] - ❌ Đăng ký thất bại: 12
+2025-10-06 12:16:34,865 - INFO - [MainThread] - Đang dọn dẹp dữ liệu người dùng...
+2025-10-06 12:16:35,549 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2025-10-06 12:16:35,549 - INFO - [MainThread] - Chương trình hoàn tất. Thoát sau 5 giây...
+2025-10-06 12:16:40,549 - WARNING - [MainThread] - Đang dọn dẹp drivers...
+2025-10-06 12:16:40,550 - WARNING - [MainThread] - Đang dọn dẹp drivers...
