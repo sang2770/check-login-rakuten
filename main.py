@@ -319,7 +319,7 @@ def safe_click(driver, element):
         try:
             driver.execute_script("arguments[0].click();", element)
         except Exception as e2:
-            logging.warning(f"Cả hai phương pháp click đều thất bại: {repr(e)}, {repr(e2)}")
+            logging.debug(f"Cả hai phương pháp click đều thất bại: {repr(e)}, {repr(e2)}")
             raise
 
 def safe_wait_and_click(driver, by, value, timeout=10):
@@ -343,7 +343,7 @@ def _remove_account_from_file(email):
                             f.write(line)
                     else:
                         f.write(line)
-            logging.info(f"🗑️ Đã xóa {email} khỏi accounts.txt")
+            logging.debug(f"🗑️ Đã xóa {email} khỏi accounts.txt")
     except Exception as e:
         logging.warning(f"Không thể xóa {email} khỏi accounts.txt: {e}")
 
@@ -443,18 +443,18 @@ def _check_login_success(driver, email):
                 error_elements = driver.find_elements(By.CSS_SELECTOR, error_selectors)
                 if error_elements:
                     error_text = error_elements[0].text
-                    logging.warning(f"Đăng nhập thất bại cho {email}: {error_text}")
+                    logging.debug(f"Đăng nhập thất bại cho {email}: {error_text}")
                     return False
             except:
                 pass
             
-            logging.warning(f"Đăng nhập thất bại cho {email}: Acc bị khoá hoặc sai mật khẩu")
+            logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
             return False
         
         return True
         
     except Exception as e:
-        logging.error(f"Timeout hoặc lỗi chờ redirect cho {email}: {repr(e)}")
+        # logging.error(f"Timeout hoặc lỗi chờ redirect cho {email}: {repr(e)}")
         return False
 
 def _check_points(driver, email, password):
@@ -475,7 +475,7 @@ def _check_points(driver, email, password):
                 if held_points_clean:
                     held_points_value = int(held_points_clean)
                     points_details.append(f"Total Point: {held_points_value:,}")
-                    logging.info(f"📊 {email} - Points total: {held_points_value:,}")
+                    logging.debug(f"📊 {email} - Points total: {held_points_value:,}")
             except Exception:
                 logging.debug(f"Không tìm thấy 'Points total' cho {email}")
 
@@ -486,7 +486,7 @@ def _check_points(driver, email, password):
                 if operation_points_clean:
                     operation_points_value = int(operation_points_clean)
                     points_details.append(f"Operation: {operation_points_value:,}")
-                    logging.info(f"📈 {email} - Points in operation: {operation_points_value:,}")
+                    logging.debug(f"📈 {email} - Points in operation: {operation_points_value:,}")
             except Exception:
                 logging.debug(f"Không tìm thấy 'Points in operation' cho {email}")
 
@@ -497,7 +497,7 @@ def _check_points(driver, email, password):
                 if add_points_clean:
                     add_points_value = int(add_points_clean)
                     points_details.append(f"Add: {add_points_value:,}")
-                    logging.info(f"➕ {email} - Points add: {add_points_value:,}")
+                    logging.debug(f"➕ {email} - Points add: {add_points_value:,}")
             except Exception:
                 logging.debug(f"Không tìm thấy 'Points add' cho {email}")
             if len(points_details) > 0:
@@ -529,7 +529,7 @@ def process_account(driver, account, account_index):
     """Xử lý đăng ký một tài khoản"""
     email, password = account['email'], account['password']
     try:
-        logging.info(f"Đang xử lý tài khoản {account_index + 1}: {email}")
+        logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
         success, message = check_rakuten_account(driver, email, password)
         with file_lock:
             if success:
@@ -552,7 +552,7 @@ def process_account(driver, account, account_index):
 
 def clean_all_user_data(retries=5, delay=1):
     """Dọn dẹp tất cả thư mục dữ liệu người dùng"""
-    logging.info("Đang dọn dẹp dữ liệu người dùng...")
+    logging.debug("Đang dọn dẹp dữ liệu người dùng...")
     user_data_dir = os.path.join(os.getcwd(), "user-data")
     if os.path.exists(user_data_dir):
         for _ in range(retries):
@@ -561,7 +561,7 @@ def clean_all_user_data(retries=5, delay=1):
                 logging.info("Đã dọn dẹp dữ liệu người dùng thành công.")
                 break
             except PermissionError:
-                logging.warning(f"Đang dọn dẹp dữ liệu. Thử lại sau {delay}s...")
+                logging.debug(f"Đang dọn dẹp dữ liệu. Thử lại sau {delay}s...")
                 time.sleep(delay)
             except Exception as e:
                 # logging.error(f"Lỗi không mong muốn khi dọn dẹp dữ liệu người dùng: {repr(e)}")
