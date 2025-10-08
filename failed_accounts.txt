@@ -11,3 +11,14 @@ dewasiex@yahoo.co.jp|fuck323Gt|Đăng nhập thất bại
 nyo2929@yahoo.co.jp|mk12101226|Đăng nhập thất bại
 sa_ki_ymd@yahoo.co.jp|sy030604|Đăng nhập thất bại
 writtendai@yahoo.co.jp|2928580|Đăng nhập thất bại
+kango_n@yahoo.co.jp|dk3glrsv|Đăng nhập thất bại
+dakutosg@yahoo.co.jp|Sg1208as|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
+matm1226@yahoo.co.jp|m0610610|Đăng nhập thất bại
+hqxnd187@yahoo.co.jp|s87y1021|Đăng nhập thất bại
+mh_araki@yahoo.co.jp|mz120108|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+yaurajp@katch.ne.jp|yaura5917|Đăng nhập thất bại
+kuma28tk@yahoo.co.jp|Cele1218|Lỗi nhập email cho kuma28tk@yahoo.co.jp
+kuma28tk@yahoo.co.jp|Cele1218|TypeError('_enter_password() takes 2 positional arguments but 3 were given')
+mao_2514220332@yahoo.co.jp|Mei20090918|WebDriverException()
+tmyu417@yahoo.co.jp|tmyu04417|Lỗi nhập email cho tmyu417@yahoo.co.jp

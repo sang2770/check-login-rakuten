@@ -20,10 +20,7 @@ import chromedriver_autoinstaller
 import psutil
 import shutil
 import requests
-from seleniumwire import webdriver
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
+from selenium.common.exceptions import TimeoutException
 colorama.init()
 
 drivers = []
@@ -202,12 +199,22 @@ def wait_for_document_loaded(driver, timeout=10):
                 pass  # Driver might not be ready yet
             time.sleep(1)
         return False
-def test_proxy_with_curl(proxy_address, test_url="https://login.account.rakuten.com"):
-  """Kiểm tra proxy bằng một lệnh curl đơn giản."""
-  try:
-      os.system(f"curl -x {proxy_address} {test_url} --max-time 10")
-  except:
-      pass
+
+import subprocess
+
+def test_proxy_with_curl(proxy_address):
+    login_url = "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in"
+    command_list = ["curl", "-x", proxy_address, login_url, "--max-time", "10", "-s", "-o", os.devnull]
+    try:
+        subprocess.run(
+            command_list, 
+            stdout=subprocess.DEVNULL, 
+            stderr=subprocess.DEVNULL,
+            check=True 
+        )
+        return True
+    except:
+        return False
 
 def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
     """Khởi tạo Chrome driver với cài đặt không bị phát hiện"""
@@ -250,46 +257,24 @@ def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
         version_main = None
 
     driver = None
-    
-    # Set window position and size
-    if show_browser:
-        driver = uc.Chrome(
+    driver = uc.Chrome(
             options=options,
             version_main=version_main,
             use_subprocess=True,
             headless=(not show_browser)
-        )
+    )
+    # Set window position and size
+    if show_browser:
+
         width, height = size
         x = col * width
         y = row * height
         driver.set_window_rect(x=x, y=y, width=width, height=height)
     else:
-        try:
-            username, password = proxy.get('credentials', '').split(':')
-            host, port = proxy.get('host_port', '').split(':')
-            proxy_options = {
-                'proxy': {
-                    'http': f'http://{username}:{password}@{host}:{port}',
-                    'https': f'http://{username}:{password}@{host}:{port}',
-                    'no_proxy': 'localhost,127.0.0.1'
-                }
-            }
-            chrome_options = Options()
-            chrome_options.add_argument('--headless=new')
-            driver = webdriver.Chrome(
-                service=Service(ChromeDriverManager().install()),
-                seleniumwire_options=proxy_options,
-                options=chrome_options
-            )
-        except:
-            driver = uc.Chrome(
-                options=options,
-                version_main=version_main,
-                use_subprocess=True,
-                headless=(not show_browser)
-            )
-            test_proxy_with_curl(f"{proxy['credentials']}@{proxy['host_port']}")
-
+        threading.Thread(
+                target=test_proxy_with_curl,
+                args=(f"{proxy['credentials']}@{proxy['host_port']}",)
+        ).start()
     # Anti-detection scripts
     driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
         "source": """
@@ -327,7 +312,18 @@ def human_type(element, text, min_delay=0.05, max_delay=0.15):
         element.send_keys(char)
         time.sleep(random.uniform(min_delay, max_delay))
 
-def wait_for_element(driver, by, value, timeout=10, clickable=False):
+def wait_for_element_by_js(driver, selector, timeout=10):
+    start_time = time.time()
+    while True:
+        element = driver.execute_script(f"return document.querySelector('{selector}');")
+
+        if element:
+            return element
+        if time.time() - start_time > timeout:
+            raise TimeoutException(f"Không tìm thấy phần tử '{selector}'")
+        time.sleep(0.5)
+
+def wait_for_element(driver, by, value, timeout=10, clickable=False, selector_string = None):
     """Wait for element to be present or clickable"""
     try:
         if clickable:
@@ -340,8 +336,10 @@ def wait_for_element(driver, by, value, timeout=10, clickable=False):
             )
         return element
     except Exception as e:
-        # logging.error(f"Không tìm thấy element {value}: {repr(e)}")
-        raise
+        try:
+            wait_for_element_by_js(driver, selector_string)
+        except Exception:
+            raise
 
 def safe_click(driver, element):
     """Click an toàn với fallback về JavaScript"""
@@ -397,7 +395,7 @@ def check_rakuten_account(driver, email, password):
         if not _enter_email(driver, email):
             result = False, f"Lỗi nhập email cho {email}"
         # Step 2: Enter password
-        elif not _enter_password(driver, password, email):
+        elif not _enter_password(driver, password):
             result = False, f"Lỗi nhập password cho {email}"
         # Step 3: Check login success
         elif not _check_login_success(driver, email):
@@ -405,10 +403,7 @@ def check_rakuten_account(driver, email, password):
         else:
             # Step 4: Check points
             result = _check_points(driver, email, password)
-        
-        # Remove account from accounts.txt after check is complete (success or fail)
-        _remove_account_from_file(email)
-        
+        _remove_account_from_file(email)        
         return result
             
     except Exception as e:
@@ -421,7 +416,7 @@ def _enter_email(driver, email):
     """Enter email in login form"""
     try:
         # Wait for email input field
-        email_input = wait_for_element(driver, By.NAME, "username", timeout=30)
+        email_input = wait_for_element(driver, By.NAME, "username", timeout=30, selector_string="input[name='username']")
         
         # Type email with human-like delay
         human_type(email_input, email)
@@ -437,12 +432,11 @@ def _enter_email(driver, email):
         # logging.error(f"Lỗi khi nhập email: {repr(e)}")
         return False
 
-def _enter_password(driver, password, email):
+def _enter_password(driver, password):
     """Enter password in login form"""
     try:
         # Wait for password input field
-        password_input = wait_for_element(driver, By.NAME, "password", timeout=30)
-        
+        password_input = wait_for_element(driver, By.NAME, "password", timeout=30, selector_string="input[name='password']")
         # Type password with human-like delay
         human_type(password_input, password)
         time.sleep(random.randint(1, 2))
