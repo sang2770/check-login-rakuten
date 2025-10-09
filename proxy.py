@@ -66,12 +66,14 @@ class MitmproxyManager:
 
         # Khởi chạy tiến trình nền
         # stdout=subprocess.DEVNULL để ẩn output của mitmdump ra console chính
-        self.process = subprocess.Popen(command)
+        self.process = subprocess.Popen(command,
+                        stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL)
         
         # Chờ một vài giây để proxy có thời gian khởi động hoàn toàn
         time.sleep(3) 
         
-        print(f"--- [Mitmproxy Manager] Proxy trung gian đang chạy tại 127.0.0.1:{self.local_port} ---")
+        # print(f"--- [Mitmproxy Manager] Proxy trung gian đang chạy tại 127.0.0.1:{self.local_port} ---")
         return f"127.0.0.1:{self.local_port}"
 
     def __exit__(self, exc_type, exc_val, exc_tb):
