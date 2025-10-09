@@ -10,7 +10,6 @@ import logging
 import threading
 from queue import Queue
 import os
-import pyautogui
 import colorama
 from datetime import datetime
 import signal
@@ -21,6 +20,8 @@ import psutil
 import shutil
 import requests
 from selenium.common.exceptions import TimeoutException
+import subprocess
+import pyautogui
 colorama.init()
 
 drivers = []
@@ -245,7 +246,7 @@ def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
         os.makedirs(user_data_dir)
     options.add_argument(f'--user-data-dir={user_data_dir}')
     if (proxy and show_browser):
-        options.add_argument(f'--proxy-server={proxy["host_port"]}')
+        options.add_argument(f'--proxy-server={proxy}')
     
     # Headless mode
     options.headless = (not show_browser)
@@ -265,16 +266,10 @@ def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
     )
     # Set window position and size
     if show_browser:
-
         width, height = size
         x = col * width
         y = row * height
         driver.set_window_rect(x=x, y=y, width=width, height=height)
-    else:
-        threading.Thread(
-                target=test_proxy_with_curl,
-                args=(f"{proxy['credentials']}@{proxy['host_port']}",)
-        ).start()
     # Anti-detection scripts
     driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
         "source": """
@@ -284,24 +279,6 @@ def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
             Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
         """
     })
-    
-    # Proxy settings (after driver is created)
-    if proxy and show_browser:
-        try:
-            driver.get('https://bing.com')
-            time.sleep(5)
-            if wait_for_document_loaded(driver, timeout=10):
-                credentials = proxy.get('credentials')
-                if credentials:
-                    user, password = credentials.split(':')
-                    pyautogui.typewrite(user)
-                    pyautogui.press('tab')
-                    pyautogui.typewrite(password)
-                    time.sleep(1)
-                    pyautogui.press('enter')
-                    time.sleep(random.randint(2, 3))
-        except Exception as e:
-            logging.warning(f"Lỗi khi cài đặt proxy: {e}")
     
     return driver, user_data_dir
 
@@ -639,7 +616,7 @@ def check_key_live():
     except Exception as e:
         logging.warning(f"⚠️ Lỗi khi kiểm tra key: {repr(e)}. Tiếp tục chạy...")
         return True
-
+from proxy import MitmproxyManager
 def main():
     """Hàm chính"""
     global show_browser
@@ -694,23 +671,33 @@ def main():
             while not account_queue.empty():
                 try:
                     account, account_index = account_queue.get()
-                    
                     with driver_init_lock:
                         proxy = proxies[account_index % len(proxies)] if len(proxies) > 0 else None
                         row = account_index // col
                         col_index = account_index % col
                         size = (screen_width // col, 400)
-                        driver, user_data_dir = init_driver(
-                            proxy=proxy, 
-                            email=account['email'], 
-                            row=row, 
-                            col=col_index, 
-                            size=size
-                        )
-                        drivers.append(driver)
-                    
-                    process_account(driver, user_data_dir, account, account_index)
-                    
+                        if proxy: 
+                            with MitmproxyManager(f'{proxy["host_port"]}:{proxy["credentials"]}') as local_proxy:
+                                driver, user_data_dir = init_driver(
+                                    proxy=local_proxy, 
+                                    email=account['email'], 
+                                    row=row, 
+                                    col=col_index, 
+                                    size=size
+                                )
+                                drivers.append(driver)
+                                process_account(driver, user_data_dir, account, account_index)
+                        else:
+                            driver, user_data_dir = init_driver(
+                                    proxy=None, 
+                                    email=account['email'], 
+                                    row=row, 
+                                    col=col_index, 
+                                    size=size
+                                )
+                            drivers.append(driver)
+                            process_account(driver, user_data_dir, account, account_index)
+
                 except Exception as e:
                     logging.error(f"Lỗi trong worker thread: {repr(e)}")
                 
