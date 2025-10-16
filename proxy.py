@@ -5,86 +5,126 @@ import sys
 import os
 
 def find_free_port():
-    """
-    Tìm một cổng TCP đang rảnh trên máy.
-    """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        # Bind vào cổng 0 để hệ điều hành tự chọn cổng rảnh
         s.bind(('127.0.0.1', 0))
-        # Lấy thông tin địa chỉ và cổng đã được gán
-        port = s.getsockname()[1]
-        # Trả về số cổng đã tìm được
-        return port
+        return s.getsockname()[1]
+
 def get_mitmdump_path():
-    """
-    Tìm đường dẫn đến file thực thi mitmdump.
-    Nếu đang chạy từ file .exe đã đóng gói, nó sẽ tìm trong thư mục tạm thời.
-    Nếu không, nó chỉ trả về 'mitmdump' để hệ thống tự tìm trong PATH.
-    """
     if hasattr(sys, '_MEIPASS'):
-        # Đang chạy trong môi trường PyInstaller đã đóng gói
-        # sys._MEIPASS là đường dẫn đến thư mục tạm thời
         base_path = sys._MEIPASS
         mitmdump_path = os.path.join(base_path, 'mitmdump.exe')
-        return mitmdump_path
-    
-    # Đang chạy từ source code .py
+        if os.path.exists(mitmdump_path):
+            return mitmdump_path
+        # fallback to 'mitmdump' if .exe not found in _MEIPASS
+    # normal dev environment - rely on PATH
     return 'mitmdump'
+
 class MitmproxyManager:
     """
-    Một Context Manager để tự động khởi động và tắt mitmdump.
+    Manages a mitmdump subprocess. Use .start() to start, .stop() to stop.
+    Optionally usable as context manager.
     """
-    def __init__(self, upstream_proxy_string):
-        """
-        Khởi tạo với chuỗi proxy gốc dạng 'host:port:user:pass'.
-        """
+    def __init__(self, upstream_proxy_string, mitmdump_path=None, log_path=None, startup_timeout=8):
         self.upstream_proxy = upstream_proxy_string
         self.process = None
         self.local_port = find_free_port()
+        self.mitmdump_path = mitmdump_path or get_mitmdump_path()
+        self.log_path = log_path  # if set, redirect stdout/stderr to this file
+        self.startup_timeout = startup_timeout
 
-    def __enter__(self):
-        """
-        Được gọi khi bắt đầu khối 'with'. Khởi động mitmdump.
-        """
-        # print("--- [Mitmproxy Manager] Đang khởi động proxy trung gian... ---")
+    @property
+    def address(self):
+        return f"127.0.0.1:{self.local_port}"
+
+    def _check_mitmdump_exists(self):
+        # if mitmdump_path is a path (contains slash or backslash) check exists
+        if os.path.isabs(self.mitmdump_path) or os.path.sep in self.mitmdump_path:
+            if not os.path.exists(self.mitmdump_path):
+                return False
+        # otherwise assume in PATH and let subprocess fail if not found
+        return True
+
+    def _wait_port_open(self, timeout=None):
+        timeout = timeout or self.startup_timeout
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                try:
+                    s.settimeout(0.5)
+                    s.connect(('127.0.0.1', self.local_port))
+                    return True
+                except Exception:
+                    time.sleep(0.2)
+        return False
+
+    def start(self):
+        if not self._check_mitmdump_exists():
+            raise FileNotFoundError(f"mitmdump not found at {self.mitmdump_path}")
+
         parts = self.upstream_proxy.split(':')
         if len(parts) != 4:
-            raise ValueError("Định dạng proxy gốc không hợp lệ. Cần 'host:port:user:password'.")
-        
+            raise ValueError("Định dạng proxy gốc phải 'host:port:user:password'")
+
         host, port, user, password = parts
-        # print(f"--- [Mitmproxy Manager] Đang sử dụng proxy gốc: {host}:{port} --- {user}:{password}")
-        # Xây dựng lệnh để chạy mitmdump
-        mitmdump_executable = get_mitmdump_path()
+
         command = [
-            mitmdump_executable,
+            self.mitmdump_path,
             '--set', f'upstream_auth={user}:{password}',
             '--mode', f'upstream:http://{host}:{port}',
             '--listen-port', str(self.local_port),
-            '--quiet'
+            # you can remove --quiet for more logs
         ]
-        # print(f"Command: {command}")
 
-        # Khởi chạy tiến trình nền
-        # stdout=subprocess.DEVNULL để ẩn output của mitmdump ra console chính
-        self.process = subprocess.Popen(command,
-                        stdout=subprocess.DEVNULL,
-                        stderr=subprocess.DEVNULL)
-        
-        # Chờ một vài giây để proxy có thời gian khởi động hoàn toàn
-        time.sleep(3) 
-        
-        # print(f"--- [Mitmproxy Manager] Proxy trung gian đang chạy tại 127.0.0.1:{self.local_port} ---")
-        return f"127.0.0.1:{self.local_port}"
+        # open log file if requested
+        stdout = stderr = None
+        if self.log_path:
+            logf = open(self.log_path, 'ab')
+            stdout = stderr = logf
+
+        # Start process (don't DEVNULL stderr so we can see errors when debugging)
+        try:
+            self.process = subprocess.Popen(command, stdout=stdout or subprocess.PIPE,
+                                            stderr=stderr or subprocess.STDOUT)
+        except FileNotFoundError as e:
+            raise FileNotFoundError(f"Failed to start mitmdump ({self.mitmdump_path}). Ensure it's installed and in PATH.") from e
+
+        # Wait until mitmdump actually listens on the port
+        if not self._wait_port_open(timeout=self.startup_timeout):
+            # capture a bit of output if available for debugging
+            out = None
+            try:
+                if self.process and self.process.stdout:
+                    out = self.process.stdout.read(1024).decode(errors='ignore')
+            except Exception:
+                out = None
+            self.stop()
+            raise RuntimeError(f"mitmdump did not open listening port within {self.startup_timeout}s. output: {out!r}")
+
+        return True
+
+    def stop(self):
+        if self.process:
+            try:
+                self.process.terminate()
+            except Exception:
+                pass
+            try:
+                self.process.wait(timeout=5)
+            except Exception:
+                try:
+                    self.process.kill()
+                except Exception:
+                    pass
+        self.process = None
+
+    # context manager support
+    def __enter__(self):
+        self.start()
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """
-        Được gọi khi kết thúc khối 'with'. Tắt mitmdump.
-        """
-        # print("--- [Mitmproxy Manager] Đang tắt proxy trung gian... ---")
-        if self.process:
-            self.process.terminate() # Gửi tín hiệu yêu cầu dừng
-            self.process.wait()    # Chờ tiến trình dừng hẳn
-        # print("--- [Mitmproxy Manager] Proxy trung gian đã được tắt. ---")
+        self.stop()
+
 
 def main():
     with MitmproxyManager("as.proxys5.net:6200:rakuten24h-zone-custom-region-JP:091101") as proxy:

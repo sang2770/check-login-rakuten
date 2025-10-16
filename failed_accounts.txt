@@ -22,3 +22,83 @@ kuma28tk@yahoo.co.jp|Cele1218|Lỗi nhập email cho kuma28tk@yahoo.co.jp
 kuma28tk@yahoo.co.jp|Cele1218|TypeError('_enter_password() takes 2 positional arguments but 3 were given')
 mao_2514220332@yahoo.co.jp|Mei20090918|WebDriverException()
 tmyu417@yahoo.co.jp|tmyu04417|Lỗi nhập email cho tmyu417@yahoo.co.jp
+mao_2514220332@yahoo.co.jp|Mei20090918|Đăng nhập thất bại
+kango_n@yahoo.co.jp|dk3glrsv|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
+tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
+mao_2514220332@yahoo.co.jp|Mei20090918|Đăng nhập thất bại
+kango_n@yahoo.co.jp|dk3glrsv|Đăng nhập thất bại
+dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
+tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
+mao_2514220332@yahoo.co.jp|Mei20090918|WebDriverException()
+kango_n@yahoo.co.jp|dk3glrsv|WebDriverException()
+dakutosg@yahoo.co.jp|Sg1208as|WebDriverException()
+tmyu417@yahoo.co.jp|tmyu04417|WebDriverException()
+mao_2514220332@yahoo.co.jp|Mei20090918|Lỗi nhập email cho mao_2514220332@yahoo.co.jp
+tmyu417@yahoo.co.jp|tmyu04417|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+dakutosg@yahoo.co.jp|Sg1208as|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+kango_n@yahoo.co.jp|dk3glrsv|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
+mao_2514220332@yahoo.co.jp|Mei20090918|Error('Page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
+kango_n@yahoo.co.jp|dk3glrsv|Error('Page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
+dakutosg@yahoo.co.jp|Sg1208as|Error('Page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
+tmyu417@yahoo.co.jp|tmyu04417|Error('Page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
+kango_n@yahoo.co.jp|dk3glrsv|TimeoutError('Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
+dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
+tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
+kango_n@yahoo.co.jp|dk3glrsv|Đăng nhập thất bại
+dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
+tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
+kango_n@yahoo.co.jp|dk3glrsv|Đăng nhập thất bại
+dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
+tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
+kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
+dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
+tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
+mao_2514220332@yahoo.co.jp|Mei20090918|Đăng nhập thất bại
