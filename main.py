@@ -13,6 +13,7 @@ import shutil
 import requests
 import pyautogui
 from playwright.sync_api import sync_playwright
+from undetected_playwright import Tarnished
 import subprocess
 from fake_useragent import UserAgent
 
@@ -355,6 +356,7 @@ def init_browser(proxy=None, email=None, size=(1366, 768)):
     try:
         browser = playwright.chromium.launch(**launch_options)
         context = browser.new_context(**context_options)
+        Tarnished.apply_stealth(context)
         
         # Anti-detection scripts
         context.add_init_script("""
@@ -485,7 +487,19 @@ def _enter_password(page, password):
         return True
         
     except Exception as e:
-        logging.debug(f"Lỗi khi nhập password: {repr(e)}")
+        debug_folder = "debug_output"
+        os.makedirs(debug_folder, exist_ok=True)
+        
+        logging.error(f"Không tìm thấy ô password. Bắt đầu thu thập bằng chứng...")
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        screenshot_path = os.path.join(debug_folder, f"debug_screenshot_{timestamp}.png")
+        page.screenshot(path=screenshot_path, full_page=True)
+        logging.info(f"Đã lưu ảnh chụp màn hình lỗi tại: {screenshot_path}")
+        html_path = os.path.join(debug_folder, f"debug_page_{timestamp}.html")
+        with open(html_path, "w", encoding="utf-8") as f:
+            f.write(page.content())
+        logging.info(f"Đã lưu mã HTML của trang lỗi tại: {html_path}")
+        # logging.debug(f"Lỗi khi nhập password: {repr(e)}")
         return False
 
 def _check_login_success(page, email):
