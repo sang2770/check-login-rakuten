@@ -14,110 +14,87 @@ import requests
 import pyautogui
 from playwright.sync_api import sync_playwright
 from undetected_playwright import Tarnished
-import subprocess
 from fake_useragent import UserAgent
-
-# Set Playwright browsers path for bundled executable
-if getattr(sys, 'frozen', False):
-    # Running as bundled executable
-    bundle_dir = sys._MEIPASS
-    browsers_path = os.path.join(bundle_dir, 'playwright_browsers')
-    if not os.path.exists(browsers_path):
-        browsers_path = os.path.join(os.path.dirname(sys.executable), 'playwright_browsers')
-    os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browsers_path
-# else:
-#     # Running as script
-#     os.environ["PLAYWRIGHT_BROWSERS_PATH"] = "0"
 
 colorama.init()
 
+# Global variables
 successful_accounts = []
 failed_accounts = []
 browsers = []
+stop_event = threading.Event()
+failed_start_profile_count = 0
 
-def ensure_browsers_installed():
-    """Ensure Playwright browsers are installed, especially for bundled executables"""
-    try:
-        # For bundled executables, try to use portable browser approach
-        if getattr(sys, 'frozen', False):
-            logging.info("Đang chạy từ executable, kiểm tra browsers...")
+class GPMLoginAPI:
+    def __init__(self):
+        self.base_url = "http://127.0.0.1:19995"
+        self.session = requests.Session()
+    
+    def create_profile(self, proxy, name):
+        # Tạo cấu hình mới với proxy HTTP và hệ điều hành Windows
+        payload = {
+            "profile_name": f"{name}_{random.randint(1000, 9999)}",
+            "group_name": "All",
+            "browser_core": "chromium",
+            "browser_name": "Chrome",
+            "browser_version": "119.0.0.0",
+            "is_random_browser_version": False,
+            "raw_proxy": f"{proxy}" if proxy else "",
+            "startup_urls": "",
+            "is_masked_font": True,
+            "is_noise_canvas": False,
+            "is_noise_webgl": False,
+            "is_noise_client_rect": False,
+            "is_noise_audio_context": True,
+            "is_random_screen": False,
+            "is_masked_webgl_data": True,
+            "is_masked_media_device": True,
+            "is_random_os": False,
+            "os": "Windows 11",
+            "webrtc_mode": 2,
+            "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+        }
+        response = self.session.post(f"{self.base_url}/api/v3/profiles/create", json=payload)
+        if response.status_code == 200 and response.json().get("success"):
+            return response.json().get("data", {}).get("id")
+        logging.error(f"CẢNH BÁO: Không tạo được cấu hình với proxy {proxy}")
+        return None
+    
+    def start_profile(self, profile_id, x=None, y=None, w=None, h=None):
+        global failed_start_profile_count
+        # Khởi động trình duyệt cho cấu hình
+        win_params = ""
+        if x is not None and y is not None:
+            win_params += f"&win_pos={x},{y}"
+        if w is not None and h is not None:
+            win_params += f"&win_size={w},{h}"
             
-            # Check if browsers exist in the expected paths
-            exe_dir = os.path.dirname(sys.executable)
-            possible_browser_paths = [
-                os.path.join(exe_dir, 'playwright_browsers'),
-                os.path.join(exe_dir, '..', 'playwright_browsers'),
-                os.path.join(os.getcwd(), 'playwright_browsers'),
-            ]
-            
-            for browser_path in possible_browser_paths:
-                if os.path.exists(browser_path):
-                    chromium_path = os.path.join(browser_path, 'chromium-*', 'chrome-win', 'chrome.exe')
-                    import glob
-                    if glob.glob(chromium_path):
-                        os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browser_path
-                        logging.info(f"✅ Đã tìm thấy browsers tại: {browser_path}")
-                        return True
-            
-            # Try to install browsers to current directory
-            logging.info("Đang thử cài đặt browsers...")
-            browsers_path = os.path.join(os.getcwd(), 'playwright_browsers')
-            if not os.path.exists(browsers_path):
-                os.makedirs(browsers_path, exist_ok=True)
-            
-            os.environ["PLAYWRIGHT_BROWSERS_PATH"] = browsers_path
-            
-            try:
-                # Try multiple approaches to install browsers
-                install_commands = [
-                    ['python', '-m', 'playwright', 'install', 'chromium'],
-                    ['playwright', 'install', 'chromium'],
-                    ['npx', 'playwright', 'install', 'chromium']
-                ]
-                
-                for cmd in install_commands:
-                    try:
-                        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300,
-                                              env={**os.environ, 'PLAYWRIGHT_BROWSERS_PATH': browsers_path})
-                        if result.returncode == 0:
-                            logging.info("✅ Đã cài đặt browsers thành công")
-                            return True
-                        else:
-                            logging.debug(f"Command {' '.join(cmd)} failed: {result.stderr}")
-                    except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
-                        logging.debug(f"Command {' '.join(cmd)} error: {e}")
-                        continue
-                
-                # If all installation attempts fail, show error
-                logging.error("❌ Không thể cài đặt browsers tự động")
-                logging.error("📝 Hướng dẫn khắc phục:")
-                logging.error("1. Tải và giải nén Chromium vào thư mục 'playwright_browsers'")
-                logging.error("2. Hoặc chạy: python -m playwright install chromium")
-                logging.error("3. Sau đó copy thư mục browsers vào cùng thư mục với file .exe")
-                return False
-                
-            except Exception as e:
-                logging.warning(f"⚠️ Lỗi khi cài đặt browsers: {e}")
-                return False
-                
-        else:
-            # For non-bundled version, try normal installation
-            try:
-                result = subprocess.run(['python', '-m', 'playwright', 'install', 'chromium'], 
-                                      capture_output=True, text=True, timeout=300)
-                if result.returncode == 0:
-                    logging.info("✅ Đã cài đặt browsers thành công")
-                    return True
-                else:
-                    logging.warning(f"Không thể cài đặt browsers: {result.stderr}")
-                    return False
-            except Exception as e:
-                logging.warning(f"Lỗi khi cài đặt browsers: {e}")
-                return False
-                
-    except Exception as e:
-        logging.warning(f"Lỗi trong ensure_browsers_installed: {e}")
-        return False
+        response = self.session.get(f"{self.base_url}/api/v3/profiles/start/{profile_id}?{win_params}")
+        if response.status_code == 200 and response.json().get("success"):
+            return response.json().get("data", {})
+        logging.error(f"CẢNH BÁO: Không khởi động được cấu hình {profile_id} {response.json().get('message')}")
+        failed_start_profile_count += 1
+        if (failed_start_profile_count >= 10):
+            stop_event.set()
+            time.sleep(5)
+            os._exit(1)
+        return None
+
+    def close_profile(self, profile_id):
+        # Đóng trình duyệt
+        response = self.session.get(f"{self.base_url}/api/v3/profiles/close/{profile_id}")
+        if response.status_code == 200 and response.json().get("success"):
+            return response.json().get("data", {})
+        logging.error(f"CẢNH BÁO: Không đóng được cấu hình {profile_id} {response.json().get('message')}")
+        return None
+
+    def delete_profile(self, profile_id):
+        # Xoá cấu hình
+        response = self.session.delete(f"{self.base_url}/api/v3/profiles/delete/{profile_id}?mode=2")
+        if response.status_code == 200 and response.json().get("success"):
+            return response.json().get("data", {})
+        logging.error(f"CẢNH BÁO: Không xoá được cấu hình {profile_id} {response.json().get('message')}")
+        return None
 
 def cleanup_browsers():
     """Dọn dẹp tất cả các Browser instances."""
@@ -136,7 +113,6 @@ def signal_handler(sig, frame):
     """Xử lý SIGINT (Ctrl+C) và SIGTERM (đóng terminal)."""
     logging.info("Nhận tín hiệu dừng. Đang dọn dẹp...")
     cleanup_browsers()
-    clean_all_user_data()
     logging.info("Dọn dẹp hoàn tất. Thoát...")
     sys.exit(0)
 
@@ -259,89 +235,53 @@ def load_input_files():
         logging.error(f"Lỗi khi tải file đầu vào: {repr(e)}")
         raise
 
-def test_proxy_connection(proxy_info):
-    """Test proxy connection before using it"""
+def init_browser_with_gpm(gpm_api, proxy, email, size=(1366, 768)):
+    """Khởi tạo Playwright browser với GPM API"""
+    profile_id = None
     try:
-        import requests
-        proxy_dict = {
-            'http': f"http://{proxy_info['username']}:{proxy_info['password']}@{proxy_info['server'].replace('http://', '')}",
-            'https': f"http://{proxy_info['username']}:{proxy_info['password']}@{proxy_info['server'].replace('http://', '')}"
-        }
+        # Create profile with proxy
+        profile_id = gpm_api.create_profile(proxy, email)
+        if not profile_id:
+            return None, None, None, None, None, None
         
-        response = requests.get('https://httpbin.org/ip', proxies=proxy_dict, timeout=10)
-        if response.status_code == 200:
-            logging.debug(f"Proxy test successful: {response.json()}")
-            return True
-        else:
-            logging.warning(f"Proxy test failed with status {response.status_code}")
-            return False
-    except Exception as e:
-        logging.warning(f"Proxy test failed: {e}")
-        return False
-
-def init_browser(proxy=None, email=None, size=(1366, 768)):
-    """Khởi tạo Playwright browser với cài đặt không bị phát hiện"""
-    
-    try:
+        # Start profile
+        profile_data = gpm_api.start_profile(profile_id)
+        if not profile_data:
+            gpm_api.delete_profile(profile_id)
+            return None, None, None, None, None, None
+        
+        # Get remote debugging port
+        remote_port = profile_data.get("remote_debugging_port")
+        if not remote_port:
+            logging.error("Không lấy được remote debugging port")
+            gpm_api.close_profile(profile_id)
+            gpm_api.delete_profile(profile_id)
+            return None, None, None, None, None, None
+        
+        # Connect Playwright to existing browser instance
         playwright = sync_playwright().start()
-    except Exception as e:
-        logging.error(f"Lỗi khởi tạo Playwright: {e}")
-        # Try to ensure browsers are installed
-        if ensure_browsers_installed():
-            try:
-                playwright = sync_playwright().start()
-            except Exception as e2:
-                logging.error(f"Vẫn không thể khởi tạo Playwright sau khi cài đặt browsers: {e2}")
-                raise
+        
+        # Connect to existing browser via CDP
+        browser = playwright.chromium.connect_over_cdp(f"http://127.0.0.1:{remote_port}")
+        
+        # Get the default context and page (GPM should already have opened one)
+        contexts = browser.contexts
+        if contexts:
+            context = contexts[0]
         else:
-            raise
-    
-    # User data directory
-    user_data_dir = os.path.join(os.getcwd(), "user-data")
-    if email:
-        user_data_dir = os.path.join(user_data_dir, f"user-data-{email.replace('@', '_').replace('.', '_')}")
-    if not os.path.exists(user_data_dir):
-        os.makedirs(user_data_dir)
-    
-    # Browser launch options
-    launch_options = {
-        'headless': not show_browser,
-        'args': [
-            '--disable-blink-features=AutomationControlled',
-            '--no-sandbox',
-            '--disable-dev-shm-usage',
-            '--disable-infobars',
-            '--ignore-certificate-errors',
-            '--allow-insecure-localhost',
-            '--allow-running-insecure-content',
-            '--disable-web-security',
-            '--disable-gpu',
-            '--disable-features=VizDisplayCompositor'
-        ]
-    }
-    ua = UserAgent()
-    random_user_agent = ua.chrome
-    # Context options
-    context_options = {
-        'user_agent': random_user_agent,
-        'viewport': {'width': size[0], 'height': size[1]},
-        'locale': 'ja-JP',
-        'timezone_id': 'Asia/Tokyo',
-        "geolocation": {
-                'latitude': 35.6895,
-                'longitude': 139.6917
-        },
-        "permissions": ['geolocation']
-    }
-    
-    # Add proxy if provided
-    if proxy:
-        logging.debug(f"Setting up proxy: {proxy}")
-        context_options['proxy'] = proxy
-    
-    try:
-        browser = playwright.chromium.launch(**launch_options)
-        context = browser.new_context(**context_options)
+            # If no context exists, create one
+            ua = UserAgent()
+            random_user_agent = ua.chrome
+            context = browser.new_context(
+                user_agent=random_user_agent,
+                viewport={'width': size[0], 'height': size[1]},
+                locale='ja-JP',
+                timezone_id='Asia/Tokyo',
+                geolocation={'latitude': 35.6895, 'longitude': 139.6917},
+                permissions=['geolocation']
+            )
+        
+        # Apply stealth
         Tarnished.apply_stealth(context)
         
         # Anti-detection scripts
@@ -352,20 +292,27 @@ def init_browser(proxy=None, email=None, size=(1366, 768)):
             Object.defineProperty(navigator, 'languages', { get: () => ['ja-JP', 'ja', 'en-US', 'en'] });
         """)
         
-        page = context.new_page()
+        # Get existing page or create new one
+        pages = context.pages
+        if pages:
+            page = pages[0]
+        else:
+            page = context.new_page()
         
-        return browser, context, page, user_data_dir, playwright
+        return browser, context, page, None, playwright, profile_id
         
     except Exception as e:
-        logging.error(f"Lỗi khởi tạo browser: {e}")
-        playwright.stop()
-        raise
+        logging.error(f"Lỗi khởi tạo browser với GPM: {e}")
+        if profile_id:
+            gpm_api.close_profile(profile_id)
+            gpm_api.delete_profile(profile_id)
+        return None, None, None, None, None, None
 
-async def human_type(page, selector, text, min_delay=0.05, max_delay=0.15):
+def human_type(page, selector, text, min_delay=0.05, max_delay=0.15):
     """Type text with human-like delay"""
-    await page.fill(selector, "")  # Clear first
+    page.fill(selector, "")  # Clear first
     for char in text:
-        await page.type(selector, char, delay=random.uniform(min_delay, max_delay) * 1000)
+        page.type(selector, char, delay=random.uniform(min_delay, max_delay) * 1000)
 
 def _remove_account_from_file(email):
     """Remove account from accounts.txt file"""
@@ -386,8 +333,8 @@ def _remove_account_from_file(email):
     except Exception as e:
         logging.warning(f"Không thể xóa {email} khỏi accounts.txt: {e}")
 
-def check_rakuten_account(browser, context, page, email, password):
-    """Kiểm tra tài khoản Rakuten"""
+def check_rakuten_account(page, email, password):
+    """Kiểm tra tài khoản Rakuten với Playwright"""
     try:
         logging.info(f"Bắt đầu kiểm tra tài khoản: {email}")
         
@@ -398,7 +345,6 @@ def check_rakuten_account(browser, context, page, email, password):
         max_retries = 3
         for attempt in range(max_retries):
             try:
-                # Increase timeout for slow proxies
                 page.goto(login_url, timeout=60000)  # 60 seconds timeout
                 logging.debug(f"Successfully navigated to login page for {email} (attempt {attempt + 1})")
                 break
@@ -485,7 +431,6 @@ def _enter_password(page, password):
         with open(html_path, "w", encoding="utf-8") as f:
             f.write(page.content())
         logging.info(f"Đã lưu mã HTML của trang lỗi tại: {html_path}")
-        # logging.debug(f"Lỗi khi nhập password: {repr(e)}")
         return False
 
 def _check_login_success(page, email):
@@ -597,12 +542,10 @@ def _check_points(page, email, password):
                     if cash_points_clean:
                         cash_points_value = int(cash_points_clean)
                         points_details.append(f"Cash: {cash_points_value:,}")
-                        logging.debug(f"➕ {email} - Cash Point: {cash_points_value:,}")
+                        logging.debug(f"💰 {email} - Cash Point: {cash_points_value:,}")
             except Exception:
-                logging.debug(f"Không tìm thấy 'Points add' cho {email}")
-
+                logging.debug(f"Không tìm thấy 'Cash Point' cho {email}")
             
-                
             if len(points_details) > 0:
                 points_summary = " | ".join(points_details)
                 logging.info(f"✅ {email} - ({points_summary})")
@@ -628,14 +571,32 @@ def _check_points(page, email, password):
         logging.debug(f"Lỗi khi kiểm tra điểm cho {email}: {repr(e)}")
         return True, "Đăng nhập thành công nhưng lỗi kiểm tra điểm"
 
-def process_account(browser, context, page, user_data_dir, playwright, account, account_index):
-    """Xử lý đăng ký một tài khoản"""
+def process_account(gpm_api, account, account_index, proxy_info):
+    """Xử lý một tài khoản với GPM API"""
     email, password = account['email'], account['password']
+    browser = None
+    context = None
+    playwright = None
+    profile_id = None
+    
     try:
         logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
-        success, message = check_rakuten_account(browser, context, page, email, password)
+        
+        # Initialize browser with GPM
+        browser, context, page, _, playwright, profile_id = init_browser_with_gpm(
+            gpm_api, 
+            proxy_info.get('full') if proxy_info else None, 
+            email
+        )
+        if not browser:
+            raise Exception("Không thể khởi tạo browser với GPM")
+        
+        browsers.append(browser)
+        
+        success, message = check_rakuten_account(page, email, password)
         if not success:
             logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
+            
         with file_lock:
             if success:
                 successful_accounts.append(account)
@@ -648,6 +609,7 @@ def process_account(browser, context, page, user_data_dir, playwright, account, 
                 with open('failed_accounts.txt', 'a', encoding='utf-8') as f:
                     f.write(f"{email}|{password}|{message}\n")
         logging.info(f"Hoàn tất xử lý tài khoản: {email}")
+        
     except Exception as e:
         logging.error(f"Lỗi xử lý tài khoản {email}: {repr(e)}")
         with file_lock:
@@ -655,37 +617,21 @@ def process_account(browser, context, page, user_data_dir, playwright, account, 
             with open('failed_accounts.txt', 'a', encoding='utf-8') as f:
                 f.write(f"{email}|{password}|{'Acc lock hoặc lỗi pass'}\n")
     finally:
-        # Cleanup browser resources
+        # Cleanup browser and profile
         try:
-            context.close()
-            browser.close()
-            playwright.stop()
+            if context:
+                context.close()
+            if browser:
+                browser.close()
+                if browser in browsers:
+                    browsers.remove(browser)
+            if playwright:
+                playwright.stop()
+            if profile_id:
+                gpm_api.close_profile(profile_id)
+                gpm_api.delete_profile(profile_id)
         except Exception as e:
-            logging.debug(f"Lỗi khi đóng browser: {e}")
-        
-        # Delete user_data_dir
-        for _ in range(3):
-            try:
-                if user_data_dir and os.path.exists(user_data_dir):
-                    shutil.rmtree(user_data_dir, ignore_errors=True)
-                break
-            except:
-                time.sleep(5)
-
-def clean_all_user_data(retries=5, delay=1):
-    """Dọn dẹp tất cả thư mục dữ liệu người dùng"""
-    logging.debug("Đang dọn dẹp dữ liệu người dùng...")
-    user_data_dir = os.path.join(os.getcwd(), "user-data")
-    if os.path.exists(user_data_dir):
-        for _ in range(retries):
-            try:
-                shutil.rmtree(user_data_dir)
-                logging.info("Đã dọn dẹp dữ liệu người dùng thành công.")
-                break
-            except PermissionError:
-                time.sleep(delay)
-            except Exception as e:
-                time.sleep(delay)
+            logging.debug(f"Lỗi khi đóng browser/profile: {e}")
 
 def check_key_live():
     """Kiểm tra key có live không từ GitHub"""
@@ -722,36 +668,19 @@ def check_key_live():
 def main():
     """Hàm chính"""
     global show_browser
+    
     # Check if key is live before proceeding
     if not check_key_live():
         logging.error("Dừng chương trình do key không hợp lệ.")
         input("Nhấn Enter để thoát...")
         sys.exit(1)
     
-    # Ensure browsers are installed (especially important for bundled executables)
-    logging.info("Đang kiểm tra và chuẩn bị browsers...")
-    if not ensure_browsers_installed():
-        logging.error("❌ Không thể cài đặt hoặc tìm thấy Playwright browsers.")
-        logging.error("=" * 60)
-        logging.error("📝 HƯỚNG DẪN KHẮC PHỤC:")
-        logging.error("1. Tạo thư mục 'playwright_browsers' cùng với file .exe")
-        logging.error("2. Tải Chromium và giải nén vào thư mục đó:")
-        logging.error("   https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html")
-        logging.error("3. Hoặc copy từ máy đã cài Playwright:")
-        logging.error("   %USERPROFILE%\\AppData\\Local\\ms-playwright")
-        logging.error("4. Cấu trúc thư mục phải như sau:")
-        logging.error("   playwright_browsers/chromium-xxxx/chrome-win/chrome.exe")
-        logging.error("=" * 60)
-        logging.error("Hoặc đọc file BUILD_GUIDE.md để biết thêm chi tiết")
-        input("Nhấn Enter để thoát...")
-        sys.exit(1)
-    
     try:
+        # Initialize GPM API
+        gpm_api = GPMLoginAPI()
+        
         # Load input files
         accounts, proxies = load_input_files()
-        
-        # Clean previous user data
-        clean_all_user_data()
         
         # Get number of threads
         try:
@@ -772,8 +701,6 @@ def main():
                 
         # Setup account queue
         account_queue = Queue()
-        screen_width, screen_height = pyautogui.size()
-        col = 4  # Number of columns for browser windows
         
         # Add accounts to queue
         for idx, account in enumerate(accounts):
@@ -783,58 +710,18 @@ def main():
         signal.signal(signal.SIGINT, signal_handler)
         signal.signal(signal.SIGTERM, signal_handler)
         
-        browser_init_lock = threading.Lock()
-        
         def worker():
             """Hàm worker thread"""
-            browser = None
-            while not account_queue.empty():
+            while not account_queue.empty() and not stop_event.is_set():
                 try:
                     account, account_index = account_queue.get()
-                    with browser_init_lock:
-                        proxy = proxies[account_index % len(proxies)] if len(proxies) > 0 else None
-                        size = (screen_width // col, 400)
-                        
-                        # Debug logging for proxy
-                        if proxy:
-                            logging.debug(f"Using proxy for {account['email']}: {proxy}")
-                            # # Test proxy connection
-                            # if proxy.get('username') and proxy.get('password'):
-                            #     if not test_proxy_connection(proxy):
-                            #         logging.warning(f"Proxy test failed for {proxy['full']}, trying without proxy...")
-                            #         proxy = None  # Fallback to no proxy
-                        
-                        # Try to initialize browser with proxy, fallback to no proxy if it fails
-                        browser_initialized = False
-                        for use_proxy in [True, False]:
-                            if not use_proxy and proxy is None:
-                                continue  # Skip if we already tried without proxy
-                                
-                            current_proxy = proxy if use_proxy else None
-                            try:
-                                browser, context, page, user_data_dir, playwright = init_browser(
-                                    proxy=current_proxy, 
-                                    email=account['email'],  
-                                    size=size
-                                )
-                                browsers.append(browser)
-                                browser_initialized = True
-                                if not use_proxy:
-                                    logging.warning(f"Fallback to no proxy for {account['email']}")
-                                break
-                            except Exception as e:
-                                logging.warning(f"Failed to initialize browser with{'out' if not use_proxy else ''} proxy for {account['email']}: {repr(e)}")
-                                if browser:
-                                    try:
-                                        browser.close()
-                                    except:
-                                        pass
-                                    browser = None
-                                
-                        if not browser_initialized:
-                            raise Exception("Failed to initialize browser with and without proxy")
+                    proxy_info = proxies[account_index % len(proxies)] if len(proxies) > 0 else None
                     
-                    process_account(browser, context, page, user_data_dir, playwright, account, account_index)
+                    # Debug logging for proxy
+                    if proxy_info:
+                        logging.debug(f"Using proxy for {account['email']}: {proxy_info}")
+                    
+                    process_account(gpm_api, account, account_index, proxy_info)
 
                 except Exception as e:
                     logging.error(f"Lỗi trong worker thread: {repr(e)}")
@@ -845,8 +732,6 @@ def main():
                             f.write(f"{account['email']}|{account['password']}|{repr(e)}\n")
                 
                 finally:
-                    if browser and browser in browsers:
-                        browsers.remove(browser)
                     account_queue.task_done()
         
         # Start worker threads
@@ -860,12 +745,11 @@ def main():
         for t in threads:
             t.join()
         
-        # Báo cáo cuối cùng và dọn dẹp
+        # Báo cáo cuối cùng
         logging.info("Đã xử lý xong tất cả tài khoản.")
         logging.info(f"✅ Đăng ký thành công: {len(successful_accounts)}")
         logging.info(f"❌ Đăng ký thất bại: {len(failed_accounts)}")
         
-        clean_all_user_data()
         logging.info("Chương trình hoàn tất. Thoát sau 5 giây...")
         time.sleep(5)
         
@@ -883,6 +767,5 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         logging.info("Nhận KeyboardInterrupt. Đang dọn dẹp...")
         cleanup_browsers()
-        clean_all_user_data()
         logging.info("Dọn dẹp hoàn tất. Thoát...")
         sys.exit(0)
