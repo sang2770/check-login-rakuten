@@ -422,18 +422,21 @@ def check_rakuten_account(browser, context, page, email, password, hotmail=None)
             result = _check_points(page, email, password)
             # Step 5: Change Email
             if hotmail:
-                result, _ = _change_email(page, email, password, hotmail)
-                if result:
+                change_result, change_message = _change_email(page, email, password, hotmail)
+                if change_result:
                     is_valid_hot_mail = True
+                    result = True, change_message
+                else:
+                    result = False, change_message
         
         _remove_account_from_file(email)        
-        return result, is_valid_hot_mail
+        return result[0], result[1], is_valid_hot_mail
 
     except Exception as e:
         logging.error(f"❌ Lỗi trong quá trình kiểm tra cho {email}: {repr(e)}")
         # Remove account even if there's an exception
         _remove_account_from_file(email)
-        return False, repr(e)
+        return False, repr(e), False
 
 def _enter_email(page, email):
     """Enter email in login form"""
@@ -494,6 +497,8 @@ def _enter_password(page, password):
 def _check_login_success(page, email):
     """Check if login was successful"""
     try:
+        check_skip(page)
+
         # Wait for potential redirect to rakuten.co.jp domain with longer timeout for slow proxies
         page.wait_for_function(
             "window.location.href.includes('rakuten.co.jp')",
@@ -698,6 +703,13 @@ def _get_otp_from_hotmail(hotmail, otp_code = None):
     except Exception as e:
             logging.error(f"CẢNH BÁO: Lỗi khi gọi API OTP: {str(e)}")
             return None
+def check_skip(page):
+    try:
+        page.wait_for_selector('#seco_473', timeout=5000)
+        page.click('#seco_473')
+        time.sleep(5)
+    except Exception:
+        pass
 
 def _change_email(page, email, password, hotmail):
     try:
@@ -708,6 +720,7 @@ def _change_email(page, email, password, hotmail):
             return False, "Lỗi parse hotmail string"
 
         page.goto("https://profile.id.rakuten.co.jp/account-security", timeout=60000)
+        check_skip(page)
         time.sleep(3)
 
         # If redirected to login, retry to open the account-security page
@@ -755,6 +768,7 @@ def _change_email(page, email, password, hotmail):
             time.sleep(0.8)
             page.click('#submit')
             logging.info(f"Đã gửi OTP để xác thực email cho {email}")
+            time.sleep(10)
         except Exception as e:
             logging.error(f"Lỗi khi nhập/submit OTP cho {email}: {repr(e)}")
             return False, "Lỗi khi nhập/submit OTP"
@@ -771,7 +785,7 @@ def process_account(browser, context, page, user_data_dir, playwright, account, 
     """Xử lý đăng ký một tài khoản"""
     email, password = account['email'], account['password']
     hotmail = hotmails[account_index % len(hotmails)] if len(hotmails) > 0 else None
-    logging.info(f"Sử dụng hotmail: {hotmail} cho tài khoản {email}")
+    # logging.info(f"Sử dụng hotmail: {hotmail} cho tài khoản {email}")
     try:
         logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
         success, message, is_valid_hot_mail = check_rakuten_account(browser, context, page, email, password, hotmail)
