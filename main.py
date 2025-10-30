@@ -15,7 +15,16 @@ import pyautogui
 from playwright.sync_api import sync_playwright
 from undetected_playwright import Tarnished
 import subprocess
-from fake_useragent import UserAgent
+
+def randomUserAgent():
+    """Generate a random Chrome user agent with realistic version numbers"""
+    def randInt(min_val, max_val):
+        return random.randint(min_val, max_val)
+    
+    major = randInt(100, 120)
+    build = randInt(4200, 5400) 
+    patch = randInt(10, 200)
+    return f"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{major}.0.{build}.{patch} Safari/537.36"
 
 # Set Playwright browsers path for bundled executable
 if getattr(sys, 'frozen', False):
@@ -296,20 +305,13 @@ def init_browser(proxy=None, email=None, size=(1366, 768)):
     launch_options = {
         'headless': not show_browser,
         'args': [
-            '--disable-blink-features=AutomationControlled',
             '--no-sandbox',
             '--disable-dev-shm-usage',
-            '--disable-infobars',
-            '--ignore-certificate-errors',
-            '--allow-insecure-localhost',
-            '--allow-running-insecure-content',
-            '--disable-web-security',
-            '--disable-gpu',
-            '--disable-features=VizDisplayCompositor'
+            '--disable-blink-features=AutomationControlled',
+            '--disable-infobars'
         ]
     }
-    ua = UserAgent()
-    random_user_agent = ua.chrome
+    random_user_agent = randomUserAgent()
     # Context options
     context_options = {
         'user_agent': random_user_agent,
@@ -332,14 +334,18 @@ def init_browser(proxy=None, email=None, size=(1366, 768)):
         browser = playwright.chromium.launch(**launch_options)
         context = browser.new_context(**context_options)
         Tarnished.apply_stealth(context)
-        
-        # Anti-detection scripts
         context.add_init_script("""
-            Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-            window.navigator.chrome = { runtime: {} };
-            Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3] });
-            Object.defineProperty(navigator, 'languages', { get: () => ['ja-JP', 'ja', 'en-US', 'en'] });
-        """)
+                        (() => {
+                            try {
+                                Object.defineProperty(navigator, 'webdriver', { get: () => false, configurable: true });
+                                window.navigator.chrome = { runtime: {} };
+                                Object.defineProperty(navigator, 'languages', { get: () => ['ja-JP','ja'] });
+                                Object.defineProperty(navigator, 'plugins', { get: () => [1,2,3,4,5] });
+                                const orig = navigator.permissions.query;
+                                navigator.permissions.query = (p) => p && p.name === 'notifications' ? Promise.resolve({ state: Notification.permission }) : orig(p);
+                            } catch(e) {}
+                        })();
+                """)
         
         page = context.new_page()
         
