@@ -1,13 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
 import os
 import sys
+import undetected_playwright
 from PyInstaller.utils.hooks import collect_data_files, collect_dynamic_libs
+
+stealth_path = os.path.join(os.path.dirname(undetected_playwright.__file__), 'puppeteer-extra-plugin-stealth')
 
 # Collect Playwright data files and binaries
 playwright_datas = collect_data_files('playwright')
 playwright_binaries = collect_dynamic_libs('playwright')
 fake_useragent_datas = collect_data_files('fake_useragent')
-all_datas = playwright_datas + fake_useragent_datas
+all_datas = playwright_datas + fake_useragent_datas + [(stealth_path, 'undetected_playwright/puppeteer-extra-plugin-stealth')]
 
 
 a = Analysis(

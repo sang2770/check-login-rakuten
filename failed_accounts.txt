@@ -1,104 +1,20 @@
-kango_n@yahoo.co.jp|dk3glrsv|WebDriverException()
-dakutosg@yahoo.co.jp|Sg1208as|Lỗi nhập password cho dakutosg@yahoo.co.jp
-tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
-matm1226@yahoo.co.jp|m0610610|Đăng nhập thất bại
-hqxnd187@yahoo.co.jp|s87y1021|Đăng nhập thất bại
-mh_araki@yahoo.co.jp|mz120108|Đăng nhập thất bại
-yaurajp@katch.ne.jp|yaura5917|Đăng nhập thất bại
-hirock28jp@yahoo.co.jp|shout59|Đăng nhập thất bại
-ggg30612@yahoo.co.jp|gitch0612|Đăng nhập thất bại
-dewasiex@yahoo.co.jp|fuck323Gt|Đăng nhập thất bại
-nyo2929@yahoo.co.jp|mk12101226|Đăng nhập thất bại
-sa_ki_ymd@yahoo.co.jp|sy030604|Đăng nhập thất bại
-writtendai@yahoo.co.jp|2928580|Đăng nhập thất bại
-kango_n@yahoo.co.jp|dk3glrsv|Đăng nhập thất bại
-dakutosg@yahoo.co.jp|Sg1208as|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
-matm1226@yahoo.co.jp|m0610610|Đăng nhập thất bại
-hqxnd187@yahoo.co.jp|s87y1021|Đăng nhập thất bại
-mh_araki@yahoo.co.jp|mz120108|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-yaurajp@katch.ne.jp|yaura5917|Đăng nhập thất bại
-kuma28tk@yahoo.co.jp|Cele1218|Lỗi nhập email cho kuma28tk@yahoo.co.jp
-kuma28tk@yahoo.co.jp|Cele1218|TypeError('_enter_password() takes 2 positional arguments but 3 were given')
-mao_2514220332@yahoo.co.jp|Mei20090918|WebDriverException()
-tmyu417@yahoo.co.jp|tmyu04417|Lỗi nhập email cho tmyu417@yahoo.co.jp
-mao_2514220332@yahoo.co.jp|Mei20090918|Đăng nhập thất bại
-kango_n@yahoo.co.jp|dk3glrsv|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
-tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
-mao_2514220332@yahoo.co.jp|Mei20090918|Đăng nhập thất bại
-kango_n@yahoo.co.jp|dk3glrsv|Đăng nhập thất bại
-dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
-tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
-mao_2514220332@yahoo.co.jp|Mei20090918|WebDriverException()
-kango_n@yahoo.co.jp|dk3glrsv|WebDriverException()
-dakutosg@yahoo.co.jp|Sg1208as|WebDriverException()
-tmyu417@yahoo.co.jp|tmyu04417|WebDriverException()
-mao_2514220332@yahoo.co.jp|Mei20090918|Lỗi nhập email cho mao_2514220332@yahoo.co.jp
-tmyu417@yahoo.co.jp|tmyu04417|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-dakutosg@yahoo.co.jp|Sg1208as|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-kango_n@yahoo.co.jp|dk3glrsv|ProtocolError('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))
-mao_2514220332@yahoo.co.jp|Mei20090918|Error('Page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
-kango_n@yahoo.co.jp|dk3glrsv|Error('Page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
-dakutosg@yahoo.co.jp|Sg1208as|Error('Page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
-tmyu417@yahoo.co.jp|tmyu04417|Error('Page.goto: net::ERR_PROXY_CONNECTION_FAILED at https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
-kango_n@yahoo.co.jp|dk3glrsv|TimeoutError('Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to "https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in", waiting until "load"\n')
-dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
-tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
-kango_n@yahoo.co.jp|dk3glrsv|Đăng nhập thất bại
-dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
-tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
-kango_n@yahoo.co.jp|dk3glrsv|Đăng nhập thất bại
-dakutosg@yahoo.co.jp|Sg1208as|Đăng nhập thất bại
-tmyu417@yahoo.co.jp|tmyu04417|Đăng nhập thất bại
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Exception('Failed to initialize browser with and without proxy')
-kango_n@yahoo.co.jp|dk3glrsv|Exception('Failed to initialize browser with and without proxy')
-dakutosg@yahoo.co.jp|Sg1208as|Exception('Failed to initialize browser with and without proxy')
-tmyu417@yahoo.co.jp|tmyu04417|Exception('Failed to initialize browser with and without proxy')
-mao_2514220332@yahoo.co.jp|Mei20090918|Đăng nhập thất bại
+ohana_0827@yahoo.co.jp|Laki1234|Lỗi nhập password cho ohana_0827@yahoo.co.jp
+ohana_0827@yahoo.co.jp|Laki1234|TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+akkossy-227@yahoo.ne.jp|Aa227227|Acc lock hoặc lỗi pass
+akkossy-227@yahoo.ne.jp|Aa227227|Acc lock hoặc lỗi pass
+akkossy-227@yahoo.ne.jp|Aa227227|Acc lock hoặc lỗi pass
+akkossy-227@yahoo.ne.jp|Aa227227|Acc lock hoặc lỗi pass
+akkossy-227@yahoo.ne.jp|Aa227227|Acc lock hoặc lỗi pass
+akkossy-227@yahoo.ne.jp|Aa227227|Acc lock hoặc lỗi pass
+akkossy-227@yahoo.ne.jp|Aa227227|Acc lock hoặc lỗi pass
+akkossy-227@yahoo.ne.jp|Aa227227|Đăng nhập thất bại|odetteberilharold9@hotmail.com|nxTCKP8083|M.C513_BAY.0.U.-CoLRlPoHKi!FW7uQUNplKw9*z67AhWsmq7sHHViHL0ZFgo6KmqlpGmn1jOCELGMxlzTL3CN2HzRg7NktNYjQlzSIlnMkoZoAeKk7zOG47DtY20qJQrxB8N8GNFoWV*!oRFbvavRMa2QaG0oQPhn!O0PX1jwwYwcXCgevedeCovF2bhqeSJmbrjuQmgZoTfKnOKGF*VT*WyDTM8fGfLv8cBGroGXSQdeMomcIm6rJQM8VUq8j4xo8G3soyRMxJPDnYcxP!d!lnqNiYJ*XpxoP95lf7D9NH3A4VuydaVE0wJL2p8RrTSD67r9CScJa0W5vtM4FegcA663WIifK4x6FJv4$|9e5f94bc-e8a4-4e73-b8be-63364c29d753
+odetteberilharold9@hotmail.com|mach2002|Đăng nhập thất bại|baldricleonaaron3@hotmail.com|7Kb6Y77605|M.C561_BAY.0.U.-ClmfCqWlYyfxgPcOBI1A0YRzy7nWuPCL14R5QsRhPMin!euYaz0fwPvSM!*j!4Lk1q6uzOmDxlkk8tJx035HfoKZEYISiRE2*usOdopv2PHrPVIzualHtQAWsHoJnaQCV8fMUXNURy8DYUxL8wDyA!dmFN82ELMQHVLes1ITiVtR4k6kX05jijuY14VadCdKYMYU58npP1OHiWc80HdaZz8S*0Y2D2DRaK96ClknLzhfSiBsg6srJJ5hwZmQbHxmA6TLYmMJcRjeEcFR5TmAJ99xH9bcarBGrhjUZM7ORUqg2w96MrBtWtKRAfQlLFnpSPNlqpW5mx7muFMEKaxzYd4$|9e5f94bc-e8a4-4e73-b8be-63364c29d753
+odetteberilharold9@hotmail.com|pocari|Đăng nhập thất bại|baldricleonaaron3@hotmail.com|7Kb6Y77605|M.C561_BAY.0.U.-ClmfCqWlYyfxgPcOBI1A0YRzy7nWuPCL14R5QsRhPMin!euYaz0fwPvSM!*j!4Lk1q6uzOmDxlkk8tJx035HfoKZEYISiRE2*usOdopv2PHrPVIzualHtQAWsHoJnaQCV8fMUXNURy8DYUxL8wDyA!dmFN82ELMQHVLes1ITiVtR4k6kX05jijuY14VadCdKYMYU58npP1OHiWc80HdaZz8S*0Y2D2DRaK96ClknLzhfSiBsg6srJJ5hwZmQbHxmA6TLYmMJcRjeEcFR5TmAJ99xH9bcarBGrhjUZM7ORUqg2w96MrBtWtKRAfQlLFnpSPNlqpW5mx7muFMEKaxzYd4$|9e5f94bc-e8a4-4e73-b8be-63364c29d753
+odetteberilharold9@hotmail.com|Aa227227|Đăng nhập thất bại|None
+fritzmcelroyt1885@hotmail.com|maki0923|Lỗi nhập email cho fritzmcelroyt1885@hotmail.com|jadaiolantheernesta9@hotmail.com|YICKV08745|M.C516_BAY.0.U.-CrA3AQ6iZ9wiuLaRCzcqVHqcWyEKzPiiuf2DOzwnS27Y5ibN!eZSqAuDDq9Dcsu9wu0Uym6vVn3FSNXaL1BJ9*klV0nIPTe0AXgFdjJmUw882884paFoxdQXjMyTW26tqTMC8qWtA5xPlQ2sUK*7gPiV9dTXC92O2zG2pOkhebzEmBAQYWRWWbc3!HWpK9tM8Bj6QYlIw*OQbbnRz0HGCiEhVN9Y8iubHdSh*NsNRUfhvzg*vMWF8krL0RmrcVW3sR1nADOi6kOFRqIEfHWZLmiA!2jrhAuhZ*i!O!tbWyzEObgVUcsCDmFJxHgWqyKm1rG6zZmQdExVELi!PUspQ2E$|9e5f94bc-e8a4-4e73-b8be-63364c29d753
+tea-drop@rose.freemail.ne.jp|maki0923|Đăng nhập thất bại|jadaiolantheernesta9@hotmail.com|YICKV08745|M.C516_BAY.0.U.-CrA3AQ6iZ9wiuLaRCzcqVHqcWyEKzPiiuf2DOzwnS27Y5ibN!eZSqAuDDq9Dcsu9wu0Uym6vVn3FSNXaL1BJ9*klV0nIPTe0AXgFdjJmUw882884paFoxdQXjMyTW26tqTMC8qWtA5xPlQ2sUK*7gPiV9dTXC92O2zG2pOkhebzEmBAQYWRWWbc3!HWpK9tM8Bj6QYlIw*OQbbnRz0HGCiEhVN9Y8iubHdSh*NsNRUfhvzg*vMWF8krL0RmrcVW3sR1nADOi6kOFRqIEfHWZLmiA!2jrhAuhZ*i!O!tbWyzEObgVUcsCDmFJxHgWqyKm1rG6zZmQdExVELi!PUspQ2E$|9e5f94bc-e8a4-4e73-b8be-63364c29d753
+fritzmcelroyt1885@hotmail.com|maki0923|Đăng nhập thất bại|jadaiolantheernesta9@hotmail.com|YICKV08745|M.C516_BAY.0.U.-CrA3AQ6iZ9wiuLaRCzcqVHqcWyEKzPiiuf2DOzwnS27Y5ibN!eZSqAuDDq9Dcsu9wu0Uym6vVn3FSNXaL1BJ9*klV0nIPTe0AXgFdjJmUw882884paFoxdQXjMyTW26tqTMC8qWtA5xPlQ2sUK*7gPiV9dTXC92O2zG2pOkhebzEmBAQYWRWWbc3!HWpK9tM8Bj6QYlIw*OQbbnRz0HGCiEhVN9Y8iubHdSh*NsNRUfhvzg*vMWF8krL0RmrcVW3sR1nADOi6kOFRqIEfHWZLmiA!2jrhAuhZ*i!O!tbWyzEObgVUcsCDmFJxHgWqyKm1rG6zZmQdExVELi!PUspQ2E$|9e5f94bc-e8a4-4e73-b8be-63364c29d753
+rabbitkyao@yahoo.co.jp|kyao1014|InvalidSessionIdException()|None
+rabbitkyao@yahoo.co.jp|kyao1014|Đăng nhập thất bại|None
+carlan@yahoo.co.in|@Ggu3ER{7H+;s?|Lỗi nhập email cho carlan@yahoo.co.in|None
+ineshassan590@yandex.ru|NJzDcz{}a%Nj2u|Acc Die {email}|None

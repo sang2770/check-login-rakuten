@@ -13,6 +13,7 @@ import shutil
 import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
@@ -29,11 +30,44 @@ failed_accounts = []
 browsers = []
 stop_event = threading.Event()
 failed_start_profile_count = 0
+gpm_api_lock = threading.Semaphore(3)  # Limit concurrent GPM API calls to 3
 
 class GPMLoginAPI:
     def __init__(self):
         self.base_url = self.read_config_url()
         self.session = requests.Session()
+        # Configure session for better connection handling
+        self.session.mount('http://', requests.adapters.HTTPAdapter(max_retries=3))
+        self.session.mount('https://', requests.adapters.HTTPAdapter(max_retries=3))
+        
+    def _make_request(self, method, url, max_retries=3, **kwargs):
+        """Make HTTP request with retry logic and proper error handling"""
+        for attempt in range(max_retries):
+            try:
+                # Add timeout to prevent hanging
+                kwargs.setdefault('timeout', 30)
+                
+                if method.upper() == 'POST':
+                    response = self.session.post(url, **kwargs)
+                elif method.upper() == 'DELETE':
+                    response = self.session.delete(url, **kwargs)
+                else:
+                    response = self.session.get(url, **kwargs)
+                
+                return response
+                
+            except (requests.exceptions.ConnectionError, 
+                    requests.exceptions.Timeout, 
+                    requests.exceptions.RequestException) as e:
+                
+                if attempt < max_retries - 1:
+                    delay = random.uniform(1, 3) * (attempt + 1)
+                    logging.debug(f"Request failed, retrying in {delay:.1f}s: {e}")
+                    time.sleep(delay)
+                    continue
+                else:
+                    logging.error(f"Request failed after {max_retries} attempts: {e}")
+                    raise
     def read_config_url(self):
         try:
             with open('config.txt', 'r', encoding='utf-8') as f:
@@ -73,41 +107,70 @@ class GPMLoginAPI:
             "webrtc_mode": 2,
             "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
         }
-        response = self.session.post(f"{self.base_url}/api/v3/profiles/create", json=payload)
-        if response.status_code == 200 and response.json().get("success"):
-            return response.json().get("data", {}).get("id")
-        logging.error(f"CẢNH BÁO: Không tạo được cấu hình với proxy {proxy}")
-        return None
+        
+        try:
+            response = self._make_request('POST', f"{self.base_url}/api/v3/profiles/create", json=payload)
+            if response.status_code == 200 and response.json().get("success"):
+                return response.json().get("data", {}).get("id")
+            else:
+                logging.error(f"CẢNH BÁO: Không tạo được cấu hình với proxy {proxy}, response: {response.text}")
+                return None
+        except Exception as e:
+            logging.error(f"CẢNH BÁO: Lỗi khi tạo cấu hình với proxy {proxy}: {e}")
+            return None
     
     def start_profile(self, profile_id, x=None, y=None, w=None, h=None):
         global failed_start_profile_count
         # Khởi động trình duyệt cho cấu hình
-        response = self.session.get(f"{self.base_url}/api/v3/profiles/start/{profile_id}?win_pos=0,0")
-        if response.status_code == 200 and response.json().get("success"):
-            return response.json().get("data", {})
-        logging.error(f"CẢNH BÁO: Không khởi động được cấu hình {profile_id} {response.json().get('message')}")
-        failed_start_profile_count += 1
-        if (failed_start_profile_count >= 10):
-            stop_event.set()
-            time.sleep(5)
-            os._exit(1)
-        return None
+        try:
+            response = self._make_request('GET', f"{self.base_url}/api/v3/profiles/start/{profile_id}?win_pos=0,0")
+            if response.status_code == 200 and response.json().get("success"):
+                return response.json().get("data", {})
+            else:
+                error_msg = response.json().get('message', 'Unknown error') if response else 'No response'
+                logging.error(f"CẢNH BÁO: Không khởi động được cấu hình {profile_id}: {error_msg}")
+                failed_start_profile_count += 1
+                if (failed_start_profile_count >= 10):
+                    stop_event.set()
+                    time.sleep(5)
+                    os._exit(1)
+                return None
+        except Exception as e:
+            logging.error(f"CẢNH BÁO: Lỗi khi khởi động cấu hình {profile_id}: {e}")
+            failed_start_profile_count += 1
+            if (failed_start_profile_count >= 10):
+                stop_event.set()
+                time.sleep(5)
+                os._exit(1)
+            return None
 
     def close_profile(self, profile_id):
         # Đóng trình duyệt
-        response = self.session.get(f"{self.base_url}/api/v3/profiles/close/{profile_id}")
-        if response.status_code == 200 and response.json().get("success"):
-            return response.json().get("data", {})
-        logging.error(f"CẢNH BÁO: Không đóng được cấu hình {profile_id} {response.json().get('message')}")
-        return None
+        try:
+            response = self._make_request('GET', f"{self.base_url}/api/v3/profiles/close/{profile_id}")
+            if response.status_code == 200 and response.json().get("success"):
+                return response.json().get("data", {})
+            else:
+                error_msg = response.json().get('message', 'Unknown error') if response else 'No response'
+                logging.error(f"CẢNH BÁO: Không đóng được cấu hình {profile_id}: {error_msg}")
+                return None
+        except Exception as e:
+            logging.error(f"CẢNH BÁO: Lỗi khi đóng cấu hình {profile_id}: {e}")
+            return None
 
     def delete_profile(self, profile_id):
         # Xoá cấu hình
-        response = self.session.delete(f"{self.base_url}/api/v3/profiles/delete/{profile_id}?mode=2")
-        if response.status_code == 200 and response.json().get("success"):
-            return response.json().get("data", {})
-        logging.error(f"CẢNH BÁO: Không xoá được cấu hình {profile_id} {response.json().get('message')}")
-        return None
+        try:
+            response = self._make_request('DELETE', f"{self.base_url}/api/v3/profiles/delete/{profile_id}?mode=2")
+            if response.status_code == 200 and response.json().get("success"):
+                return response.json().get("data", {})
+            else:
+                error_msg = response.json().get('message', 'Unknown error') if response else 'No response'
+                logging.error(f"CẢNH BÁO: Không xoá được cấu hình {profile_id}: {error_msg}")
+                return None
+        except Exception as e:
+            logging.error(f"CẢNH BÁO: Lỗi khi xoá cấu hình {profile_id}: {e}")
+            return None
 
 def cleanup_browsers():
     """Dọn dẹp tất cả các Browser instances."""
@@ -163,15 +226,27 @@ file_handler.setFormatter(logging.Formatter(
     '%(asctime)s - %(levelname)s - [%(threadName)s] - %(message)s'
 ))
 
+
+
+class IgnorePatchingDriverFilter(logging.Filter):
+    def filter(self, record):
+        message = record.getMessage().lower()
+        return (
+            "retrying" not in message and "cache" not in message and "patching driver" not in message and "webdriver" not in message
+        )
+    
+# Hide verbose logs
+logging.getLogger('selenium').setLevel(logging.WARNING)
+logging.getLogger('urllib3').setLevel(logging.WARNING)
+
+ignore_patch_filter = IgnorePatchingDriverFilter()
+console_handler.addFilter(ignore_patch_filter)
+
 # Setup logging
 logging.basicConfig(
     level=logging.INFO,
     handlers=[file_handler, console_handler]
 )
-
-# Hide verbose logs
-logging.getLogger('selenium').setLevel(logging.WARNING)
-logging.getLogger('urllib3').setLevel(logging.WARNING)
 
 # Global variables
 file_lock = threading.Lock()
@@ -257,47 +332,120 @@ def load_input_files():
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
+# Global service instance but with thread safety
+_service_lock = threading.Lock()
+_service_instance = None
+
+def get_chrome_service():
+    """Get Chrome service instance with thread safety"""
+    global _service_instance
+    if _service_instance is None:
+        with _service_lock:
+            if _service_instance is None:
+                _service_instance = Service(ChromeDriverManager(driver_version="139.0.7258.139").install())
+    return _service_instance
 
 def init_browser_with_gpm(gpm_api, proxy, email):
     """Khởi tạo Selenium browser với GPM API"""
-    try:
-        # Create profile with proxy
-        profile_id = gpm_api.create_profile(proxy, email)
-        if not profile_id:
-            return None, None        
-        # Start profile
-        profile_data = gpm_api.start_profile(profile_id)
-        if not profile_data:
-            gpm_api.delete_profile(profile_id)
-            return None, None
-        # Get remote debugging address
-        remote_debugging_address = profile_data.get("remote_debugging_address")
-        if not remote_debugging_address:
-            logging.error("Không lấy được remote debugging address")
-            gpm_api.close_profile(profile_id)
-            gpm_api.delete_profile(profile_id)
-            return None, None
-        service = Service(ChromeDriverManager(driver_version="139.0.7258.139").install())
-        # Setup Chrome options for remote debugging
-        chrome_options = Options()
-        chrome_options.add_experimental_option("debuggerAddress", remote_debugging_address)
-        driver = webdriver.Chrome(service=service, options=chrome_options)
-
-        return driver, profile_id
-        
-    except Exception as e:
-        logging.error(f"Lỗi khởi tạo browser với GPM: {e}")
-        if profile_id:
-            gpm_api.close_profile(profile_id)
-            gpm_api.delete_profile(profile_id)
-        return None, None
+    profile_id = None
+    max_retries = 3
+    
+    for attempt in range(max_retries):
+        try:
+            # Add delay between attempts to avoid rate limiting
+            if attempt > 0:
+                delay = random.uniform(2, 5) * attempt
+                logging.debug(f"Retry attempt {attempt + 1} for {email} after {delay:.1f}s delay")
+                time.sleep(delay)
+            
+            # Create profile with proxy
+            profile_id = gpm_api.create_profile(proxy, email)
+            if not profile_id:
+                if attempt == max_retries - 1:
+                    logging.error(f"Failed to create profile for {email} after {max_retries} attempts")
+                    return None, None
+                continue
+                
+            # Add delay before starting profile
+            time.sleep(random.uniform(1, 3))
+            
+            # Start profile
+            profile_data = gpm_api.start_profile(profile_id)
+            if not profile_data:
+                gpm_api.delete_profile(profile_id)
+                profile_id = None
+                if attempt == max_retries - 1:
+                    logging.error(f"Failed to start profile for {email} after {max_retries} attempts")
+                    return None, None
+                continue
+                
+            # Get remote debugging address
+            remote_debugging_address = profile_data.get("remote_debugging_address")
+            if not remote_debugging_address:
+                logging.error(f"Không lấy được remote debugging address cho {email}")
+                gpm_api.close_profile(profile_id)
+                gpm_api.delete_profile(profile_id)
+                profile_id = None
+                if attempt == max_retries - 1:
+                    return None, None
+                continue
+                
+            # Add delay before connecting to browser
+            time.sleep(random.uniform(1, 2))
+            
+            # Setup Chrome options for remote debugging
+            chrome_options = Options()
+            chrome_options.add_experimental_option("debuggerAddress", remote_debugging_address)
+            chrome_options.add_argument("--no-sandbox")
+            chrome_options.add_argument("--disable-dev-shm-usage")
+            chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+            
+            # Get service instance with thread safety
+            service = get_chrome_service()
+            
+            # Create driver with timeout
+            driver = webdriver.Chrome(service=service, options=chrome_options)
+            
+            # Verify connection by trying to get current URL
+            try:
+                driver.current_url
+                logging.debug(f"Successfully initialized browser for {email}")
+                return driver, profile_id
+            except Exception as conn_e:
+                logging.warning(f"Browser connection test failed for {email}: {conn_e}")
+                driver.quit()
+                raise conn_e
+                
+        except Exception as e:
+            error_msg = str(e).lower()
+            logging.warning(f"Attempt {attempt + 1} failed for {email}: {e}")
+            
+            # Clean up profile if it was created
+            if profile_id:
+                try:
+                    gpm_api.close_profile(profile_id)
+                    gpm_api.delete_profile(profile_id)
+                except:
+                    pass
+                profile_id = None
+            
+            # Check if it's a connection issue that might be retryable
+            if any(keyword in error_msg for keyword in ['connection', 'timeout', 'refused', 'reset', 'aborted']):
+                if attempt < max_retries - 1:
+                    logging.debug(f"Connection issue detected for {email}, will retry...")
+                    continue
+            
+            # For non-retryable errors or final attempt
+            if attempt == max_retries - 1:
+                logging.error(f"Lỗi khởi tạo browser với GPM cho {email} sau {max_retries} lần thử: {e}")
+                return None, None
+    
+    return None, None
 
 def human_type(driver, element, text, min_delay=0.05, max_delay=0.15):
-    """Type text with human-like delay using Selenium"""
     element.clear()
-    for char in text:
-        element.send_keys(char)
-        time.sleep(random.uniform(min_delay, max_delay))
+    time.sleep(2)
+    element.send_keys(text)
 
 def _remove_account_from_file(email):
     """Remove account from accounts.txt file"""
@@ -324,7 +472,7 @@ def check_rakuten_account(driver, email, password, hot_mail=None):
         logging.info(f"Bắt đầu kiểm tra tài khoản: {email}")
         
         # Navigate to login page with retry logic
-        login_url = ("https://login.account.rakuten.com/sso/authorize?client_id=rakuten_ichiba_top_web&service_id=s245&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rakuten.co.jp%2F#/sign_in")
+        login_url = ("https://login.account.rakuten.com/sso/authorize?ui_locales=ja-JP&client_id=rakuten_rebates_jpn_web&response_type=code&scope=openid&redirect_uri=https%3A%2F%2Fwww.rebates.jp%2Fomni%2Fpost-login&state=%2F#/sign_in")
         
         # Try to navigate with retry mechanism
         max_retries = 3
@@ -334,27 +482,24 @@ def check_rakuten_account(driver, email, password, hot_mail=None):
                 WebDriverWait(driver, 30).until(
                     lambda d: d.execute_script("return document.readyState") == "complete"
                 )
-                logging.debug(f"Successfully navigated to login page for {email} (attempt {attempt + 1})")
                 break
             except Exception as e:
                 if attempt == max_retries - 1:
-                    logging.debug(f"Failed to navigate to login page for {email} after {max_retries} attempts: {repr(e)}")
                     raise
                 else:
-                    logging.debug(f"Navigation attempt {attempt + 1} failed for {email}, retrying... Error: {repr(e)}")
                     time.sleep(5)
 
         time.sleep(random.randint(2, 5))
         
         # Step 1: Enter email
-        if not _enter_email(driver, email):
-            result = False, f"Lỗi nhập email cho {email}"
+        if not _enter_email(driver, email, password):
+            result = False, f"Acc Die {email}"
         # Step 2: Enter password
         elif not _enter_password(driver, password):
             result = False, f"Lỗi nhập password cho {email}"
         # Step 3: Check login success
         elif not _check_login_success(driver, email):
-            result = False, "Đăng nhập thất bại"
+            result = False, "Acc Die {email}"
         else:
             # Step 4: Check points
             result = _check_points(driver, email, password)
@@ -371,7 +516,7 @@ def check_rakuten_account(driver, email, password, hot_mail=None):
         _remove_account_from_file(email)
         return False, repr(e)
 
-def _enter_email(driver, email):
+def _enter_email(driver, email, password):
     """Enter email in login form using Selenium"""
     try:
         # Wait for email input field
@@ -382,12 +527,8 @@ def _enter_email(driver, email):
         # Type email with human-like delay
         human_type(driver, email_input, email)
         time.sleep(random.randint(1, 2))
-        
-        # Click first submit button (Next)
-        next_button = driver.find_element(By.ID, "cta001")
-        next_button.click()
-        time.sleep(random.randint(2, 4))
-        
+        email_input.send_keys(Keys.RETURN)
+        time.sleep(5)
         return True
         
     except Exception as e:
@@ -407,11 +548,22 @@ def _enter_password(driver, password):
         time.sleep(random.randint(1, 2))
         
         # Click second submit button (Next)
-        submit_button = driver.find_element(By.ID, "cta011")
-        submit_button.click()
+        # submit_button = driver.find_element(By.ID, "cta011")
+        # submit_button.click()
+        # press Enter
+        password_input.send_keys(Keys.RETURN)
         
         # Wait for login to process
         time.sleep(5)
+
+        try:
+            skip = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.ID, "seco_473"))
+            )
+            skip.click()
+            time.sleep(5)
+        except:
+            pass
         
         return True
         
@@ -432,12 +584,7 @@ def _enter_password(driver, password):
 
 def _check_login_success(driver, email):
     """Check if login was successful using Selenium"""
-    try:
-        # Wait for potential redirect to rakuten.co.jp domain
-        WebDriverWait(driver, 30).until(
-            lambda d: "rakuten.co.jp" in d.current_url
-        )
-        
+    try:        
         time.sleep(10)
         current_url = driver.current_url
         
@@ -644,7 +791,10 @@ def _change_email(driver, email, password, hotmail):
     new_email, password, refresh_token, client_id = hotmail.split('|')
     try:
         driver.get("https://profile.id.rakuten.co.jp/account-security")
-        time.sleep(5)
+        time.sleep(10)
+        if "login.account.rakuten.com" in driver.current_url:
+            driver.get("https://profile.id.rakuten.co.jp/account-security")
+            time.sleep(10)
         change_btn = driver.find_element(By.CSS_SELECTOR, "[data-qa-id=\"email-edit-field\"]")
         change_btn.click()
         time.sleep(3)
@@ -668,7 +818,7 @@ def _change_email(driver, email, password, hotmail):
         verify_btn.click()
 
     except Exception as e:
-        logging.debug(f"Lỗi khi đổi email cho {email}: {repr(e)}")
+        logging.error(f"Lỗi khi đổi email cho {email}: {repr(e)}")
         return
 def process_account(gpm_api, account, account_index, proxy_info, hotmails):
     """Xử lý một tài khoản với GPM API"""
@@ -680,10 +830,12 @@ def process_account(gpm_api, account, account_index, proxy_info, hotmails):
     try:
         logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
         
-        # Initialize browser with GPM
-        driver, profile_id = init_browser_with_gpm(gpm_api, proxy_info.get('full') if proxy_info else None, email)
-        if not driver:
-            raise Exception("Không thể khởi tạo browser với GPM")
+        # Use semaphore to limit concurrent GPM API calls
+        with gpm_api_lock:
+            # Initialize browser with GPM
+            driver, profile_id = init_browser_with_gpm(gpm_api, proxy_info.get('full') if proxy_info else None, email)
+            if not driver:
+                raise Exception("Không thể khởi tạo browser với GPM")
         
         browsers.append(driver)
 
@@ -720,8 +872,10 @@ def process_account(gpm_api, account, account_index, proxy_info, hotmails):
                 if driver in browsers:
                     browsers.remove(driver)
             if profile_id:
-                gpm_api.close_profile(profile_id)
-                gpm_api.delete_profile(profile_id)
+                # Use semaphore for cleanup API calls too
+                with gpm_api_lock:
+                    gpm_api.close_profile(profile_id)
+                    gpm_api.delete_profile(profile_id)
 
             # remove hotmail.txt if used
             if hotmail and hotmail in hotmail_need_deletes:
