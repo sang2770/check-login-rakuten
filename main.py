@@ -204,8 +204,8 @@ def load_input_files():
         with open('accounts.txt', 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip()
-                if line and not line.startswith('#') and ':' in line:
-                    parts = line.split(':')
+                if line and not line.startswith('#') and '||' in line:
+                    parts = line.split('||')
                     if len(parts) >= 2:
                         accounts.append({
                             'email': parts[0].strip(),
@@ -372,7 +372,7 @@ def _remove_account_from_file(email):
             with open('accounts.txt', 'w', encoding='utf-8') as f:
                 for line in lines:
                     if line.strip() and not line.startswith('#'):
-                        parts = line.strip().split(':')
+                        parts = line.strip().split('||')
                         if len(parts) >= 1 and parts[0].strip() != email:
                             f.write(line)
                     else:
@@ -425,9 +425,6 @@ def check_rakuten_account(browser, context, page, email, password, hotmail=None)
                 change_result, change_message = _change_email(page, email, password, hotmail)
                 if change_result:
                     is_valid_hot_mail = True
-                    result = True, change_message
-                else:
-                    result = False, change_message
         
         _remove_account_from_file(email)        
         return result[0], result[1], is_valid_hot_mail
@@ -754,6 +751,7 @@ def _change_email(page, email, password, hotmail):
             logging.error(f"Không tìm thấy nút submit update email: {repr(e)}")
             return False, "Không tìm thấy nút submit update email"
 
+        time.sleep(15)
         hotmail_obj = Hotmail(email, password, refresh_token, client_id)
 
         otp_code = _get_otp_from_hotmail(hotmail_obj)
@@ -765,7 +763,7 @@ def _change_email(page, email, password, hotmail):
             page.wait_for_selector('#VerifyCode', timeout=60000)
             # _type_like_human(page, '#VerifyCode', str(otp_code))
             page.fill('#VerifyCode', str(otp_code))
-            time.sleep(0.8)
+            time.sleep(3)
             page.click('#submit')
             logging.info(f"Đã gửi OTP để xác thực email cho {email}")
             time.sleep(10)
@@ -773,10 +771,10 @@ def _change_email(page, email, password, hotmail):
             logging.error(f"Lỗi khi nhập/submit OTP cho {email}: {repr(e)}")
             return False, "Lỗi khi nhập/submit OTP"
 
-        return True, f"Đã đổi email thành công thành {new_email}"
+        return True, f"{new_email}"
     except Exception as e:
         logging.error(f"Lỗi khi đổi email cho {email}: {repr(e)}")
-        return False, "Lỗi khi đổi email"
+        return False, "None"
 
 
 hotmail_need_deletes = []
@@ -799,12 +797,12 @@ def process_account(browser, context, page, user_data_dir, playwright, account, 
                 successful_accounts.append(account)
                 # Lưu tài khoản thành công
                 with open('successful_accounts.txt', 'a', encoding='utf-8') as f:
-                    f.write(f"{email}|{password}|{message}|{hotmail if is_valid_hot_mail else ''}\n")
+                    f.write(f"{email}|{password}|{message}|{hotmail if is_valid_hot_mail else 'None'}\n")
             else:
                 failed_accounts.append({'account': account, 'error': message})
                 # Lưu tài khoản thất bại
                 with open('failed_accounts.txt', 'a', encoding='utf-8') as f:
-                    f.write(f"{email}|{password}|{message}|{hotmail if is_valid_hot_mail else ''}\n")
+                    f.write(f"{email}|{password}|{message}|{hotmail if is_valid_hot_mail else 'None'}\n")
         logging.info(f"Hoàn tất xử lý tài khoản: {email}")
     except Exception as e:
         logging.error(f"Lỗi xử lý tài khoản {email}: {repr(e)}")
