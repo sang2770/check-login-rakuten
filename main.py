@@ -417,6 +417,12 @@ def check_rakuten_account(browser, context, page, email, password):
         _remove_account_from_file(email)
         return False, repr(e), False
 
+def human_type(page, selector, text, min_delay=0.05, max_delay=0.15):
+    """Type text with human-like delay"""
+    page.fill(selector, "")  # Clear first
+    for char in text:
+        page.type(selector, char, delay=random.uniform(min_delay, max_delay) * 1000)
+
 def _enter_email(page, email):
     """Enter email in login form"""
     try:
@@ -424,7 +430,7 @@ def _enter_email(page, email):
         page.wait_for_selector("input#user_id", timeout=30000)
         
         # Type email with human-like delay
-        page.fill("input#user_id", email)
+        human_type(page, "input#user_id", email)
         time.sleep(random.randint(1, 2))
         
         # Click first submit button (Next)
@@ -445,7 +451,7 @@ def _enter_password(page, password):
         page.wait_for_selector("input#password_current", timeout=30000)
         
         # Type password with human-like delay
-        page.fill("input#password_current", password)
+        human_type(page, "input#password_current", password)
         time.sleep(random.randint(1, 2))
         
         page.keyboard.press("Enter")
@@ -498,7 +504,6 @@ def _check_login_success(page, email):
             except:
                 pass
             
-            logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
             return False
         
         return True
@@ -523,7 +528,9 @@ def process_account(browser, context, page, user_data_dir, playwright, account, 
         logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
         success, message = check_rakuten_account(browser, context, page, email, password)
         if not success:
-            logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
+            logging.error(f"Đăng nhập thất bại cho {email}: Acc Die")
+        else:
+            logging.warning(f"Đăng nhập thành công cho {email}: Acc Live")
 
         with file_lock:
             if success:
