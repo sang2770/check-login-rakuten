@@ -575,47 +575,9 @@ def clean_all_user_data(retries=5, delay=1):
             except Exception as e:
                 time.sleep(delay)
 
-def check_key_live():
-    """Kiểm tra key có live không từ GitHub"""
-    try:
-        trial_url = "https://raw.githubusercontent.com/sang2770/storage/master/trial.json"
-        
-        logging.info("Đang kiểm tra key live...")
-        response = requests.get(trial_url, timeout=10)
-        
-        if response.status_code == 404:
-            logging.error("❌ Key đã hết hạn hoặc không tồn tại (404).")
-            print("\n" + "="*50)
-            print("🔑 KEY ĐÃ HẾT HẠN HOẶC KHÔNG TỒN TẠI")
-            print("Vui lòng liên hệ để gia hạn key.")
-            print("="*50)
-            return False
-        elif response.status_code == 200:
-            logging.info("✅ Key live - Cho phép chạy chương trình.")
-            return True
-        else:
-            logging.warning(f"⚠️ Không thể kiểm tra key (HTTP {response.status_code}). Tiếp tục chạy...")
-            return True
-            
-    except requests.exceptions.Timeout:
-        logging.warning("⚠️ Timeout khi kiểm tra key. Tiếp tục chạy...")
-        return True
-    except requests.exceptions.ConnectionError:
-        logging.warning("⚠️ Không có kết nối internet. Tiếp tục chạy...")
-        return True
-    except Exception as e:
-        logging.warning(f"⚠️ Lỗi khi kiểm tra key: {repr(e)}. Tiếp tục chạy...")
-        return True
-
 def main():
     """Hàm chính"""
-    global show_browser
-    # Check if key is live before proceeding
-    if not check_key_live():
-        logging.error("Dừng chương trình do key không hợp lệ.")
-        input("Nhấn Enter để thoát...")
-        sys.exit(1)
-    
+    global show_browser    
     # Ensure browsers are installed (especially important for bundled executables)
     logging.info("Đang kiểm tra và chuẩn bị browsers...")
     if not ensure_browsers_installed():
