@@ -26,7 +26,7 @@ jobs:
         pip install pyinstaller
 
     - name: Show Installed Packages
-        run: pip list
+      run: pip list
     
     - name: Build EXE
       shell: pwsh
