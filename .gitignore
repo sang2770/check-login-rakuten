@@ -2,5 +2,4 @@ user-data/*
 build/*
 dist/*
 .venv/*
-*.zip
 *.txt
