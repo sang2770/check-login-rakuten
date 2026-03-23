@@ -1,0 +1,1067 @@
+2026-03-23 11:40:58,044 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 11:41:06,445 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for je198073_2@yahoo.co.jp: InvalidProxy('Failed to connect to proxy: http://USER934967-zone-custom-region-JP:f13808@as.rp.lokiproxy.com:10000')
+2026-03-23 11:41:06,445 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:07,162 - WARNING - [Luồng-2] - Failed to initialize browser with proxy for bekkoukamen0106@yahoo.co.jp: InvalidProxy('Failed to connect to proxy: http://USER934967-zone-custom-region-JP:f13808@as.rp.lokiproxy.com:10000')
+2026-03-23 11:41:07,162 - ERROR - [Luồng-2] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:07,839 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for h.kmf2-xoxo@ezweb.ne.jp: InvalidProxy('Failed to connect to proxy: http://USER934967-zone-custom-region-JP:f13808@as.rp.lokiproxy.com:10000')
+2026-03-23 11:41:07,839 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:08,779 - WARNING - [Luồng-2] - Failed to initialize browser with proxy for catering@mori-kun.jp: InvalidProxy('Failed to connect to proxy: http://USER934967-zone-custom-region-JP:f13808@as.rp.lokiproxy.com:10000')
+2026-03-23 11:41:08,779 - ERROR - [Luồng-2] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:09,446 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for sk8.death@hotmail.co.jp: InvalidProxy('Failed to connect to proxy: http://USER934967-zone-custom-region-JP:f13808@as.rp.lokiproxy.com:10000')
+2026-03-23 11:41:09,446 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:09,998 - WARNING - [Luồng-2] - Failed to initialize browser with proxy for yaokada@mtb.biglobe.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 11:41:09,998 - ERROR - [Luồng-2] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:10,282 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for iuki_anuenue@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 11:41:10,282 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:10,565 - WARNING - [Luồng-2] - Failed to initialize browser with proxy for t_kuro_96@ybb.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 11:41:10,565 - ERROR - [Luồng-2] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:10,565 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-32' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 11:41:10,565 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-41' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 11:41:11,232 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for t.watari-1912@docomo.ne.jp: InvalidProxy('Failed to connect to proxy: http://USER934967-zone-custom-region-JP:f13808@as.rp.lokiproxy.com:10000')
+2026-03-23 11:41:11,232 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:41:11,253 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 11:41:11,253 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 11:41:11,253 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 11:41:11,253 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 11:41:11,253 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 11:41:11,275 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-47' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 11:41:27,195 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 11:41:43,998 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: je198073_2@yahoo.co.jp
+2026-03-23 11:42:56,403 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho je198073_2@yahoo.co.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:42:56,409 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: je198073_2@yahoo.co.jp
+2026-03-23 11:51:12,585 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 11:51:12,643 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 11:51:25,243 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: bekkoukamen0106@yahoo.co.jp
+2026-03-23 11:51:33,284 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 11:51:42,977 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: catering@mori-kun.jp
+2026-03-23 11:51:50,437 - WARNING - [Luồng-2] - Đăng nhập thất bại cho bekkoukamen0106@yahoo.co.jp: Acc Die
+2026-03-23 11:52:05,921 - WARNING - [Luồng-3] - Đăng nhập thất bại cho catering@mori-kun.jp: Acc Die
+2026-03-23 11:52:43,052 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho h.kmf2-xoxo@ezweb.ne.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:52:43,060 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 11:52:47,969 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: sk8.death@hotmail.co.jp
+2026-03-23 11:52:55,475 - WARNING - [Luồng-2] - Không thể lấy điểm cá nhân cho bekkoukamen0106@yahoo.co.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:52:55,475 - WARNING - [Luồng-2] - Đăng nhập thất bại cho bekkoukamen0106@yahoo.co.jp: Acc Die
+2026-03-23 11:52:55,476 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: bekkoukamen0106@yahoo.co.jp
+2026-03-23 11:53:04,264 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: yaokada@mtb.biglobe.ne.jp
+2026-03-23 11:53:10,957 - WARNING - [Luồng-3] - Không thể lấy điểm cá nhân cho catering@mori-kun.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:53:10,957 - WARNING - [Luồng-3] - Đăng nhập thất bại cho catering@mori-kun.jp: Acc Die
+2026-03-23 11:53:10,964 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: catering@mori-kun.jp
+2026-03-23 11:53:26,256 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: iuki_anuenue@yahoo.co.jp
+2026-03-23 11:53:56,547 - WARNING - [Luồng-2] - Đăng nhập thất bại cho yaokada@mtb.biglobe.ne.jp: Acc Die
+2026-03-23 11:54:01,324 - ERROR - [Luồng-3] - ❌ Lỗi trong quá trình kiểm tra cho iuki_anuenue@yahoo.co.jp: TimeoutError('Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 11:54:01,324 - WARNING - [Luồng-3] - Đăng nhập thất bại cho iuki_anuenue@yahoo.co.jp: Acc Die
+2026-03-23 11:54:01,325 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: iuki_anuenue@yahoo.co.jp
+2026-03-23 11:54:10,708 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: t_kuro_96@ybb.ne.jp
+2026-03-23 11:54:35,759 - WARNING - [Luồng-3] - Đăng nhập thất bại cho t_kuro_96@ybb.ne.jp: Acc Die
+2026-03-23 11:54:56,171 - WARNING - [Luồng-2] - Không thể lấy điểm cá nhân cho yaokada@mtb.biglobe.ne.jp: Locator.inner_text: Target page, context or browser has been closed
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:54:56,173 - WARNING - [Luồng-2] - Đăng nhập thất bại cho yaokada@mtb.biglobe.ne.jp: Acc Die
+2026-03-23 11:54:56,173 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho sk8.death@hotmail.co.jp: TargetClosedError('Locator.click: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> C:\\Users\\sang2.nguyen\\AppData\\Local\\camoufox\\camoufox\\Cache\\camoufox.exe -no-remote -headless -profile D:\\me\\nest\\tools\\check-login-rakuten\\user-data\\user-data-sk8_death_hotmail_co_jp -juggler-pipe about:blank\n<launched> pid=17416\n[pid=17416][err] *** You are running in headless mode.\n[pid=17416][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 57: unreachable code after return statement\n[pid=17416][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 119: unreachable code after return statement\n[pid=17416][err] DEBUG: Juggler pipe initialized\n[pid=17416][err] DEBUG: Dispatcher created\n[pid=17416][err] DEBUG: BrowserHandler created\n[pid=17416][err] DEBUG: BrowserHandler set as root session handler\n[pid=17416][out] \n[pid=17416][out] Juggler listening to the pipe\n[pid=17416][out] console.error: "Ignoring protocol handler for mailto without a uriTemplate!"\n[pid=17416][out] Crash Annotation GraphicsCriticalError: |[0][GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt (t=17.5666) [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt\n[pid=17416][out] console.error: SearchService: "#init: failure initializing search:" (new TypeError("defaultsConfig is undefined", "resource://gre/modules/SearchEngineSelector.sys.mjs", 752))\n[pid=17416][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=17416][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=17416][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=17416][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=17416][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=17416][out] console.error: "Could not parse ASRouter preference. Try resetting browser.newtabpage.activity-stream.asrouter.providers.snippets in about:config."\n[pid=17416][out] console.error: ({})\n[pid=17416][out] console.error: SearchSettings: "_write: Could not write to settings file:" (new Error("cannot write without any engine.", "resource://gre/modules/SearchSettings.sys.mjs", 280))\n[pid=17416][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]\n[pid=17416][out] console.error: WebExtensions: \n[pid=17416][out]   Message: TypeError: defaultsConfig is undefined\n[pid=17416][out]   Stack:\n[pid=17416][out]     #defaultEngines@resource://gre/modules/SearchEngineSelector.sys.mjs:752:22\n[pid=17416][out] fetchEngineConfiguration@resource://gre/modules/SearchEngineSelector.sys.mjs:375:65\n[pid=17416][out] \n[pid=17416][err] DEBUG: Installed 1 addon(s)\n[pid=17416][err] JavaScript error: resource://gre/modules/ExtensionContent.sys.mjs, line 687: TypeError: PrecompiledScript.executeInGlobal: Argument 1 is not an object.\n[pid=17416][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=17416][out] console.error: ({})\n[pid=17416][err] JavaScript error: resource://gre/modules/ConduitsChild.sys.mjs, line 199: Error: PortDisconnect for closed conduit 687194767364: ({portId:687194767363, source:true, error:null})\n[pid=17416][err] DEBUG: Installed 1 addon(s)\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: unreachable code after return statement\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: unreachable code after return statement\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/Zx5Xb/0YAPBsF?v=46a0888d-2464-81b2-22da-1f03653c172e, line 1: unreachable code after return statement\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/Zx5Xb/0YAPBsF?v=46a0888d-2464-81b2-22da-1f03653c172e, line 1: unreachable code after return statement\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/Zx5Xb/0YAPBsF?v=46a0888d-2464-81b2-22da-1f03653c172e, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/Zx5Xb/0YAPBsF?v=46a0888d-2464-81b2-22da-1f03653c172e, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] ERROR: Value for key \'humanize:maxTime\' is not a double\n[pid=17416][err] ERROR: Value for key \'humanize:maxTime\' is not a double\n[pid=17416][err] ERROR: Value for key \'humanize:maxTime\' is not a double\n[pid=17416][out] \n[pid=17416][out]         ERROR: error in channel "content::13/15/6": exception while running method "disposeObject" in namespace "page": Failed to find execution context with id = id-7 findExecutionContext@chrome://juggler/content/content/Runtime.js:319:13\n[pid=17416][out] disposeObject@chrome://juggler/content/content/Runtime.js:145:35\n[pid=17416][out] _onMessageInternal@chrome://juggler/content/SimpleChannel.js:237:37\n[pid=17416][out] _onMessage@chrome://juggler/content/SimpleChannel.js:194:12\n[pid=17416][out] bindToActor/actor.receiveMessage@chrome://juggler/content/SimpleChannel.js:39:44\n[pid=17416][out]  _onMessageInternal@chrome://juggler/content/SimpleChannel.js:208:24\n[pid=17416][out] _onMessage@chrome://juggler/content/SimpleChannel.js:194:12\n[pid=17416][out] bindToActor/actor.receiveMessage@chrome://juggler/content/SimpleChannel.js:39:44\n[pid=17416][out] \n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: unreachable code after return statement\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: unreachable code after return statement\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/Zx5Xb/0YAPBsF?v=46a0888d-2464-81b2-22da-1f03653c172e, line 1: unreachable code after return statement\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/Zx5Xb/0YAPBsF?v=46a0888d-2464-81b2-22da-1f03653c172e, line 1: unreachable code after return statement\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/Zx5Xb/0YAPBsF?v=46a0888d-2464-81b2-22da-1f03653c172e, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/Zx5Xb/0YAPBsF?v=46a0888d-2464-81b2-22da-1f03653c172e, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=17416][err] ERROR: Value for key \'humanize:maxTime\' is not a double\n[pid=17416][err] ERROR: Value for key \'humanize:maxTime\' is not a double\n[pid=17416][err] ERROR: Value for key \'humanize:maxTime\' is not a double\n[pid=17416] <gracefully close start>\n[pid=17416][err] DEBUG: BrowserHandler cleanup callback called\n[pid=17416][out]       \n[pid=17416][out]         ERROR: Failed "callFunction": connector for namespace "page" in channel "browser::page[95c4915f-f2ba-4dbd-bea7-a201fd05143c]/13/15/4" is disposed. _rejectCallbacksFromConnector@chrome://juggler/content/SimpleChannel.js:108:25\n[pid=17416][out] dispose@chrome://juggler/content/SimpleChannel.js:119:27\n[pid=17416][out] dispose@chrome://juggler/content/protocol/PageHandler.js:166:23\n[pid=17416][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:130:21\n[pid=17416][out] destroySession@chrome://juggler/content/protocol/Dispatcher.js:36:13\n[pid=17416][out] dispose@chrome://juggler/content/protocol/BrowserHandler.js:79:24\n[pid=17416][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:130:21\n[pid=17416][out] _dispose@chrome://juggler/content/protocol/Dispatcher.js:42:23\n[pid=17416][out] observe/browserHandler<@chrome://juggler/content/components/Juggler.js:145:22\n[pid=17416][out] Browser.close@chrome://juggler/content/protocol/BrowserHandler.js:150:10\n[pid=17416][out] \nCall log:\n  - waiting for locator("button[type=\\"submit\\"]")\n    - locator resolved to <button name="" value="" disabled type="submit" id="TMP-BTN-1" class="pc_w70per fs_large_2 btn-login bcs_btnLogin">…</button>\n  - attempting click action\n    2 × waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n    - waiting 20ms\n    2 × waiting for element to be visible, enabled and stable\n      - element is not enabled\n    - retrying click action\n      - waiting 100ms\n    50 × waiting for element to be visible, enabled and stable\n       - element is not enabled\n     - retrying click action\n       - waiting 500ms\n')
+2026-03-23 11:54:56,174 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: yaokada@mtb.biglobe.ne.jp
+2026-03-23 11:54:56,176 - WARNING - [Luồng-1] - Đăng nhập thất bại cho sk8.death@hotmail.co.jp: Acc Die
+2026-03-23 11:54:56,176 - WARNING - [Luồng-3] - Không thể lấy điểm cá nhân cho t_kuro_96@ybb.ne.jp: Locator.inner_text: Target page, context or browser has been closed
+2026-03-23 11:54:56,177 - WARNING - [Luồng-3] - Đăng nhập thất bại cho t_kuro_96@ybb.ne.jp: Acc Die
+2026-03-23 11:54:56,182 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: sk8.death@hotmail.co.jp
+2026-03-23 11:54:56,192 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: t_kuro_96@ybb.ne.jp
+2026-03-23 11:54:56,559 - WARNING - [Luồng-2] - Failed to initialize browser with proxy for t.watari-1912@docomo.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 11:54:56,559 - ERROR - [Luồng-2] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:54:56,734 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for je198073_2@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 11:54:56,736 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 11:54:56,748 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 11:54:56,748 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 11:54:56,794 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 11:54:56,794 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 11:54:56,794 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 11:54:56,794 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 11:54:56,817 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-45' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 11:54:56,825 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-56' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 11:55:48,981 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 11:56:03,021 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: bekkoukamen0106@yahoo.co.jp
+2026-03-23 11:56:07,415 - INFO - [Luồng-5] - Bắt đầu kiểm tra tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 11:56:12,702 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: catering@mori-kun.jp
+2026-03-23 11:56:19,627 - INFO - [Luồng-4] - Bắt đầu kiểm tra tài khoản: sk8.death@hotmail.co.jp
+2026-03-23 11:56:28,205 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: yaokada@mtb.biglobe.ne.jp
+2026-03-23 11:56:50,498 - WARNING - [Luồng-1] - Đăng nhập thất bại cho bekkoukamen0106@yahoo.co.jp: Acc Die
+2026-03-23 11:57:00,629 - WARNING - [Luồng-2] - Đăng nhập thất bại cho yaokada@mtb.biglobe.ne.jp: Acc Die
+2026-03-23 11:57:24,831 - ERROR - [Luồng-4] - ❌ Lỗi trong quá trình kiểm tra cho sk8.death@hotmail.co.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 11:57:24,831 - WARNING - [Luồng-4] - Đăng nhập thất bại cho sk8.death@hotmail.co.jp: Acc Die
+2026-03-23 11:57:24,832 - INFO - [Luồng-4] - Hoàn tất xử lý tài khoản: sk8.death@hotmail.co.jp
+2026-03-23 11:57:25,597 - WARNING - [Luồng-5] - Không thể lấy điểm cá nhân cho h.kmf2-xoxo@ezweb.ne.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:57:25,702 - INFO - [Luồng-5] - Hoàn tất xử lý tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 11:57:30,209 - INFO - [Luồng-4] - Bắt đầu kiểm tra tài khoản: iuki_anuenue@yahoo.co.jp
+2026-03-23 11:57:32,497 - WARNING - [Luồng-3] - Không thể lấy điểm cá nhân cho catering@mori-kun.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:57:32,564 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: catering@mori-kun.jp
+2026-03-23 11:57:35,734 - INFO - [Luồng-5] - Bắt đầu kiểm tra tài khoản: t_kuro_96@ybb.ne.jp
+2026-03-23 11:57:42,014 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: t.watari-1912@docomo.ne.jp
+2026-03-23 11:57:55,538 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho bekkoukamen0106@yahoo.co.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:57:55,570 - WARNING - [Luồng-1] - Đăng nhập thất bại cho bekkoukamen0106@yahoo.co.jp: Acc Die
+2026-03-23 11:57:55,579 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: bekkoukamen0106@yahoo.co.jp
+2026-03-23 11:58:00,532 - WARNING - [Luồng-5] - Đăng nhập thất bại cho t_kuro_96@ybb.ne.jp: Acc Die
+2026-03-23 11:58:04,086 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: je198073_2@yahoo.co.jp
+2026-03-23 11:58:05,663 - WARNING - [Luồng-2] - Không thể lấy điểm cá nhân cho yaokada@mtb.biglobe.ne.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:58:05,709 - WARNING - [Luồng-2] - Đăng nhập thất bại cho yaokada@mtb.biglobe.ne.jp: Acc Die
+2026-03-23 11:58:05,714 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: yaokada@mtb.biglobe.ne.jp
+2026-03-23 11:58:27,090 - WARNING - [Luồng-1] - Đăng nhập thất bại cho je198073_2@yahoo.co.jp: Acc Die
+2026-03-23 11:58:27,275 - ERROR - [Luồng-3] - ❌ Lỗi trong quá trình kiểm tra cho t.watari-1912@docomo.ne.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 11:58:27,276 - WARNING - [Luồng-3] - Đăng nhập thất bại cho t.watari-1912@docomo.ne.jp: Acc Die
+2026-03-23 11:58:27,277 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: t.watari-1912@docomo.ne.jp
+2026-03-23 11:58:36,344 - WARNING - [Luồng-5] - Không thể lấy điểm cá nhân cho t_kuro_96@ybb.ne.jp: Locator.inner_text: Target page, context or browser has been closed
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:58:36,345 - WARNING - [Luồng-4] - Không thể lấy điểm cá nhân cho iuki_anuenue@yahoo.co.jp: Locator.inner_text: Target page, context or browser has been closed
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 11:58:36,351 - ERROR - [Luồng-4] - ❌ Lỗi trong quá trình kiểm tra cho iuki_anuenue@yahoo.co.jp: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+2026-03-23 11:58:36,352 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho je198073_2@yahoo.co.jp: Locator.inner_text: Target page, context or browser has been closed
+2026-03-23 11:58:36,352 - WARNING - [Luồng-4] - Đăng nhập thất bại cho iuki_anuenue@yahoo.co.jp: Acc Die
+2026-03-23 11:58:36,352 - ERROR - [Luồng-5] - ❌ Lỗi trong quá trình kiểm tra cho t_kuro_96@ybb.ne.jp: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+2026-03-23 11:58:36,353 - WARNING - [Luồng-5] - Đăng nhập thất bại cho t_kuro_96@ybb.ne.jp: Acc Die
+2026-03-23 11:58:36,354 - INFO - [Luồng-4] - Hoàn tất xử lý tài khoản: iuki_anuenue@yahoo.co.jp
+2026-03-23 11:58:36,357 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho je198073_2@yahoo.co.jp: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+2026-03-23 11:58:36,357 - WARNING - [Luồng-1] - Đăng nhập thất bại cho je198073_2@yahoo.co.jp: Acc Die
+2026-03-23 11:58:36,358 - INFO - [Luồng-5] - Hoàn tất xử lý tài khoản: t_kuro_96@ybb.ne.jp
+2026-03-23 11:58:36,370 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: je198073_2@yahoo.co.jp
+2026-03-23 11:58:36,428 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 11:58:36,429 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 11:58:36,510 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 11:58:36,511 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 11:58:36,511 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 11:58:36,512 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:10:09,809 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 12:10:28,897 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 12:11:17,505 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho h.kmf2-xoxo@ezweb.ne.jp: Locator.inner_text: Error: strict mode violation: locator("span.bcs_red") resolved to 2 elements:
+    1) <span class="bcs_red">1,413</span> aka get_by_role("link", name="伊藤様 1,413ポイント")
+    2) <span class="bcs_red bcs_bold">（厳重に管理お願いします）</span> aka get_by_text("（厳重に管理お願いします）")
+
+Call log:
+  - waiting for locator("span.bcs_red")
+
+2026-03-23 12:11:47,520 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho h.kmf2-xoxo@ezweb.ne.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 12:11:48,005 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 12:12:06,938 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: catering@mori-kun.jp
+2026-03-23 12:12:13,805 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho catering@mori-kun.jp: TargetClosedError('Page.goto: Target page, context or browser has been closed\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 12:12:13,806 - WARNING - [Luồng-1] - Đăng nhập thất bại cho catering@mori-kun.jp: Acc Die
+2026-03-23 12:12:13,808 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: catering@mori-kun.jp
+2026-03-23 12:12:14,381 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for sk8.death@hotmail.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:12:14,381 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:12:14,554 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for yaokada@mtb.biglobe.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:12:14,555 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:12:14,714 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for iuki_anuenue@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:12:14,715 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:12:14,725 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-16' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:12:14,729 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-22' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:12:14,731 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-28' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:12:14,863 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for t_kuro_96@ybb.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:12:14,863 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:12:15,021 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for t.watari-1912@docomo.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:12:15,021 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:12:15,198 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for je198073_2@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:12:15,198 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:12:15,356 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for bekkoukamen0106@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:12:15,356 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:12:15,365 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 12:12:15,365 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:12:15,393 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 12:12:15,395 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 12:12:15,395 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:12:15,396 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:12:15,430 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-34' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:12:15,436 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-40' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:12:15,436 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-46' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:12:15,443 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-52' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:12:25,793 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 12:12:35,849 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 12:13:27,695 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho h.kmf2-xoxo@ezweb.ne.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 12:13:27,695 - WARNING - [Luồng-1] - Đăng nhập thất bại cho h.kmf2-xoxo@ezweb.ne.jp: Acc Die
+2026-03-23 12:13:27,695 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 12:13:32,454 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: catering@mori-kun.jp
+2026-03-23 12:13:47,311 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho catering@mori-kun.jp: TargetClosedError('Locator.click: Target page, context or browser has been closed\nBrowser logs:\n\n<launching> C:\\Users\\sang2.nguyen\\AppData\\Local\\camoufox\\camoufox\\Cache\\camoufox.exe -no-remote -headless -profile D:\\me\\nest\\tools\\check-login-rakuten\\user-data\\user-data-catering_mori-kun_jp -juggler-pipe about:blank\n<launched> pid=24956\n[pid=24956][err] *** You are running in headless mode.\n[pid=24956][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 57: unreachable code after return statement\n[pid=24956][err] JavaScript warning: resource://services-settings/Utils.sys.mjs, line 119: unreachable code after return statement\n[pid=24956][err] DEBUG: Juggler pipe initialized\n[pid=24956][err] DEBUG: Dispatcher created\n[pid=24956][err] DEBUG: BrowserHandler created\n[pid=24956][err] DEBUG: BrowserHandler set as root session handler\n[pid=24956][out] \n[pid=24956][out] Juggler listening to the pipe\n[pid=24956][out] console.error: "Ignoring protocol handler for mailto without a uriTemplate!"\n[pid=24956][out] Crash Annotation GraphicsCriticalError: |[0][GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt (t=17.8748) [GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt\n[pid=24956][out] console.error: SearchService: "#init: failure initializing search:" (new TypeError("defaultsConfig is undefined", "resource://gre/modules/SearchEngineSelector.sys.mjs", 752))\n[pid=24956][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=24956][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=24956][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=24956][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=24956][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=24956][out] console.error: "Could not parse ASRouter preference. Try resetting browser.newtabpage.activity-stream.asrouter.providers.snippets in about:config."\n[pid=24956][out] console.error: ({})\n[pid=24956][out] console.error: SearchSettings: "_write: Could not write to settings file:" (new Error("cannot write without any engine.", "resource://gre/modules/SearchSettings.sys.mjs", 280))\n[pid=24956][err] JavaScript error: chrome://juggler/content/Helper.js, line 82: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIWebProgress.removeProgressListener]\n[pid=24956][out] console.error: WebExtensions: \n[pid=24956][out]   Message: TypeError: defaultsConfig is undefined\n[pid=24956][out]   Stack:\n[pid=24956][out]     #defaultEngines@resource://gre/modules/SearchEngineSelector.sys.mjs:752:22\n[pid=24956][out] fetchEngineConfiguration@resource://gre/modules/SearchEngineSelector.sys.mjs:375:65\n[pid=24956][out] \n[pid=24956][err] DEBUG: Installed 1 addon(s)\n[pid=24956][err] JavaScript error: resource://gre/modules/ExtensionContent.sys.mjs, line 687: TypeError: PrecompiledScript.executeInGlobal: Argument 1 is not an object.\n[pid=24956][err] JavaScript error: resource://gre/modules/SearchEngineSelector.sys.mjs, line 752: TypeError: defaultsConfig is undefined\n[pid=24956][out] console.error: ({})\n[pid=24956][err] JavaScript error: resource://gre/modules/ConduitsChild.sys.mjs, line 199: Error: PortDisconnect for closed conduit 687194767364: ({portId:687194767363, source:true, error:null})\n[pid=24956][err] DEBUG: Installed 1 addon(s)\n[pid=24956][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: unreachable code after return statement\n[pid=24956][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/KCIiA/hkLABwF?v=5fbdf1ef-ede6-a94a-be63-f97fabbf17cd, line 1: unreachable code after return statement\n[pid=24956][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=24956][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=24956][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=24956][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/3OwYkJiY1EL3wzJ1z7/NncmY3J3Bw/A3cve/ANwIB0B, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=24956][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/KCIiA/hkLABwF?v=5fbdf1ef-ede6-a94a-be63-f97fabbf17cd, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=24956][err] JavaScript warning: https://www.biccamera.com/wq5IDv3aVmoV/3P/hJrDEcSTx8/GLwYkJiY1EL3/JDIyY3J3Bw/KCIiA/hkLABwF?v=5fbdf1ef-ede6-a94a-be63-f97fabbf17cd, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.\n[pid=24956][err] ERROR: Value for key \'humanize:maxTime\' is not a double\n[pid=24956] <gracefully close start>\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n    - locator resolved to <input value="" type="text" maxlength="100" name="782a2f6369e0d260608641e49838c93d060428d43d8a0d571b61c5f4b57b55b0"/>\n  - attempting click action\n    - waiting for element to be visible, enabled and stable\n    - element is visible, enabled and stable\n    - scrolling into view if needed\n    - done scrolling\n    - performing click action\n')
+2026-03-23 12:13:47,312 - WARNING - [Luồng-1] - Đăng nhập thất bại cho catering@mori-kun.jp: Acc Die
+2026-03-23 12:13:47,314 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: catering@mori-kun.jp
+2026-03-23 12:13:47,539 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for sk8.death@hotmail.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:13:47,539 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:13:47,539 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-16' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:13:47,727 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for yaokada@mtb.biglobe.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:13:47,727 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:13:47,898 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for iuki_anuenue@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:13:47,898 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:13:48,050 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for t_kuro_96@ybb.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:13:48,050 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:13:48,208 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for t.watari-1912@docomo.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:13:48,208 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:13:48,241 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-28' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:13:48,242 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-34' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:13:48,243 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-40' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:13:48,384 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for je198073_2@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:13:48,384 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:13:48,548 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for bekkoukamen0106@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:13:48,548 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:13:48,564 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 12:13:48,564 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:13:48,569 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 12:13:48,569 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 12:13:48,569 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:13:48,569 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:13:48,620 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-52' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:13:48,630 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-22' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:13:48,632 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-46' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:14:20,139 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 12:14:28,443 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 12:14:55,574 - WARNING - [Luồng-1] - Đăng nhập thất bại cho h.kmf2-xoxo@ezweb.ne.jp: Acc Die
+2026-03-23 12:15:00,589 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho h.kmf2-xoxo@ezweb.ne.jp: 'Locator' object is not callable
+2026-03-23 12:15:30,608 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho h.kmf2-xoxo@ezweb.ne.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 12:15:30,632 - WARNING - [Luồng-1] - Đăng nhập thất bại cho h.kmf2-xoxo@ezweb.ne.jp: Acc Die
+2026-03-23 12:15:30,632 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 12:15:33,458 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for catering@mori-kun.jp: Exception('BrowserType.launch_persistent_context: Connection closed while reading from the driver')
+2026-03-23 12:15:33,458 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:15:33,512 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for sk8.death@hotmail.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:15:33,512 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:15:33,717 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for yaokada@mtb.biglobe.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:15:33,717 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:15:33,744 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-16' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:15:33,747 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-22' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:15:33,894 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for iuki_anuenue@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:15:33,894 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:15:34,062 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for t_kuro_96@ybb.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:15:34,062 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:15:34,426 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for t.watari-1912@docomo.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:15:34,426 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:15:34,630 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for je198073_2@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:15:34,630 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:15:34,828 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for bekkoukamen0106@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:15:34,828 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:15:34,828 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 12:15:34,828 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:15:34,858 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 12:15:34,858 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 12:15:34,858 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:15:34,858 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:15:34,889 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-34' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:15:34,897 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-40' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:15:34,899 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-46' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:15:34,900 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-52' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:15:34,900 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-28' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:15:50,455 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 12:16:03,380 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: iuki_anuenue@yahoo.co.jp
+2026-03-23 12:16:29,122 - WARNING - [Luồng-1] - Đăng nhập thất bại cho iuki_anuenue@yahoo.co.jp: Acc Die
+2026-03-23 12:16:34,147 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho iuki_anuenue@yahoo.co.jp: 'Locator' object is not callable
+2026-03-23 12:17:04,153 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho iuki_anuenue@yahoo.co.jp: Locator.inner_text: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 12:17:04,179 - WARNING - [Luồng-1] - Đăng nhập thất bại cho iuki_anuenue@yahoo.co.jp: Acc Die
+2026-03-23 12:17:04,179 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: iuki_anuenue@yahoo.co.jp
+2026-03-23 12:17:09,031 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: t_kuro_96@ybb.ne.jp
+2026-03-23 12:17:37,734 - WARNING - [Luồng-1] - Đăng nhập thất bại cho t_kuro_96@ybb.ne.jp: Acc Die
+2026-03-23 12:17:42,756 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho t_kuro_96@ybb.ne.jp: 'Locator' object is not callable
+2026-03-23 12:18:02,431 - WARNING - [Luồng-1] - Không thể lấy điểm cá nhân cho t_kuro_96@ybb.ne.jp: Locator.inner_text: Target page, context or browser has been closed
+Call log:
+  - waiting for locator("#bcs_top_personal_point")
+
+2026-03-23 12:18:02,441 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho t_kuro_96@ybb.ne.jp: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+2026-03-23 12:18:02,446 - ERROR - [Luồng-1] - Lỗi xử lý tài khoản t_kuro_96@ybb.ne.jp: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+2026-03-23 12:18:02,593 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for t.watari-1912@docomo.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:18:02,593 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:18:02,761 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for je198073_2@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:18:02,761 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:18:02,784 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-16' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:18:02,786 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-22' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:18:02,911 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for bekkoukamen0106@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:18:02,911 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:18:03,086 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for h.kmf2-xoxo@ezweb.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:18:03,087 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:18:03,689 - ERROR - [Luồng-1] - Task exception was never retrieved
+future: <Task finished name='Task-34' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:18:04,472 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for catering@mori-kun.jp: Exception('BrowserType.launch_persistent_context: Connection closed while reading from the driver')
+2026-03-23 12:18:04,472 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:18:04,720 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for sk8.death@hotmail.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:18:04,720 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:18:04,881 - WARNING - [Luồng-1] - Failed to initialize browser with proxy for yaokada@mtb.biglobe.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 12:18:04,890 - ERROR - [Luồng-1] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 12:18:04,890 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 12:18:04,890 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:18:04,914 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 12:18:04,914 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 12:18:04,914 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:18:04,914 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:18:04,947 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-46' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:18:04,954 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-52' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:18:04,954 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-28' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 12:18:27,471 - INFO - [MainThread] - Đã tải 9 tài khoản và 1 proxy
+2026-03-23 12:18:37,944 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 12:19:18,263 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho h.kmf2-xoxo@ezweb.ne.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 12:19:18,327 - WARNING - [Luồng-1] - Đăng nhập thất bại cho h.kmf2-xoxo@ezweb.ne.jp: Acc Die
+2026-03-23 12:19:18,328 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: h.kmf2-xoxo@ezweb.ne.jp
+2026-03-23 12:19:22,882 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: iuki_anuenue@yahoo.co.jp
+2026-03-23 12:19:49,771 - WARNING - [Luồng-1] - Đăng nhập thất bại cho iuki_anuenue@yahoo.co.jp: Acc Die
+2026-03-23 12:19:49,771 - WARNING - [Luồng-1] - Đăng nhập thất bại cho iuki_anuenue@yahoo.co.jp: Acc Die
+2026-03-23 12:19:49,771 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: iuki_anuenue@yahoo.co.jp
+2026-03-23 12:19:58,276 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: t_kuro_96@ybb.ne.jp
+2026-03-23 12:20:25,612 - WARNING - [Luồng-1] - Đăng nhập thất bại cho t_kuro_96@ybb.ne.jp: Acc Die
+2026-03-23 12:20:25,613 - WARNING - [Luồng-1] - Đăng nhập thất bại cho t_kuro_96@ybb.ne.jp: Acc Die
+2026-03-23 12:20:25,613 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: t_kuro_96@ybb.ne.jp
+2026-03-23 12:20:34,373 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: t.watari-1912@docomo.ne.jp
+2026-03-23 12:21:19,688 - INFO - [Luồng-1] - Điểm cá nhân cho t.watari-1912@docomo.ne.jp: 0
+2026-03-23 12:21:19,689 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: t.watari-1912@docomo.ne.jp
+2026-03-23 12:21:32,573 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: je198073_2@yahoo.co.jp
+2026-03-23 12:22:33,684 - INFO - [Luồng-1] - Điểm cá nhân cho je198073_2@yahoo.co.jp: 16
+2026-03-23 12:22:33,684 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: je198073_2@yahoo.co.jp
+2026-03-23 12:22:46,676 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: bekkoukamen0106@yahoo.co.jp
+2026-03-23 12:23:08,923 - WARNING - [Luồng-1] - Đăng nhập thất bại cho bekkoukamen0106@yahoo.co.jp: Acc Die
+2026-03-23 12:23:08,923 - WARNING - [Luồng-1] - Đăng nhập thất bại cho bekkoukamen0106@yahoo.co.jp: Acc Die
+2026-03-23 12:23:08,923 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: bekkoukamen0106@yahoo.co.jp
+2026-03-23 12:23:17,148 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: catering@mori-kun.jp
+2026-03-23 12:23:38,457 - WARNING - [Luồng-1] - Đăng nhập thất bại cho catering@mori-kun.jp: Acc Die
+2026-03-23 12:23:38,459 - WARNING - [Luồng-1] - Đăng nhập thất bại cho catering@mori-kun.jp: Acc Die
+2026-03-23 12:23:38,460 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: catering@mori-kun.jp
+2026-03-23 12:23:49,888 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: sk8.death@hotmail.co.jp
+2026-03-23 12:24:17,399 - WARNING - [Luồng-1] - Đăng nhập thất bại cho sk8.death@hotmail.co.jp: Acc Die
+2026-03-23 12:24:17,399 - WARNING - [Luồng-1] - Đăng nhập thất bại cho sk8.death@hotmail.co.jp: Acc Die
+2026-03-23 12:24:17,399 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: sk8.death@hotmail.co.jp
+2026-03-23 12:24:27,204 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: yaokada@mtb.biglobe.ne.jp
+2026-03-23 12:24:29,324 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho yaokada@mtb.biglobe.ne.jp: TargetClosedError('BrowserContext.new_page: Target page, context or browser has been closed')
+2026-03-23 12:24:29,326 - ERROR - [Luồng-1] - Lỗi xử lý tài khoản yaokada@mtb.biglobe.ne.jp: UnboundLocalError("cannot access local variable 'page' where it is not associated with a value")
+2026-03-23 12:24:29,665 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 12:24:29,665 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:24:29,705 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 12:24:29,705 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:24:29,818 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 12:24:29,819 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 12:24:29,819 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 12:24:29,820 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:31:05,539 - INFO - [MainThread] - Đã tải 9 tài khoản và 50 proxy
+2026-03-23 13:31:11,734 - WARNING - [Luồng-1] - Lỗi khi xác định IP cho tomopyon@lime.plala.or.jp với proxy: [WinError 64] The specified network name is no longer available
+2026-03-23 13:31:20,770 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:31:21,182 - WARNING - [Luồng-3] - Lỗi khi xác định IP cho ms06hws@maia.eonet.ne.jp với proxy: [WinError 64] The specified network name is no longer available
+2026-03-23 13:31:25,125 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho tomopyon@lime.plala.or.jp: Error('Page.goto: NS_ERROR_NET_RESET\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 13:31:25,347 - WARNING - [Luồng-1] - Đăng nhập thất bại cho tomopyon@lime.plala.or.jp: Acc Die
+2026-03-23 13:31:25,347 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:31:31,394 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:31:31,813 - WARNING - [Luồng-2] - Lỗi khi xác định IP cho makoto_s@i.softbank.jp với proxy: [WinError 64] The specified network name is no longer available
+2026-03-23 13:31:35,336 - ERROR - [Luồng-3] - ❌ Lỗi trong quá trình kiểm tra cho ms06hws@maia.eonet.ne.jp: Error('Page.goto: NS_ERROR_NET_RESET\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 13:31:35,504 - WARNING - [Luồng-3] - Đăng nhập thất bại cho ms06hws@maia.eonet.ne.jp: Acc Die
+2026-03-23 13:31:35,522 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:31:38,813 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:31:39,195 - WARNING - [Luồng-4] - Lỗi khi xác định IP cho dual_glasklar@hotmail.co.jp với proxy: [WinError 64] The specified network name is no longer available
+2026-03-23 13:31:41,463 - ERROR - [Luồng-2] - ❌ Lỗi trong quá trình kiểm tra cho makoto_s@i.softbank.jp: TargetClosedError('Page.goto: Target page, context or browser has been closed\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 13:31:41,463 - ERROR - [Luồng-2] - Lỗi xử lý tài khoản makoto_s@i.softbank.jp: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+2026-03-23 13:31:41,838 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 13:31:41,838 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:31:41,859 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 13:31:41,859 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 13:31:41,859 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:31:43,612 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 13:31:43,612 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:31:43,614 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 13:31:43,624 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:32:12,887 - INFO - [MainThread] - Đã tải 9 tài khoản và 50 proxy
+2026-03-23 13:32:12,887 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 13:32:23,451 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:32:27,167 - ERROR - [Luồng-2] - ❌ Lỗi trong quá trình kiểm tra cho tomopyon@lime.plala.or.jp: Error('Page.goto: NS_ERROR_NET_RESET\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 13:32:27,278 - WARNING - [Luồng-2] - Đăng nhập thất bại cho tomopyon@lime.plala.or.jp: Acc Die
+2026-03-23 13:32:27,278 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:32:29,535 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:32:33,029 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho ms06hws@maia.eonet.ne.jp: Error('Page.goto: NS_ERROR_NET_RESET\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 13:32:33,198 - WARNING - [Luồng-1] - Đăng nhập thất bại cho ms06hws@maia.eonet.ne.jp: Acc Die
+2026-03-23 13:32:33,202 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:32:36,580 - WARNING - [Luồng-3] - Failed to initialize browser with proxy for makoto_s@i.softbank.jp: InvalidIP('Failed to get IP address')
+2026-03-23 13:32:36,580 - ERROR - [Luồng-3] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 13:32:41,598 - WARNING - [Luồng-4] - Failed to initialize browser with proxy for dual_glasklar@hotmail.co.jp: Exception('BrowserType.launch_persistent_context: Connection closed while reading from the driver')
+2026-03-23 13:32:41,598 - ERROR - [Luồng-4] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 13:32:41,612 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 13:32:41,612 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:32:41,648 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 13:32:41,648 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 13:32:41,648 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:32:41,684 - WARNING - [Luồng-7] - Failed to initialize browser with proxy for yuka-o.0713@i.softbank.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 13:32:41,688 - ERROR - [Luồng-7] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 13:32:41,845 - WARNING - [Luồng-5] - Failed to initialize browser with proxy for kujoumakoto7@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 13:32:41,845 - ERROR - [Luồng-5] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 13:32:41,996 - WARNING - [Luồng-8] - Failed to initialize browser with proxy for rein514@yahoo.co.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 13:32:41,996 - ERROR - [Luồng-8] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 13:32:42,173 - WARNING - [Luồng-6] - Failed to initialize browser with proxy for tomoe.kashi1974@docomo.ne.jp: Exception('Connection closed while reading from the driver')
+2026-03-23 13:32:42,174 - ERROR - [Luồng-6] - Lỗi trong worker thread: Exception('Failed to initialize browser proxy')
+2026-03-23 13:32:42,179 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 13:32:42,179 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:32:42,179 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 13:32:42,181 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:32:42,205 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-52' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 13:32:42,215 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-60' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 13:32:42,215 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-68' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 13:32:42,217 - ERROR - [MainThread] - Task exception was never retrieved
+future: <Task finished name='Task-44' coro=<Connection.run.<locals>.init() done, defined at D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py:307> exception=Exception('Connection.init: Connection closed while reading from the driver')>
+Traceback (most recent call last):
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 308, in init
+    self.playwright_future.set_result(await self._root_object.initialize())
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 249, in initialize
+    await self._channel.send(
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\me\nest\tools\check-login-rakuten\.venv\Lib\site-packages\playwright\_impl\_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+Exception: Connection.init: Connection closed while reading from the driver
+2026-03-23 13:33:17,357 - INFO - [MainThread] - Đã tải 9 tài khoản và 50 proxy
+2026-03-23 13:33:27,779 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:33:33,446 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:33:39,948 - INFO - [Luồng-4] - Bắt đầu kiểm tra tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:33:48,261 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: dual_glasklar@hotmail.co.jp
+2026-03-23 13:34:05,081 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho tomopyon@lime.plala.or.jp: AttributeError("'Page' object has no attribute 'sou'")
+2026-03-23 13:34:05,210 - WARNING - [Luồng-1] - Đăng nhập thất bại cho tomopyon@lime.plala.or.jp: Acc Die
+2026-03-23 13:34:05,213 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:34:12,155 - ERROR - [Luồng-3] - ❌ Lỗi trong quá trình kiểm tra cho ms06hws@maia.eonet.ne.jp: AttributeError("'Page' object has no attribute 'sou'")
+2026-03-23 13:34:12,218 - WARNING - [Luồng-3] - Đăng nhập thất bại cho ms06hws@maia.eonet.ne.jp: Acc Die
+2026-03-23 13:34:12,224 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:34:15,602 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: yuka-o.0713@i.softbank.jp
+2026-03-23 13:34:16,468 - WARNING - [Luồng-2] - Đăng nhập thất bại cho dual_glasklar@hotmail.co.jp: Acc Die
+2026-03-23 13:34:16,468 - WARNING - [Luồng-2] - Đăng nhập thất bại cho dual_glasklar@hotmail.co.jp: Acc Die
+2026-03-23 13:34:16,473 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: dual_glasklar@hotmail.co.jp
+2026-03-23 13:34:22,034 - ERROR - [Luồng-4] - ❌ Lỗi trong quá trình kiểm tra cho makoto_s@i.softbank.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 13:34:22,073 - WARNING - [Luồng-4] - Đăng nhập thất bại cho makoto_s@i.softbank.jp: Acc Die
+2026-03-23 13:34:22,073 - INFO - [Luồng-4] - Hoàn tất xử lý tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:34:22,756 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: kujoumakoto7@yahoo.co.jp
+2026-03-23 13:34:25,619 - ERROR - [Luồng-3] - ❌ Lỗi trong quá trình kiểm tra cho kujoumakoto7@yahoo.co.jp: TargetClosedError('Page.goto: Target page, context or browser has been closed\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 13:34:25,619 - ERROR - [Luồng-1] - ❌ Lỗi trong quá trình kiểm tra cho yuka-o.0713@i.softbank.jp: TargetClosedError('Page.goto: Target page, context or browser has been closed\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 13:34:25,622 - ERROR - [Luồng-1] - Lỗi xử lý tài khoản yuka-o.0713@i.softbank.jp: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+2026-03-23 13:34:25,622 - ERROR - [Luồng-3] - Lỗi xử lý tài khoản kujoumakoto7@yahoo.co.jp: TargetClosedError('Page.screenshot: Target page, context or browser has been closed')
+2026-03-23 13:34:25,950 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 13:34:25,950 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:34:25,999 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 13:34:25,999 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 13:34:25,999 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:34:27,143 - INFO - [MainThread] - Nhận tín hiệu dừng. Đang dọn dẹp...
+2026-03-23 13:34:27,143 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:34:27,143 - INFO - [MainThread] - Dọn dẹp hoàn tất. Thoát...
+2026-03-23 13:34:27,166 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:36:04,012 - INFO - [MainThread] - Đã tải 9 tài khoản và 50 proxy
+2026-03-23 13:36:04,012 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 13:36:12,338 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:36:20,345 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:36:27,782 - INFO - [Luồng-4] - Bắt đầu kiểm tra tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:36:37,918 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: dual_glasklar@hotmail.co.jp
+2026-03-23 13:36:44,941 - WARNING - [Luồng-3] - Kết nối bị chặn cho ms06hws@maia.eonet.ne.jp. Có thể do proxy: <!DOCTYPE html><html data-l10n-sync="true" lang="en-US" dir="ltr"><head>
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; object-src 'none'">
+    <meta name="color-scheme" 
+2026-03-23 13:36:44,941 - WARNING - [Luồng-3] - Đăng nhập thất bại cho ms06hws@maia.eonet.ne.jp: Acc Die
+2026-03-23 13:36:44,941 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:36:48,088 - WARNING - [Luồng-4] - Kết nối bị chặn cho makoto_s@i.softbank.jp. Có thể do proxy: <!DOCTYPE html><html data-l10n-sync="true" lang="en-US" dir="ltr"><head>
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; object-src 'none'">
+    <meta name="color-scheme" 
+2026-03-23 13:36:48,089 - WARNING - [Luồng-4] - Đăng nhập thất bại cho makoto_s@i.softbank.jp: Acc Die
+2026-03-23 13:36:48,094 - INFO - [Luồng-4] - Hoàn tất xử lý tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:36:48,800 - WARNING - [Luồng-1] - Kết nối bị chặn cho tomopyon@lime.plala.or.jp. Có thể do proxy: <!DOCTYPE html><html data-l10n-sync="true" lang="en-US" dir="ltr"><head>
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; object-src 'none'">
+    <meta name="color-scheme" 
+2026-03-23 13:36:48,801 - WARNING - [Luồng-1] - Đăng nhập thất bại cho tomopyon@lime.plala.or.jp: Acc Die
+2026-03-23 13:36:48,801 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:36:53,176 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: yuka-o.0713@i.softbank.jp
+2026-03-23 13:37:01,016 - INFO - [Luồng-4] - Bắt đầu kiểm tra tài khoản: kujoumakoto7@yahoo.co.jp
+2026-03-23 13:37:06,944 - WARNING - [Luồng-2] - Kết nối bị chặn cho dual_glasklar@hotmail.co.jp. Có thể do proxy: <!DOCTYPE html><html data-l10n-sync="true" lang="en-US" dir="ltr"><head>
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; object-src 'none'">
+    <meta name="color-scheme" 
+2026-03-23 13:37:06,944 - WARNING - [Luồng-2] - Đăng nhập thất bại cho dual_glasklar@hotmail.co.jp: Acc Die
+2026-03-23 13:37:06,954 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: dual_glasklar@hotmail.co.jp
+2026-03-23 13:37:15,210 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: rein514@yahoo.co.jp
+2026-03-23 13:37:20,130 - WARNING - [Luồng-4] - Kết nối bị chặn cho kujoumakoto7@yahoo.co.jp. Có thể do proxy: <!DOCTYPE html><html data-l10n-sync="true" lang="en-US" dir="ltr"><head>
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; object-src 'none'">
+    <meta name="color-scheme" 
+2026-03-23 13:37:20,130 - WARNING - [Luồng-4] - Đăng nhập thất bại cho kujoumakoto7@yahoo.co.jp: Acc Die
+2026-03-23 13:37:20,135 - INFO - [Luồng-4] - Hoàn tất xử lý tài khoản: kujoumakoto7@yahoo.co.jp
+2026-03-23 13:37:23,968 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: tomoe.kashi1974@docomo.ne.jp
+2026-03-23 13:37:35,068 - INFO - [Luồng-4] - Bắt đầu kiểm tra tài khoản: jejusbeibet@yahoo.co.jp
+2026-03-23 13:37:42,779 - ERROR - [Luồng-3] - ❌ Lỗi trong quá trình kiểm tra cho yuka-o.0713@i.softbank.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 13:37:42,868 - WARNING - [Luồng-3] - Đăng nhập thất bại cho yuka-o.0713@i.softbank.jp: Acc Die
+2026-03-23 13:37:42,868 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: yuka-o.0713@i.softbank.jp
+2026-03-23 13:37:50,873 - WARNING - [Luồng-2] - Kết nối bị chặn cho tomoe.kashi1974@docomo.ne.jp. Có thể do proxy: <!DOCTYPE html><html data-l10n-sync="true" lang="en-US" dir="ltr"><head>
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; object-src 'none'">
+    <meta name="color-scheme" 
+2026-03-23 13:37:50,873 - WARNING - [Luồng-2] - Đăng nhập thất bại cho tomoe.kashi1974@docomo.ne.jp: Acc Die
+2026-03-23 13:37:50,882 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: tomoe.kashi1974@docomo.ne.jp
+2026-03-23 13:38:03,171 - INFO - [Luồng-1] - Điểm cá nhân cho rein514@yahoo.co.jp: 0
+2026-03-23 13:38:03,183 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: rein514@yahoo.co.jp
+2026-03-23 13:38:15,913 - ERROR - [Luồng-4] - ❌ Lỗi trong quá trình kiểm tra cho jejusbeibet@yahoo.co.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 13:38:15,947 - WARNING - [Luồng-4] - Đăng nhập thất bại cho jejusbeibet@yahoo.co.jp: Acc Die
+2026-03-23 13:38:15,947 - INFO - [Luồng-4] - Hoàn tất xử lý tài khoản: jejusbeibet@yahoo.co.jp
+2026-03-23 13:38:16,501 - INFO - [MainThread] - Đã xử lý xong tất cả tài khoản.
+2026-03-23 13:38:16,501 - INFO - [MainThread] - ✅ Kiểm tra thành công: 1
+2026-03-23 13:38:16,501 - INFO - [MainThread] - ❌ Kiểm tra thất bại: 8
+2026-03-23 13:38:16,650 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 13:38:16,650 - INFO - [MainThread] - Chương trình hoàn tất. Thoát sau 5 giây...
+2026-03-23 13:38:21,651 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:38:21,651 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:46:17,813 - INFO - [MainThread] - Đã tải 9 tài khoản và 50 proxy
+2026-03-23 13:46:26,831 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:46:38,471 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:46:43,934 - WARNING - [Luồng-2] - Kết nối bị chặn cho tomopyon@lime.plala.or.jp.
+2026-03-23 13:46:43,935 - WARNING - [Luồng-2] - Đăng nhập thất bại cho tomopyon@lime.plala.or.jp: Acc Die
+2026-03-23 13:46:43,936 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:46:51,893 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:47:15,290 - WARNING - [Luồng-2] - Kết nối bị chặn cho makoto_s@i.softbank.jp.
+2026-03-23 13:47:15,290 - WARNING - [Luồng-2] - Đăng nhập thất bại cho makoto_s@i.softbank.jp: Acc Die
+2026-03-23 13:47:15,302 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:47:22,175 - WARNING - [Luồng-1] - Không thể nhập email cho ms06hws@maia.eonet.ne.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 13:47:22,252 - WARNING - [Luồng-1] - Đăng nhập thất bại cho ms06hws@maia.eonet.ne.jp: Acc Die
+2026-03-23 13:47:22,254 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:47:23,499 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: dual_glasklar@hotmail.co.jp
+2026-03-23 13:47:30,252 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: yuka-o.0713@i.softbank.jp
+2026-03-23 13:47:55,107 - ERROR - [Luồng-2] - ❌ Lỗi trong quá trình kiểm tra cho dual_glasklar@hotmail.co.jp: TimeoutError('Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to "https://www.biccamera.com/bc/member/SfrLogin.jsp", waiting until "load"\n')
+2026-03-23 13:48:04,344 - INFO - [Luồng-1] - Captcha đã được giải quyết cho yuka-o.0713@i.softbank.jp.
+2026-03-23 13:48:09,376 - INFO - [Luồng-1] - Điểm cá nhân cho yuka-o.0713@i.softbank.jp: 0
+2026-03-23 13:48:09,376 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: yuka-o.0713@i.softbank.jp
+2026-03-23 13:48:16,307 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: kujoumakoto7@yahoo.co.jp
+2026-03-23 13:48:25,126 - ERROR - [Luồng-2] - Lỗi xử lý tài khoản dual_glasklar@hotmail.co.jp: TimeoutError('Page.screenshot: Timeout 30000ms exceeded.\nCall log:\n  - taking page screenshot\n  - waiting for fonts to load...\n')
+2026-03-23 13:48:35,115 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: rein514@yahoo.co.jp
+2026-03-23 13:48:56,545 - WARNING - [Luồng-1] - Kết nối bị chặn cho kujoumakoto7@yahoo.co.jp.
+2026-03-23 13:48:56,545 - WARNING - [Luồng-1] - Đăng nhập thất bại cho kujoumakoto7@yahoo.co.jp: Acc Die
+2026-03-23 13:48:56,545 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: kujoumakoto7@yahoo.co.jp
+2026-03-23 13:49:00,980 - WARNING - [Luồng-2] - Kết nối bị chặn cho rein514@yahoo.co.jp.
+2026-03-23 13:49:00,980 - WARNING - [Luồng-2] - Đăng nhập thất bại cho rein514@yahoo.co.jp: Acc Die
+2026-03-23 13:49:00,981 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: rein514@yahoo.co.jp
+2026-03-23 13:49:10,933 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: tomoe.kashi1974@docomo.ne.jp
+2026-03-23 13:49:22,914 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: jejusbeibet@yahoo.co.jp
+2026-03-23 13:49:49,086 - INFO - [Luồng-1] - Captcha đã được giải quyết cho tomoe.kashi1974@docomo.ne.jp.
+2026-03-23 13:49:53,476 - WARNING - [Luồng-2] - Kết nối bị chặn cho jejusbeibet@yahoo.co.jp.
+2026-03-23 13:49:53,476 - WARNING - [Luồng-2] - Đăng nhập thất bại cho jejusbeibet@yahoo.co.jp: Acc Die
+2026-03-23 13:49:53,476 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: jejusbeibet@yahoo.co.jp
+2026-03-23 13:49:54,111 - INFO - [Luồng-1] - Điểm cá nhân cho tomoe.kashi1974@docomo.ne.jp: 660
+2026-03-23 13:49:54,113 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: tomoe.kashi1974@docomo.ne.jp
+2026-03-23 13:49:54,759 - INFO - [MainThread] - Đã xử lý xong tất cả tài khoản.
+2026-03-23 13:49:54,759 - INFO - [MainThread] - ✅ Kiểm tra thành công: 2
+2026-03-23 13:49:54,759 - INFO - [MainThread] - ❌ Kiểm tra thất bại: 7
+2026-03-23 13:49:54,852 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 13:49:54,852 - INFO - [MainThread] - Chương trình hoàn tất. Thoát sau 5 giây...
+2026-03-23 13:49:59,863 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:49:59,864 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:51:10,686 - INFO - [MainThread] - Đã tải 9 tài khoản và 50 proxy
+2026-03-23 13:51:19,398 - INFO - [Luồng-2] - Bắt đầu kiểm tra tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:51:26,027 - INFO - [Luồng-1] - Bắt đầu kiểm tra tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:51:33,761 - INFO - [Luồng-3] - Bắt đầu kiểm tra tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:51:39,710 - WARNING - [Luồng-2] - Kết nối bị chặn cho tomopyon@lime.plala.or.jp.
+2026-03-23 13:51:39,711 - WARNING - [Luồng-2] - Đăng nhập thất bại cho tomopyon@lime.plala.or.jp: Acc Die
+2026-03-23 13:51:39,715 - INFO - [Luồng-2] - Hoàn tất xử lý tài khoản: tomopyon@lime.plala.or.jp
+2026-03-23 13:51:42,420 - INFO - [Luồng-6] - Bắt đầu kiểm tra tài khoản: dual_glasklar@hotmail.co.jp
+2026-03-23 13:51:49,859 - INFO - [Luồng-4] - Bắt đầu kiểm tra tài khoản: yuka-o.0713@i.softbank.jp
+2026-03-23 13:51:59,212 - INFO - [Luồng-5] - Bắt đầu kiểm tra tài khoản: kujoumakoto7@yahoo.co.jp
+2026-03-23 13:52:08,702 - INFO - [Luồng-1] - Captcha đã được giải quyết cho ms06hws@maia.eonet.ne.jp.
+2026-03-23 13:52:10,161 - INFO - [Luồng-7] - Bắt đầu kiểm tra tài khoản: rein514@yahoo.co.jp
+2026-03-23 13:52:13,744 - INFO - [Luồng-1] - Điểm cá nhân cho ms06hws@maia.eonet.ne.jp: 0
+2026-03-23 13:52:13,746 - INFO - [Luồng-1] - Hoàn tất xử lý tài khoản: ms06hws@maia.eonet.ne.jp
+2026-03-23 13:52:14,299 - WARNING - [Luồng-6] - Kết nối bị chặn cho dual_glasklar@hotmail.co.jp.
+2026-03-23 13:52:14,301 - WARNING - [Luồng-6] - Đăng nhập thất bại cho dual_glasklar@hotmail.co.jp: Acc Die
+2026-03-23 13:52:14,306 - INFO - [Luồng-6] - Hoàn tất xử lý tài khoản: dual_glasklar@hotmail.co.jp
+2026-03-23 13:52:14,318 - WARNING - [Luồng-4] - Kết nối bị chặn cho yuka-o.0713@i.softbank.jp.
+2026-03-23 13:52:14,319 - WARNING - [Luồng-4] - Đăng nhập thất bại cho yuka-o.0713@i.softbank.jp: Acc Die
+2026-03-23 13:52:14,325 - INFO - [Luồng-4] - Hoàn tất xử lý tài khoản: yuka-o.0713@i.softbank.jp
+2026-03-23 13:52:17,513 - WARNING - [Luồng-3] - Không thể nhập email cho makoto_s@i.softbank.jp: TimeoutError('Locator.click: Timeout 30000ms exceeded.\nCall log:\n  - waiting for locator("input[type=\\"text\\"]").first\n')
+2026-03-23 13:52:17,749 - WARNING - [Luồng-3] - Đăng nhập thất bại cho makoto_s@i.softbank.jp: Acc Die
+2026-03-23 13:52:17,756 - INFO - [Luồng-3] - Hoàn tất xử lý tài khoản: makoto_s@i.softbank.jp
+2026-03-23 13:52:22,443 - INFO - [Luồng-8] - Bắt đầu kiểm tra tài khoản: tomoe.kashi1974@docomo.ne.jp
+2026-03-23 13:52:29,966 - WARNING - [Luồng-5] - Kết nối bị chặn cho kujoumakoto7@yahoo.co.jp.
+2026-03-23 13:52:29,967 - WARNING - [Luồng-5] - Đăng nhập thất bại cho kujoumakoto7@yahoo.co.jp: Acc Die
+2026-03-23 13:52:29,971 - INFO - [Luồng-5] - Hoàn tất xử lý tài khoản: kujoumakoto7@yahoo.co.jp
+2026-03-23 13:52:33,984 - INFO - [Luồng-9] - Bắt đầu kiểm tra tài khoản: jejusbeibet@yahoo.co.jp
+2026-03-23 13:52:38,915 - WARNING - [Luồng-7] - Kết nối bị chặn cho rein514@yahoo.co.jp.
+2026-03-23 13:52:38,915 - WARNING - [Luồng-7] - Đăng nhập thất bại cho rein514@yahoo.co.jp: Acc Die
+2026-03-23 13:52:38,920 - INFO - [Luồng-7] - Hoàn tất xử lý tài khoản: rein514@yahoo.co.jp
+2026-03-23 13:52:44,158 - WARNING - [Luồng-8] - Kết nối bị chặn cho tomoe.kashi1974@docomo.ne.jp.
+2026-03-23 13:52:44,158 - WARNING - [Luồng-8] - Đăng nhập thất bại cho tomoe.kashi1974@docomo.ne.jp: Acc Die
+2026-03-23 13:52:44,158 - INFO - [Luồng-8] - Hoàn tất xử lý tài khoản: tomoe.kashi1974@docomo.ne.jp
+2026-03-23 13:53:08,398 - INFO - [Luồng-9] - Captcha đã được giải quyết cho jejusbeibet@yahoo.co.jp.
+2026-03-23 13:53:13,421 - INFO - [Luồng-9] - Điểm cá nhân cho jejusbeibet@yahoo.co.jp: 0
+2026-03-23 13:53:13,426 - INFO - [Luồng-9] - Hoàn tất xử lý tài khoản: jejusbeibet@yahoo.co.jp
+2026-03-23 13:53:13,924 - INFO - [MainThread] - Đã xử lý xong tất cả tài khoản.
+2026-03-23 13:53:13,925 - INFO - [MainThread] - ✅ Kiểm tra thành công: 2
+2026-03-23 13:53:13,925 - INFO - [MainThread] - ❌ Kiểm tra thất bại: 7
+2026-03-23 13:53:14,043 - INFO - [MainThread] - Đã dọn dẹp dữ liệu người dùng thành công.
+2026-03-23 13:53:14,043 - INFO - [MainThread] - Chương trình hoàn tất. Thoát sau 5 giây...
+2026-03-23 13:53:19,045 - WARNING - [MainThread] - Đang dọn dẹp browsers...
+2026-03-23 13:53:19,046 - WARNING - [MainThread] - Đang dọn dẹp browsers...
