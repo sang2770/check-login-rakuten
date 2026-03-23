@@ -443,8 +443,8 @@ def main():
             num_threads = 1
         
         # Nhập lựa chọn hiển thị trình duyệt
-        show = input("Bạn có muốn hiển thị cửa sổ trình duyệt không? (y/n): ").strip().lower()
-        show_browser = show in ['y', 'yes']
+        # show = input("Bạn có muốn hiển thị cửa sổ trình duyệt không? (y/n): ").strip().lower()
+        # show_browser = show in ['y', 'yes']
                 
         # Setup account queue
         account_queue = Queue()
