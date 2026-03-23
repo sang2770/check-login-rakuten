@@ -367,7 +367,9 @@ async def process_account(account, account_index, browser, user_data_dir):
         logging.debug(f"Đang xử lý tài khoản {account_index + 1}: {email}")
         success, message = await check_account(browser, email, password)
         if not success:
-            logging.warning(f"Đăng nhập thất bại cho {email}: Acc Die")
+            logging.error(f"Đăng nhập thất bại cho {email}: Acc Die")
+        else:
+            logging.warning(f"Đăng nhập thành công cho {email}: Acc Live")
 
         with file_lock:
             if success:
